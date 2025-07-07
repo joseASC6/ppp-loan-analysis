@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="ppp_loan_lgl_dw" id="AzurePostgreSQL-1385" database="AzurePostgreSQL" >
+	<comment><![CDATA[Analysis of the PPP Loans that were issued to Small Businesses during COVID-19.]]></comment>
+	<schema name="instance" catalogname="ppp_loan_lgl_dw" >
+		<table name="dim_borrower" >
+			<column name="borrower_id" type="INT" jt="4" mandatory="y" />
+			<column name="borrower_name" type="VARCHAR" length="200" jt="12" />
+			<column name="borrower_address" type="VARCHAR" length="200" jt="12" />
+			<column name="borrower_city" type="VARCHAR" length="100" jt="12" />
+			<column name="borrower_state" type="VARCHAR" length="100" jt="12" />
+			<column name="borrower_zip" type="VARCHAR" length="100" jt="12" />
+			<column name="race" type="VARCHAR" length="100" jt="12" />
+			<column name="ethnicity" type="VARCHAR" length="100" jt="12" />
+			<column name="gender" type="VARCHAR" length="100" jt="12" />
+			<column name="veteran" type="BOOLEAN" jt="-7" />
+			<column name="franchise_name" type="VARCHAR" length="200" jt="12" />
+			<column name="nonprofit" type="BOOLEAN" jt="-7" />
+			<column name="jobs_reported" type="INT" jt="4" />
+			<index name="pk_dim_borrower" unique="PRIMARY_KEY" >
+				<column name="borrower_id" />
+			</index>
+		</table>
+		<table name="dim_business_age" >
+			<column name="business_age_id" type="INT" jt="4" mandatory="y" />
+			<column name="business_age_description" type="VARCHAR" length="200" jt="12" />
+			<index name="pk_dim_business_age" unique="PRIMARY_KEY" >
+				<column name="business_age_id" />
+			</index>
+		</table>
+		<table name="dim_business_type" >
+			<column name="business_type_id" type="INT" jt="4" mandatory="y" />
+			<column name="business_type" type="VARCHAR" length="200" jt="12" />
+			<index name="pk_dim_business_type" unique="PRIMARY_KEY" >
+				<column name="business_type_id" />
+			</index>
+		</table>
+		<table name="dim_date" >
+			<column name="date_id" type="BIGINT" jt="-5" mandatory="y" />
+			<column name="year_number" type="INT" jt="4" />
+			<column name="month_number" type="INT" jt="4" />
+			<column name="quarter_number" type="INT" jt="4" />
+			<column name="day_number" type="INT" jt="4" />
+			<column name="hour_number" type="INT" jt="4" />
+			<column name="date_iso_format" type="DATETIME" jt="93" />
+			<column name="day_name" type="VARCHAR" length="100" jt="12" />
+			<column name="month_name" type="VARCHAR" length="100" jt="12" />
+			<column name="week_of_month" type="INT" jt="4" />
+			<column name="week_of_year" type="INT" jt="4" />
+			<index name="pk_dim_date" unique="PRIMARY_KEY" >
+				<column name="date_id" />
+			</index>
+		</table>
+		<table name="dim_geography" >
+			<column name="geofips" type="INT" jt="4" mandatory="y" />
+			<column name="geo_name" type="VARCHAR" length="100" jt="12" />
+			<column name="region" type="VARCHAR" length="50" jt="12" />
+			<column name="project_county_name" type="VARCHAR" length="200" jt="12" />
+			<column name="project_state" type="VARCHAR" length="100" jt="12" />
+			<index name="pk_dim_geography" unique="PRIMARY_KEY" >
+				<column name="geofips" />
+			</index>
+		</table>
+		<table name="dim_loan_status" >
+			<column name="loan_status_id" type="INT" jt="4" mandatory="y" />
+			<column name="loan_status" type="VARCHAR" length="100" jt="12" />
+			<index name="pk_dim_loan_status" unique="PRIMARY_KEY" >
+				<column name="loan_status_id" />
+			</index>
+		</table>
+		<table name="dim_naics" >
+			<column name="naics_code" type="INT" jt="4" mandatory="y" />
+			<column name="naics_title" type="VARCHAR" length="200" jt="12" />
+			<column name="description" type="TEXT" jt="-1" />
+			<index name="pk_naics_code" unique="PRIMARY_KEY" >
+				<column name="naics_code" />
+			</index>
+		</table>
+		<table name="dim_originating_lender" >
+			<column name="originating_lender_id" type="INT" jt="4" mandatory="y" />
+			<column name="originating_lender_location_id" type="INT" jt="4" />
+			<column name="originating_lender" type="VARCHAR" length="200" jt="12" />
+			<column name="originating_lender_city" type="VARCHAR" length="200" jt="12" />
+			<column name="originating_lender_state" type="VARCHAR" length="100" jt="12" />
+			<index name="pk_dim_originating_lender" unique="PRIMARY_KEY" >
+				<column name="originating_lender_id" />
+			</index>
+		</table>
+		<table name="dim_processing_method" >
+			<column name="processing_method_id" type="INT" jt="4" mandatory="y" />
+			<column name="processing_method" type="VARCHAR" length="100" jt="12" />
+			<index name="pk_dim_processing_method" unique="PRIMARY_KEY" >
+				<column name="processing_method_id" />
+			</index>
+		</table>
+		<table name="dim_sba_office" >
+			<column name="sba_office_code" type="INT" jt="4" mandatory="y" />
+			<index name="pk_dim_sba_office" unique="PRIMARY_KEY" >
+				<column name="sba_office_code" />
+			</index>
+		</table>
+		<table name="dim_servicing_lender" >
+			<column name="servicing_lender_id" type="INT" jt="4" mandatory="y" />
+			<column name="servicing_lender_location_id" type="INT" jt="4" />
+			<column name="servicing_lender_name" type="VARCHAR" length="200" jt="12" />
+			<column name="servicing_lender_address" type="VARCHAR" length="200" jt="12" />
+			<column name="servicing_lender_city" type="VARCHAR" length="100" jt="12" />
+			<column name="servicing_lender_state" type="VARCHAR" length="200" jt="12" />
+			<column name="servicing_lender_zip" type="INT" jt="4" />
+			<index name="pk_dim_servicing_lender" unique="PRIMARY_KEY" >
+				<column name="servicing_lender_id" />
+			</index>
+		</table>
+		<table name="dim_term" >
+			<column name="term_id" type="INT" jt="4" mandatory="y" />
+			<column name="term_month" type="INT" jt="4" />
+			<index name="pk_dim_term" unique="PRIMARY_KEY" >
+				<column name="term_id" />
+			</index>
+		</table>
+		<table name="entity" prior="Entity" />
+		<table name="facts_gdp" >
+			<column name="facts_gdp_id" type="INT" jt="4" mandatory="y" />
+			<column name="year_id" type="BIGINT" jt="-5" mandatory="y" />
+			<column name="real_gdp" type="DECIMAL" jt="3" />
+			<column name="chain_type_index_gdp" type="DECIMAL" jt="3" />
+			<column name="current_dollar_gdp" type="DECIMAL" jt="3" />
+			<column name="geofips" type="INT" jt="4" mandatory="y" />
+			<index name="pk_facts_gdp" unique="PRIMARY_KEY" >
+				<column name="facts_gdp_id" />
+			</index>
+			<fk name="fk_facts_gdp_dim_geography" to_schema="ppp_loan_lgl_dw.instance" to_table="dim_geography" >
+				<fk_column name="geofips" pk="geofips" />
+			</fk>
+			<fk name="fk_facts_gdp_dim_date" to_schema="ppp_loan_lgl_dw.instance" to_table="dim_date" >
+				<fk_column name="year_id" pk="date_id" />
+			</fk>
+		</table>
+		<table name="facts_ppp" >
+			<column name="facts_ppp_id" type="BIGINT" jt="-5" mandatory="y" />
+			<column name="loan_number" type="INT" jt="4" />
+			<column name="naics_code" type="INT" jt="4" mandatory="y" />
+			<column name="geofips" type="INT" jt="4" mandatory="y" />
+			<column name="date_approved_id" type="BIGINT" jt="-5" mandatory="y" />
+			<column name="loan_status_date_id" type="BIGINT" jt="-5" mandatory="y" />
+			<column name="forgiveness_date_id" type="BIGINT" jt="-5" mandatory="y" />
+			<column name="borrower_id" type="INT" jt="4" mandatory="y" />
+			<column name="originating_lender_id" type="INT" jt="4" mandatory="y" />
+			<column name="servicing_lender_id" type="INT" jt="4" mandatory="y" />
+			<column name="term_id" type="INT" jt="4" mandatory="y" />
+			<column name="loan_status_id" type="INT" jt="4" mandatory="y" />
+			<column name="processing_method_id" type="INT" jt="4" mandatory="y" />
+			<column name="sba_office_code" type="INT" jt="4" mandatory="y" />
+			<column name="business_age_id" type="INT" jt="4" mandatory="y" />
+			<column name="business_type_id" type="INT" jt="4" mandatory="y" />
+			<column name="sba_guaranty_percentage" type="DECIMAL" jt="3" />
+			<column name="initial_approval_amount" type="DECIMAL" jt="3" />
+			<column name="current_approval_amount" type="DECIMAL" jt="3" />
+			<column name="undisbursed_amount" type="DECIMAL" jt="3" />
+			<column name="forgiveness_amount" type="DECIMAL" jt="3" />
+			<index name="pk_facts_ppp" unique="PRIMARY_KEY" >
+				<column name="facts_ppp_id" />
+			</index>
+			<fk name="fk_facts_ppp_dim_naics" to_schema="ppp_loan_lgl_dw.instance" to_table="dim_naics" >
+				<fk_column name="naics_code" pk="naics_code" />
+			</fk>
+			<fk name="fk_facts_ppp_dim_geography" to_schema="ppp_loan_lgl_dw.instance" to_table="dim_geography" >
+				<fk_column name="geofips" pk="geofips" />
+			</fk>
+			<fk name="fk_facts_ppp_dim_date" to_schema="ppp_loan_lgl_dw.instance" to_table="dim_date" >
+				<fk_column name="date_approved_id" pk="date_id" />
+			</fk>
+			<fk name="fk_facts_ppp_dim_date_0" to_schema="ppp_loan_lgl_dw.instance" to_table="dim_date" >
+				<fk_column name="loan_status_date_id" pk="date_id" />
+			</fk>
+			<fk name="fk_facts_ppp_dim_date_1" to_schema="ppp_loan_lgl_dw.instance" to_table="dim_date" >
+				<fk_column name="forgiveness_date_id" pk="date_id" />
+			</fk>
+			<fk name="fk_facts_ppp_dim_borrower" to_schema="ppp_loan_lgl_dw.instance" to_table="dim_borrower" >
+				<fk_column name="borrower_id" pk="borrower_id" />
+			</fk>
+			<fk name="fk_facts_ppp_dim_originating_lender" to_schema="ppp_loan_lgl_dw.instance" to_table="dim_originating_lender" >
+				<fk_column name="originating_lender_id" pk="originating_lender_id" />
+			</fk>
+			<fk name="fk_facts_ppp_dim_servicing_lender" to_schema="ppp_loan_lgl_dw.instance" to_table="dim_servicing_lender" >
+				<fk_column name="servicing_lender_id" pk="servicing_lender_id" />
+			</fk>
+			<fk name="fk_facts_ppp_dim_term" to_schema="ppp_loan_lgl_dw.instance" to_table="dim_term" >
+				<fk_column name="term_id" pk="term_id" />
+			</fk>
+			<fk name="fk_facts_ppp_dim_loan_status" to_schema="ppp_loan_lgl_dw.instance" to_table="dim_loan_status" >
+				<fk_column name="loan_status_id" pk="loan_status_id" />
+			</fk>
+			<fk name="fk_facts_ppp_dim_processing_method" to_schema="ppp_loan_lgl_dw.instance" to_table="dim_processing_method" >
+				<fk_column name="processing_method_id" pk="processing_method_id" />
+			</fk>
+			<fk name="fk_facts_ppp_dim_sba_office" to_schema="ppp_loan_lgl_dw.instance" to_table="dim_sba_office" >
+				<fk_column name="sba_office_code" pk="sba_office_code" />
+			</fk>
+			<fk name="fk_facts_ppp_dim_business_age" to_schema="ppp_loan_lgl_dw.instance" to_table="dim_business_age" >
+				<fk_column name="business_age_id" pk="business_age_id" />
+			</fk>
+			<fk name="fk_facts_ppp_dim_business_type" to_schema="ppp_loan_lgl_dw.instance" to_table="dim_business_type" >
+				<fk_column name="business_type_id" pk="business_type_id" />
+			</fk>
+		</table>
+	</schema>
+	<layout name="Default Layout" id="Layout-101" confirmed="y" show_relation="columns" >
+		<entity schema="ppp_loan_lgl_dw.instance" name="dim_borrower" color="C1D8EE" x="736" y="448" />
+		<entity schema="ppp_loan_lgl_dw.instance" name="dim_business_age" color="C1D8EE" x="720" y="816" />
+		<entity schema="ppp_loan_lgl_dw.instance" name="dim_business_type" color="C1D8EE" x="928" y="720" />
+		<entity schema="ppp_loan_lgl_dw.instance" name="dim_date" color="C1D8EE" x="320" y="48" />
+		<entity schema="ppp_loan_lgl_dw.instance" name="dim_geography" color="C1D8EE" x="560" y="64" />
+		<entity schema="ppp_loan_lgl_dw.instance" name="dim_loan_status" color="C1D8EE" x="80" y="416" />
+		<entity schema="ppp_loan_lgl_dw.instance" name="dim_naics" color="C1D8EE" x="80" y="528" />
+		<entity schema="ppp_loan_lgl_dw.instance" name="dim_originating_lender" color="C1D8EE" x="48" y="656" />
+		<entity schema="ppp_loan_lgl_dw.instance" name="dim_processing_method" color="C1D8EE" x="80" y="816" />
+		<entity schema="ppp_loan_lgl_dw.instance" name="dim_sba_office" color="C1D8EE" x="672" y="928" />
+		<entity schema="ppp_loan_lgl_dw.instance" name="dim_servicing_lender" color="C1D8EE" x="448" y="896" />
+		<entity schema="ppp_loan_lgl_dw.instance" name="dim_term" color="C1D8EE" x="96" y="272" />
+		<entity schema="ppp_loan_lgl_dw.instance" name="facts_gdp" color="C1D8EE" x="720" y="272" />
+		<entity schema="ppp_loan_lgl_dw.instance" name="facts_ppp" color="C1D8EE" x="400" y="384" />
+	</layout>
+</project>

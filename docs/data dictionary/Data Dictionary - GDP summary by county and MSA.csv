@@ -1,0 +1,23 @@
+Field Name,Field Description,Type,Format,Field Length
+GeoFIPS,"The Census Bureau has published FIPS codes. 
+FIPS codes are assigned alphabetically by geographic name for states, counties, core based statistical areas, places, county subdivisions, consolidated cities and all types of American Indian, Alaska Native, and Native Hawaiian (AIANNH) areas. 
+Lists of geographic FIPS codes in census products can be found on the ANSI/FIPS Codes page.",Text,"5 #'s in "" "" qouations (""#####"")",7
+GeoName,Location name of the corresponding GeoFIPS,Text,"County, State",
+Region,U.S. FIPS Region Codes (four regions) created by the Census Bureau,INT,# 1 through 4,1
+LineCode,Represents the three choices in the description ,INT,"1, 2, or 3",1
+TableName,Table source of data: CAGDP1 (GDP summary by county and MSA),Text,CAGDP1,
+IndustryClassification,"The value entered for every row is ""...""",Text,,
+Description,"Three choices: 
+Real GDP (thousands of chained 2017 dollars), 
+Chain-type quantity indexes for real GDP, 
+or Current-dollar GDP (thousands of current dollars) ",Text,,
+Unit,"Three choices: 
+Thousands of chained 2017 dollars, 
+Quantity index, 
+or Thousands of dollars",Text,,
+2017,Data input for the year 2017 based on the description and unit column,Decimal,,
+2018,Data input for the year 2018 based on the description and unit column,Decimal,,
+2019,Data input for the year 2019 based on the description and unit column,Decimal,,
+2020,Data input for the year 2020 based on the description and unit column,Decimal,,
+2021,Data input for the year 2021 based on the description and unit column,Decimal,,
+2022,Data input for the year 2022 based on the description and unit column,Decimal,,

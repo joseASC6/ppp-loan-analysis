@@ -1,0 +1,66 @@
+Field Name,Field Description,Type,Format,Field Length,Max Value
+LoanNumber,Loan Number (unique identifier),INT,,,
+DateApproved,Loan Funded Date,Date,MM/DD/YYYY,,
+SBAOfficeCode,SBA Origination Office Code,Text,4 #'s,4,
+ProcessingMethod,Loan Delivery Method (PPP for first draw; PPS for second draw),Text,"PPP 
+or PPS",3,
+BorrowerName,Borrower Name,NText ,,,
+BorrowerAddress,Borrower Street Address,Text,,,
+BorrowerCity,Borrower City,Text,,,
+BorrowerState,Borrower State,Text,Two letter abbreviations for states,2,
+BorrowerZip,Borrower Zip Code,Text,,,
+LoanStatusDate,"Loan Status Date
+- Loan Status Date is  blank when the loan is disbursed but not Paid In Full or Charged Off",Date,MM/DD/YYYY,,
+LoanStatus,"Loan Status Description
+- Loan Status is replaced by 'Exemption 4' when the loan is disbursed but not Paid in Full or Charged Off",Text,"Exemption 4
+Paid in Full
+or Charged Off",,
+Term,Loan Maturity in Months,INT,,,
+SBAGuarantyPercentage,SBA Guaranty Percentage,INT,,,100
+InitialApprovalAmount,Loan Approval Amount(at origination),Decimal,,,
+CurrentApprovalAmount,Loan Approval Amount (current),Decimal,,,
+UndisbursedAmount,Undisbursed Amount,Decimal,,,
+FranchiseName,Franchise Name,Text,,,
+ServicingLenderLocationID,Lender Location ID (unique identifier),INT,,,
+ServicingLenderName,Servicing Lender Name,Text,,,
+ServicingLenderAddress,Servicing Lender Street Address,Text,,,
+ServicingLenderCity,Servicing Lender City,Text,,,
+ServicingLenderState,Servicing Lender State,Text,Two letter abbreviations for states,2,
+ServicingLenderZip,Servicing Lender Zip Code,Text,,,
+RuralUrbanIndicator,Rural or Urban Indicator (R/U),CHAR,U or R,1,
+HubzoneIndicator,Hubzone Indicator (Y/N),CHAR,N or Y,1,
+LMIIndicator,LMI Indicator (Y/N),CHAR,N or Y,1,
+BusinessAgeDescription,Business Age Description,Text,"Existing or more than 2 years old
+New Business or 2 years or less
+or Unanswered",,
+ProjectCity,Project City,Text,,,
+ProjectCountyName,Project County Name,Text,,,
+ProjectState,Project State,Text,Two letter abbreviations for states,2,
+ProjectZip,Project Zip Code,Text,,,
+CD,Project Congressional District,Text,XY-# (ex. NY-15),,
+ProjectCountyName,Number of Employees,INT,,,500
+NAICSCode,NAICS 6 digit code,INT,6 #'s,6,
+Race,Borrower Race Description,Text,,,
+Ethnicity,Borrower Ethnicity Description,Text,,,
+UTILITIES_PROCEED,Note: Proceed data is lender reported at origination.  On the PPP application the proceeds fields were check boxes.,Text,"its either ""Not Stated"" or a decimal representing $",,
+PAYROLL_PROCEED,,Decimal,,,
+MORTGAGE_INTEREST_PROCEED,,Decimal,,,
+RENT_PROCEED,,Decimal,,,
+REFINANCE_EIDL_PROCEED,,Decimal,,,
+HEALTH_CARE_PROCEED,,Decimal,,,
+DEBT_INTEREST_PROCEED,,Decimal,,,
+BusinessType,Business Type Description,Text,About 22 different business types,,
+OriginatingLenderLocationID,Originating Lender ID (unique identifier),INT,,,
+OriginatingLender,Originating Lender Name,Text,,,
+OriginatingLenderCity,Originating Lender City,Text,,,
+OriginatingLenderState,Originating Lender State,Text,Two letter abbreviations for states,2,
+Gender,Gender Indicator,Text,"Male Owned
+Female Owned
+or Unanswered",,
+Veteran,Veteran Indicator,Text,"Veteran
+Non-Veteran
+or Unanswered",,
+NonProfit,Yes' if Business Type = Non-Profit Organization or Non-Profit Childcare Center or 501(c) Non Profit,CHAR,"Y
+or NULL(empty)",1,
+ForgivenessAmount,Forgiveness Amount,Decimal,,,
+ForgivenessDate,Forgiveness Paid Date,Date,MM/DD/YYYY,,

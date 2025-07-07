@@ -1,0 +1,5 @@
+Field Name,Field Description,Type,Format,Field Length
+Code,"NAICS Code: NAICS is an industry classification system that groups establishments into industries based on
+the similarity of their production processes. ",INT,,
+Title,Industry Name,Text ,,
+Description,Industry decription ,Text,,

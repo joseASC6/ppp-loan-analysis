@@ -1,0 +1,1352 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<!-- build 20242.24.0628.2216                               -->
+<workbook original-version='18.1' source-build='2023.2.0 (20232.23.0611.2007)' source-platform='win' version='18.1' xml:base='https://us-east-1.online.tableau.com' xmlns:user='http://www.tableausoftware.com/xml/user'>
+  <document-format-change-manifest>
+    <_.fcp.AnimationOnByDefault.true...AnimationOnByDefault />
+    <CascadingFilters />
+    <CascadingFiltersHamburgerUI />
+    <IntuitiveSorting />
+    <IntuitiveSorting_SP2 />
+    <MapboxVectorStylesAndLayers />
+    <_.fcp.MarkAnimation.true...MarkAnimation />
+    <_.fcp.ObjectModelEncapsulateLegacy.true...ObjectModelEncapsulateLegacy />
+    <_.fcp.ObjectModelRelationshipPerfOptions.true...ObjectModelRelationshipPerfOptions />
+    <_.fcp.ObjectModelTableType.true...ObjectModelTableType />
+    <_.fcp.SchemaViewerObjectModel.true...SchemaViewerObjectModel />
+    <SheetIdentifierTracking />
+    <WindowsPersistSimpleIdentifiers />
+  </document-format-change-manifest>
+  <repository-location id='gelbert_ppp' path='/t/josegarcia3a8338ac3fb/workbooks' revision='1.1' site='josegarcia3a8338ac3fb' />
+  <preferences>
+    <preference name='ui.encoding.shelf.height' value='24' />
+    <preference name='ui.shelf.height' value='26' />
+  </preferences>
+  <_.fcp.AnimationOnByDefault.false...style>
+    <_.fcp.AnimationOnByDefault.false..._.fcp.MarkAnimation.true...style-rule element='animation'>
+      <_.fcp.AnimationOnByDefault.false...format attr='animation-on' value='ao-on' />
+    </_.fcp.AnimationOnByDefault.false..._.fcp.MarkAnimation.true...style-rule>
+  </_.fcp.AnimationOnByDefault.false...style>
+  <datasources>
+    <datasource caption='dim_geography (ppp_loan.dim_geography) (postgres)' inline='true' name='federated.016dzcb005l8au1f5fekv1c7hy0v' version='18.1'>
+      <connection class='federated'>
+        <named-connections>
+          <named-connection caption='cisdwabruch.postgres.database.azure.com' name='postgres.1w15c9x0vybbw81242zq11ivm08v'>
+            <connection authentication='username-password' class='postgres' dbname='postgres' one-time-sql='' port='5432' server='cisdwabruch.postgres.database.azure.com' username='jose' workgroup-auth-mode='prompt' />
+          </named-connection>
+        </named-connections>
+        <_.fcp.ObjectModelEncapsulateLegacy.false...relation connection='postgres.1w15c9x0vybbw81242zq11ivm08v' name='dim_borrower' table='[ppp_loan].[dim_borrower]' type='table' />
+        <_.fcp.ObjectModelEncapsulateLegacy.true...relation type='collection'>
+          <relation connection='postgres.1w15c9x0vybbw81242zq11ivm08v' name='dim_geography' table='[ppp_loan].[dim_geography]' type='table' />
+          <relation connection='postgres.1w15c9x0vybbw81242zq11ivm08v' name='facts_gdp' table='[ppp_loan].[facts_gdp]' type='table' />
+          <relation connection='postgres.1w15c9x0vybbw81242zq11ivm08v' name='facts_ppp' table='[ppp_loan].[facts_ppp]' type='table' />
+          <relation connection='postgres.1w15c9x0vybbw81242zq11ivm08v' name='dim_borrower' table='[ppp_loan].[dim_borrower]' type='table' />
+          <relation connection='postgres.1w15c9x0vybbw81242zq11ivm08v' name='dim_business_type' table='[ppp_loan].[dim_business_type]' type='table' />
+          <relation connection='postgres.1w15c9x0vybbw81242zq11ivm08v' name='dim_date' table='[ppp_loan].[dim_date]' type='table' />
+        </_.fcp.ObjectModelEncapsulateLegacy.true...relation>
+        <cols>
+          <map key='[borrower_address]' value='[dim_borrower].[borrower_address]' />
+          <map key='[borrower_city]' value='[dim_borrower].[borrower_city]' />
+          <map key='[borrower_id (dim_borrower)]' value='[dim_borrower].[borrower_id]' />
+          <map key='[borrower_id]' value='[facts_ppp].[borrower_id]' />
+          <map key='[borrower_name]' value='[dim_borrower].[borrower_name]' />
+          <map key='[borrower_state]' value='[dim_borrower].[borrower_state]' />
+          <map key='[borrower_zip]' value='[dim_borrower].[borrower_zip]' />
+          <map key='[business_age_id]' value='[facts_ppp].[business_age_id]' />
+          <map key='[business_type]' value='[dim_business_type].[business_type]' />
+          <map key='[business_type_id (dim_business_type)]' value='[dim_business_type].[business_type_id]' />
+          <map key='[business_type_id]' value='[facts_ppp].[business_type_id]' />
+          <map key='[chain_type_index_gdp]' value='[facts_gdp].[chain_type_index_gdp]' />
+          <map key='[current_approval_amount]' value='[facts_ppp].[current_approval_amount]' />
+          <map key='[current_dollar_gdp]' value='[facts_gdp].[current_dollar_gdp]' />
+          <map key='[date_approved_id]' value='[facts_ppp].[date_approved_id]' />
+          <map key='[date_id]' value='[dim_date].[date_id]' />
+          <map key='[date_iso_format]' value='[dim_date].[date_iso_format]' />
+          <map key='[day_name]' value='[dim_date].[day_name]' />
+          <map key='[day_number]' value='[dim_date].[day_number]' />
+          <map key='[ethnicity]' value='[dim_borrower].[ethnicity]' />
+          <map key='[facts_gdp_id]' value='[facts_gdp].[facts_gdp_id]' />
+          <map key='[facts_ppp_id]' value='[facts_ppp].[facts_ppp_id]' />
+          <map key='[forgiveness_amount]' value='[facts_ppp].[forgiveness_amount]' />
+          <map key='[forgiveness_date_id]' value='[facts_ppp].[forgiveness_date_id]' />
+          <map key='[franchise_name]' value='[dim_borrower].[franchise_name]' />
+          <map key='[gender]' value='[dim_borrower].[gender]' />
+          <map key='[geo_name]' value='[dim_geography].[geo_name]' />
+          <map key='[geofips (facts_gdp)]' value='[facts_gdp].[geofips]' />
+          <map key='[geofips (facts_ppp)]' value='[facts_ppp].[geofips]' />
+          <map key='[geofips]' value='[dim_geography].[geofips]' />
+          <map key='[hour_number]' value='[dim_date].[hour_number]' />
+          <map key='[initial_approval_amount]' value='[facts_ppp].[initial_approval_amount]' />
+          <map key='[jobs_reported]' value='[dim_borrower].[jobs_reported]' />
+          <map key='[loan_number]' value='[facts_ppp].[loan_number]' />
+          <map key='[loan_status_date_id]' value='[facts_ppp].[loan_status_date_id]' />
+          <map key='[loan_status_id]' value='[facts_ppp].[loan_status_id]' />
+          <map key='[month_name]' value='[dim_date].[month_name]' />
+          <map key='[month_number]' value='[dim_date].[month_number]' />
+          <map key='[naics_code]' value='[facts_ppp].[naics_code]' />
+          <map key='[nonprofit]' value='[dim_borrower].[nonprofit]' />
+          <map key='[originating_lender_id]' value='[facts_ppp].[originating_lender_id]' />
+          <map key='[processing_method_id]' value='[facts_ppp].[processing_method_id]' />
+          <map key='[project_county_name]' value='[dim_geography].[project_county_name]' />
+          <map key='[project_state]' value='[dim_geography].[project_state]' />
+          <map key='[quarter_number]' value='[dim_date].[quarter_number]' />
+          <map key='[race]' value='[dim_borrower].[race]' />
+          <map key='[real_gdp]' value='[facts_gdp].[real_gdp]' />
+          <map key='[region]' value='[dim_geography].[region]' />
+          <map key='[sba_guaranty_percentage]' value='[facts_ppp].[sba_guaranty_percentage]' />
+          <map key='[sba_office_code]' value='[facts_ppp].[sba_office_code]' />
+          <map key='[servicing_lender_id]' value='[facts_ppp].[servicing_lender_id]' />
+          <map key='[term_id]' value='[facts_ppp].[term_id]' />
+          <map key='[undisbursed_amount]' value='[facts_ppp].[undisbursed_amount]' />
+          <map key='[veteran]' value='[dim_borrower].[veteran]' />
+          <map key='[week_of_month]' value='[dim_date].[week_of_month]' />
+          <map key='[week_of_year]' value='[dim_date].[week_of_year]' />
+          <map key='[year_id]' value='[facts_gdp].[year_id]' />
+          <map key='[year_number]' value='[dim_date].[year_number]' />
+        </cols>
+        <metadata-records>
+          <metadata-record class='column'>
+            <remote-name>geofips</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[geofips]</local-name>
+            <parent-name>[dim_geography]</parent-name>
+            <remote-alias>geofips</remote-alias>
+            <ordinal>1</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <contains-null>false</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_geography (ppp_loan.dim_geography)_CFECB2DC6DA04CFB91C26384C5AE1D18]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>geo_name</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[geo_name]</local-name>
+            <parent-name>[dim_geography]</parent-name>
+            <remote-alias>geo_name</remote-alias>
+            <ordinal>2</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>100</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_geography (ppp_loan.dim_geography)_CFECB2DC6DA04CFB91C26384C5AE1D18]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>region</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[region]</local-name>
+            <parent-name>[dim_geography]</parent-name>
+            <remote-alias>region</remote-alias>
+            <ordinal>3</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>50</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_geography (ppp_loan.dim_geography)_CFECB2DC6DA04CFB91C26384C5AE1D18]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>project_county_name</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[project_county_name]</local-name>
+            <parent-name>[dim_geography]</parent-name>
+            <remote-alias>project_county_name</remote-alias>
+            <ordinal>4</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>200</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_geography (ppp_loan.dim_geography)_CFECB2DC6DA04CFB91C26384C5AE1D18]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>project_state</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[project_state]</local-name>
+            <parent-name>[dim_geography]</parent-name>
+            <remote-alias>project_state</remote-alias>
+            <ordinal>5</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>100</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_geography (ppp_loan.dim_geography)_CFECB2DC6DA04CFB91C26384C5AE1D18]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>facts_gdp_id</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[facts_gdp_id]</local-name>
+            <parent-name>[facts_gdp]</parent-name>
+            <remote-alias>facts_gdp_id</remote-alias>
+            <ordinal>7</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <contains-null>false</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[facts_gdp (ppp_loan.facts_gdp)_919508810F2643FF839F1FFC30DC4699]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>year_id</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[year_id]</local-name>
+            <parent-name>[facts_gdp]</parent-name>
+            <remote-alias>year_id</remote-alias>
+            <ordinal>8</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>19</precision>
+            <contains-null>false</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[facts_gdp (ppp_loan.facts_gdp)_919508810F2643FF839F1FFC30DC4699]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>real_gdp</remote-name>
+            <remote-type>131</remote-type>
+            <local-name>[real_gdp]</local-name>
+            <parent-name>[facts_gdp]</parent-name>
+            <remote-alias>real_gdp</remote-alias>
+            <ordinal>9</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>17</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[facts_gdp (ppp_loan.facts_gdp)_919508810F2643FF839F1FFC30DC4699]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>chain_type_index_gdp</remote-name>
+            <remote-type>131</remote-type>
+            <local-name>[chain_type_index_gdp]</local-name>
+            <parent-name>[facts_gdp]</parent-name>
+            <remote-alias>chain_type_index_gdp</remote-alias>
+            <ordinal>10</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>17</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[facts_gdp (ppp_loan.facts_gdp)_919508810F2643FF839F1FFC30DC4699]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>current_dollar_gdp</remote-name>
+            <remote-type>131</remote-type>
+            <local-name>[current_dollar_gdp]</local-name>
+            <parent-name>[facts_gdp]</parent-name>
+            <remote-alias>current_dollar_gdp</remote-alias>
+            <ordinal>11</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>17</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[facts_gdp (ppp_loan.facts_gdp)_919508810F2643FF839F1FFC30DC4699]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>geofips</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[geofips (facts_gdp)]</local-name>
+            <parent-name>[facts_gdp]</parent-name>
+            <remote-alias>geofips</remote-alias>
+            <ordinal>12</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <contains-null>false</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[facts_gdp (ppp_loan.facts_gdp)_919508810F2643FF839F1FFC30DC4699]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>facts_ppp_id</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[facts_ppp_id]</local-name>
+            <parent-name>[facts_ppp]</parent-name>
+            <remote-alias>facts_ppp_id</remote-alias>
+            <ordinal>14</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>19</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[facts_ppp (ppp_loan.facts_ppp)_8228CCE778534F179374E0DEE4C5B2CD]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>loan_number</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[loan_number]</local-name>
+            <parent-name>[facts_ppp]</parent-name>
+            <remote-alias>loan_number</remote-alias>
+            <ordinal>15</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>19</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[facts_ppp (ppp_loan.facts_ppp)_8228CCE778534F179374E0DEE4C5B2CD]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>naics_code</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[naics_code]</local-name>
+            <parent-name>[facts_ppp]</parent-name>
+            <remote-alias>naics_code</remote-alias>
+            <ordinal>16</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>19</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[facts_ppp (ppp_loan.facts_ppp)_8228CCE778534F179374E0DEE4C5B2CD]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>geofips</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[geofips (facts_ppp)]</local-name>
+            <parent-name>[facts_ppp]</parent-name>
+            <remote-alias>geofips</remote-alias>
+            <ordinal>17</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>19</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[facts_ppp (ppp_loan.facts_ppp)_8228CCE778534F179374E0DEE4C5B2CD]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>date_approved_id</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[date_approved_id]</local-name>
+            <parent-name>[facts_ppp]</parent-name>
+            <remote-alias>date_approved_id</remote-alias>
+            <ordinal>18</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>19</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[facts_ppp (ppp_loan.facts_ppp)_8228CCE778534F179374E0DEE4C5B2CD]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>loan_status_date_id</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[loan_status_date_id]</local-name>
+            <parent-name>[facts_ppp]</parent-name>
+            <remote-alias>loan_status_date_id</remote-alias>
+            <ordinal>19</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>19</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[facts_ppp (ppp_loan.facts_ppp)_8228CCE778534F179374E0DEE4C5B2CD]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>forgiveness_date_id</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[forgiveness_date_id]</local-name>
+            <parent-name>[facts_ppp]</parent-name>
+            <remote-alias>forgiveness_date_id</remote-alias>
+            <ordinal>20</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>19</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[facts_ppp (ppp_loan.facts_ppp)_8228CCE778534F179374E0DEE4C5B2CD]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>borrower_id</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[borrower_id]</local-name>
+            <parent-name>[facts_ppp]</parent-name>
+            <remote-alias>borrower_id</remote-alias>
+            <ordinal>21</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>19</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[facts_ppp (ppp_loan.facts_ppp)_8228CCE778534F179374E0DEE4C5B2CD]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>originating_lender_id</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[originating_lender_id]</local-name>
+            <parent-name>[facts_ppp]</parent-name>
+            <remote-alias>originating_lender_id</remote-alias>
+            <ordinal>22</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>19</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[facts_ppp (ppp_loan.facts_ppp)_8228CCE778534F179374E0DEE4C5B2CD]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>servicing_lender_id</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[servicing_lender_id]</local-name>
+            <parent-name>[facts_ppp]</parent-name>
+            <remote-alias>servicing_lender_id</remote-alias>
+            <ordinal>23</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>19</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[facts_ppp (ppp_loan.facts_ppp)_8228CCE778534F179374E0DEE4C5B2CD]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>term_id</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[term_id]</local-name>
+            <parent-name>[facts_ppp]</parent-name>
+            <remote-alias>term_id</remote-alias>
+            <ordinal>24</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>19</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[facts_ppp (ppp_loan.facts_ppp)_8228CCE778534F179374E0DEE4C5B2CD]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>loan_status_id</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[loan_status_id]</local-name>
+            <parent-name>[facts_ppp]</parent-name>
+            <remote-alias>loan_status_id</remote-alias>
+            <ordinal>25</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>19</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[facts_ppp (ppp_loan.facts_ppp)_8228CCE778534F179374E0DEE4C5B2CD]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>processing_method_id</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[processing_method_id]</local-name>
+            <parent-name>[facts_ppp]</parent-name>
+            <remote-alias>processing_method_id</remote-alias>
+            <ordinal>26</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>19</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[facts_ppp (ppp_loan.facts_ppp)_8228CCE778534F179374E0DEE4C5B2CD]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>sba_office_code</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[sba_office_code]</local-name>
+            <parent-name>[facts_ppp]</parent-name>
+            <remote-alias>sba_office_code</remote-alias>
+            <ordinal>27</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>19</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[facts_ppp (ppp_loan.facts_ppp)_8228CCE778534F179374E0DEE4C5B2CD]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>business_age_id</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[business_age_id]</local-name>
+            <parent-name>[facts_ppp]</parent-name>
+            <remote-alias>business_age_id</remote-alias>
+            <ordinal>28</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>19</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[facts_ppp (ppp_loan.facts_ppp)_8228CCE778534F179374E0DEE4C5B2CD]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>business_type_id</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[business_type_id]</local-name>
+            <parent-name>[facts_ppp]</parent-name>
+            <remote-alias>business_type_id</remote-alias>
+            <ordinal>29</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>19</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[facts_ppp (ppp_loan.facts_ppp)_8228CCE778534F179374E0DEE4C5B2CD]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>sba_guaranty_percentage</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[sba_guaranty_percentage]</local-name>
+            <parent-name>[facts_ppp]</parent-name>
+            <remote-alias>sba_guaranty_percentage</remote-alias>
+            <ordinal>30</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>17</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[facts_ppp (ppp_loan.facts_ppp)_8228CCE778534F179374E0DEE4C5B2CD]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>initial_approval_amount</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[initial_approval_amount]</local-name>
+            <parent-name>[facts_ppp]</parent-name>
+            <remote-alias>initial_approval_amount</remote-alias>
+            <ordinal>31</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>17</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[facts_ppp (ppp_loan.facts_ppp)_8228CCE778534F179374E0DEE4C5B2CD]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>current_approval_amount</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[current_approval_amount]</local-name>
+            <parent-name>[facts_ppp]</parent-name>
+            <remote-alias>current_approval_amount</remote-alias>
+            <ordinal>32</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>17</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[facts_ppp (ppp_loan.facts_ppp)_8228CCE778534F179374E0DEE4C5B2CD]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>undisbursed_amount</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[undisbursed_amount]</local-name>
+            <parent-name>[facts_ppp]</parent-name>
+            <remote-alias>undisbursed_amount</remote-alias>
+            <ordinal>33</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>17</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[facts_ppp (ppp_loan.facts_ppp)_8228CCE778534F179374E0DEE4C5B2CD]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>forgiveness_amount</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[forgiveness_amount]</local-name>
+            <parent-name>[facts_ppp]</parent-name>
+            <remote-alias>forgiveness_amount</remote-alias>
+            <ordinal>34</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>17</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[facts_ppp (ppp_loan.facts_ppp)_8228CCE778534F179374E0DEE4C5B2CD]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>borrower_id</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[borrower_id (dim_borrower)]</local-name>
+            <parent-name>[dim_borrower]</parent-name>
+            <remote-alias>borrower_id</remote-alias>
+            <ordinal>36</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>19</precision>
+            <contains-null>false</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_borrower (ppp_loan.dim_borrower)_4DD7C1D577C14C7597EF89A2E7A3294F]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>borrower_name</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[borrower_name]</local-name>
+            <parent-name>[dim_borrower]</parent-name>
+            <remote-alias>borrower_name</remote-alias>
+            <ordinal>37</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>200</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_borrower (ppp_loan.dim_borrower)_4DD7C1D577C14C7597EF89A2E7A3294F]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>borrower_address</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[borrower_address]</local-name>
+            <parent-name>[dim_borrower]</parent-name>
+            <remote-alias>borrower_address</remote-alias>
+            <ordinal>38</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>200</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_borrower (ppp_loan.dim_borrower)_4DD7C1D577C14C7597EF89A2E7A3294F]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>borrower_city</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[borrower_city]</local-name>
+            <parent-name>[dim_borrower]</parent-name>
+            <remote-alias>borrower_city</remote-alias>
+            <ordinal>39</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>100</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_borrower (ppp_loan.dim_borrower)_4DD7C1D577C14C7597EF89A2E7A3294F]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>borrower_state</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[borrower_state]</local-name>
+            <parent-name>[dim_borrower]</parent-name>
+            <remote-alias>borrower_state</remote-alias>
+            <ordinal>40</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>100</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_borrower (ppp_loan.dim_borrower)_4DD7C1D577C14C7597EF89A2E7A3294F]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>borrower_zip</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[borrower_zip]</local-name>
+            <parent-name>[dim_borrower]</parent-name>
+            <remote-alias>borrower_zip</remote-alias>
+            <ordinal>41</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>100</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_borrower (ppp_loan.dim_borrower)_4DD7C1D577C14C7597EF89A2E7A3294F]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>race</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[race]</local-name>
+            <parent-name>[dim_borrower]</parent-name>
+            <remote-alias>race</remote-alias>
+            <ordinal>42</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>100</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_borrower (ppp_loan.dim_borrower)_4DD7C1D577C14C7597EF89A2E7A3294F]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>ethnicity</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[ethnicity]</local-name>
+            <parent-name>[dim_borrower]</parent-name>
+            <remote-alias>ethnicity</remote-alias>
+            <ordinal>43</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>100</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_borrower (ppp_loan.dim_borrower)_4DD7C1D577C14C7597EF89A2E7A3294F]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>gender</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[gender]</local-name>
+            <parent-name>[dim_borrower]</parent-name>
+            <remote-alias>gender</remote-alias>
+            <ordinal>44</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>100</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_borrower (ppp_loan.dim_borrower)_4DD7C1D577C14C7597EF89A2E7A3294F]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>veteran</remote-name>
+            <remote-type>11</remote-type>
+            <local-name>[veteran]</local-name>
+            <parent-name>[dim_borrower]</parent-name>
+            <remote-alias>veteran</remote-alias>
+            <ordinal>45</ordinal>
+            <local-type>boolean</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_borrower (ppp_loan.dim_borrower)_4DD7C1D577C14C7597EF89A2E7A3294F]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>franchise_name</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[franchise_name]</local-name>
+            <parent-name>[dim_borrower]</parent-name>
+            <remote-alias>franchise_name</remote-alias>
+            <ordinal>46</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>200</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_borrower (ppp_loan.dim_borrower)_4DD7C1D577C14C7597EF89A2E7A3294F]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>nonprofit</remote-name>
+            <remote-type>11</remote-type>
+            <local-name>[nonprofit]</local-name>
+            <parent-name>[dim_borrower]</parent-name>
+            <remote-alias>nonprofit</remote-alias>
+            <ordinal>47</ordinal>
+            <local-type>boolean</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_borrower (ppp_loan.dim_borrower)_4DD7C1D577C14C7597EF89A2E7A3294F]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>jobs_reported</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[jobs_reported]</local-name>
+            <parent-name>[dim_borrower]</parent-name>
+            <remote-alias>jobs_reported</remote-alias>
+            <ordinal>48</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_borrower (ppp_loan.dim_borrower)_4DD7C1D577C14C7597EF89A2E7A3294F]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>business_type_id</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[business_type_id (dim_business_type)]</local-name>
+            <parent-name>[dim_business_type]</parent-name>
+            <remote-alias>business_type_id</remote-alias>
+            <ordinal>50</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <contains-null>false</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_business_type (ppp_loan.dim_business_type)_7097FB3C77BA4D9AA05FA1B415742040]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>business_type</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[business_type]</local-name>
+            <parent-name>[dim_business_type]</parent-name>
+            <remote-alias>business_type</remote-alias>
+            <ordinal>51</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>200</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_business_type (ppp_loan.dim_business_type)_7097FB3C77BA4D9AA05FA1B415742040]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>date_id</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[date_id]</local-name>
+            <parent-name>[dim_date]</parent-name>
+            <remote-alias>date_id</remote-alias>
+            <ordinal>53</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>19</precision>
+            <contains-null>false</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_date (ppp_loan.dim_date)_844DDEAB9D164B2D8F47BFA57164CAC2]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>year_number</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[year_number]</local-name>
+            <parent-name>[dim_date]</parent-name>
+            <remote-alias>year_number</remote-alias>
+            <ordinal>54</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_date (ppp_loan.dim_date)_844DDEAB9D164B2D8F47BFA57164CAC2]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>month_number</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[month_number]</local-name>
+            <parent-name>[dim_date]</parent-name>
+            <remote-alias>month_number</remote-alias>
+            <ordinal>55</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_date (ppp_loan.dim_date)_844DDEAB9D164B2D8F47BFA57164CAC2]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>quarter_number</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[quarter_number]</local-name>
+            <parent-name>[dim_date]</parent-name>
+            <remote-alias>quarter_number</remote-alias>
+            <ordinal>56</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_date (ppp_loan.dim_date)_844DDEAB9D164B2D8F47BFA57164CAC2]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>day_number</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[day_number]</local-name>
+            <parent-name>[dim_date]</parent-name>
+            <remote-alias>day_number</remote-alias>
+            <ordinal>57</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_date (ppp_loan.dim_date)_844DDEAB9D164B2D8F47BFA57164CAC2]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>hour_number</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[hour_number]</local-name>
+            <parent-name>[dim_date]</parent-name>
+            <remote-alias>hour_number</remote-alias>
+            <ordinal>58</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_date (ppp_loan.dim_date)_844DDEAB9D164B2D8F47BFA57164CAC2]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>date_iso_format</remote-name>
+            <remote-type>135</remote-type>
+            <local-name>[date_iso_format]</local-name>
+            <parent-name>[dim_date]</parent-name>
+            <remote-alias>date_iso_format</remote-alias>
+            <ordinal>59</ordinal>
+            <local-type>datetime</local-type>
+            <aggregation>Year</aggregation>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_date (ppp_loan.dim_date)_844DDEAB9D164B2D8F47BFA57164CAC2]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>day_name</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[day_name]</local-name>
+            <parent-name>[dim_date]</parent-name>
+            <remote-alias>day_name</remote-alias>
+            <ordinal>60</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>100</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_date (ppp_loan.dim_date)_844DDEAB9D164B2D8F47BFA57164CAC2]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>month_name</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[month_name]</local-name>
+            <parent-name>[dim_date]</parent-name>
+            <remote-alias>month_name</remote-alias>
+            <ordinal>61</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <width>100</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LEN_RUS' />
+            <attributes>
+              <attribute datatype='string' name='TypeIsVarchar'>&quot;true&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_date (ppp_loan.dim_date)_844DDEAB9D164B2D8F47BFA57164CAC2]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>week_of_month</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[week_of_month]</local-name>
+            <parent-name>[dim_date]</parent-name>
+            <remote-alias>week_of_month</remote-alias>
+            <ordinal>62</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_date (ppp_loan.dim_date)_844DDEAB9D164B2D8F47BFA57164CAC2]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>week_of_year</remote-name>
+            <remote-type>3</remote-type>
+            <local-name>[week_of_year]</local-name>
+            <parent-name>[dim_date]</parent-name>
+            <remote-alias>week_of_year</remote-alias>
+            <ordinal>63</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>10</precision>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[dim_date (ppp_loan.dim_date)_844DDEAB9D164B2D8F47BFA57164CAC2]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+        </metadata-records>
+      </connection>
+      <aliases enabled='yes' />
+      <_.fcp.ObjectModelTableType.true...column caption='dim_borrower' datatype='table' name='[__tableau_internal_object_id__].[dim_borrower (ppp_loan.dim_borrower)_4DD7C1D577C14C7597EF89A2E7A3294F]' role='measure' type='quantitative' />
+      <_.fcp.ObjectModelTableType.true...column caption='dim_business_type' datatype='table' name='[__tableau_internal_object_id__].[dim_business_type (ppp_loan.dim_business_type)_7097FB3C77BA4D9AA05FA1B415742040]' role='measure' type='quantitative' />
+      <_.fcp.ObjectModelTableType.true...column caption='dim_date' datatype='table' name='[__tableau_internal_object_id__].[dim_date (ppp_loan.dim_date)_844DDEAB9D164B2D8F47BFA57164CAC2]' role='measure' type='quantitative' />
+      <_.fcp.ObjectModelTableType.true...column caption='dim_geography' datatype='table' name='[__tableau_internal_object_id__].[dim_geography (ppp_loan.dim_geography)_CFECB2DC6DA04CFB91C26384C5AE1D18]' role='measure' type='quantitative' />
+      <_.fcp.ObjectModelTableType.true...column caption='facts_gdp' datatype='table' name='[__tableau_internal_object_id__].[facts_gdp (ppp_loan.facts_gdp)_919508810F2643FF839F1FFC30DC4699]' role='measure' type='quantitative' />
+      <_.fcp.ObjectModelTableType.true...column caption='facts_ppp' datatype='table' name='[__tableau_internal_object_id__].[facts_ppp (ppp_loan.facts_ppp)_8228CCE778534F179374E0DEE4C5B2CD]' role='measure' type='quantitative' />
+      <column caption='Borrower Address' datatype='string' name='[borrower_address]' role='dimension' type='nominal' />
+      <column caption='Borrower City' datatype='string' name='[borrower_city]' role='dimension' semantic-role='[City].[Name]' type='nominal' />
+      <column caption='Borrower Id (Dim Borrower)' datatype='integer' name='[borrower_id (dim_borrower)]' role='dimension' type='ordinal' />
+      <column caption='Borrower Id' datatype='integer' name='[borrower_id]' role='dimension' type='ordinal' />
+      <column caption='Borrower Name' datatype='string' name='[borrower_name]' role='dimension' type='nominal' />
+      <column caption='Borrower State' datatype='string' name='[borrower_state]' role='dimension' semantic-role='[State].[Name]' type='nominal' />
+      <column caption='Borrower Zip' datatype='string' name='[borrower_zip]' role='dimension' semantic-role='[ZipCode].[Name]' type='nominal' />
+      <column caption='Business Age Id' datatype='integer' name='[business_age_id]' role='dimension' type='ordinal' />
+      <column caption='Business Type' datatype='string' name='[business_type]' role='dimension' type='nominal' />
+      <column caption='Business Type Id (Dim Business Type)' datatype='integer' name='[business_type_id (dim_business_type)]' role='dimension' type='ordinal' />
+      <column caption='Business Type Id' datatype='integer' name='[business_type_id]' role='dimension' type='ordinal' />
+      <column caption='Chain Type Index Gdp' datatype='real' name='[chain_type_index_gdp]' role='measure' type='quantitative' />
+      <column caption='Current Approval Amount' datatype='real' name='[current_approval_amount]' role='measure' type='quantitative' />
+      <column caption='Current Dollar Gdp' datatype='real' name='[current_dollar_gdp]' role='measure' type='quantitative' />
+      <column caption='Date Approved Id' datatype='integer' name='[date_approved_id]' role='dimension' type='ordinal' />
+      <column aggregation='Sum' caption='Date Id' datatype='integer' name='[date_id]' role='dimension' type='ordinal' />
+      <column caption='Date Iso Format' datatype='datetime' name='[date_iso_format]' role='dimension' type='ordinal' />
+      <column caption='Day Name' datatype='string' name='[day_name]' role='dimension' type='nominal' />
+      <column caption='Day Number' datatype='integer' name='[day_number]' role='dimension' type='quantitative' />
+      <column caption='Ethnicity' datatype='string' name='[ethnicity]' role='dimension' type='nominal' />
+      <column caption='Facts Gdp Id' datatype='integer' name='[facts_gdp_id]' role='dimension' type='ordinal' />
+      <column caption='Facts Ppp Id' datatype='integer' name='[facts_ppp_id]' role='dimension' type='ordinal' />
+      <column caption='Forgiveness Amount' datatype='real' name='[forgiveness_amount]' role='measure' type='quantitative' />
+      <column caption='Forgiveness Date Id' datatype='integer' name='[forgiveness_date_id]' role='dimension' type='ordinal' />
+      <column caption='Franchise Name' datatype='string' name='[franchise_name]' role='dimension' type='nominal' />
+      <column caption='Gender' datatype='string' name='[gender]' role='dimension' type='nominal' />
+      <column caption='Geo Name' datatype='string' name='[geo_name]' role='dimension' type='nominal' />
+      <column aggregation='Sum' caption='Geofips (Facts Gdp)' datatype='integer' name='[geofips (facts_gdp)]' role='dimension' type='ordinal' />
+      <column caption='Geofips (Facts Ppp)' datatype='integer' name='[geofips (facts_ppp)]' role='measure' type='quantitative' />
+      <column caption='Geofips' datatype='integer' name='[geofips]' role='measure' type='quantitative' />
+      <column caption='Hour Number' datatype='integer' name='[hour_number]' role='dimension' type='ordinal' />
+      <column caption='Initial Approval Amount' datatype='real' name='[initial_approval_amount]' role='measure' type='quantitative' />
+      <column caption='Jobs Reported' datatype='integer' name='[jobs_reported]' role='measure' type='quantitative' />
+      <column caption='Loan Number' datatype='integer' name='[loan_number]' role='dimension' type='ordinal' />
+      <column caption='Loan Status Date Id' datatype='integer' name='[loan_status_date_id]' role='dimension' type='ordinal' />
+      <column caption='Loan Status Id' datatype='integer' name='[loan_status_id]' role='dimension' type='ordinal' />
+      <column caption='Month Name' datatype='string' name='[month_name]' role='dimension' type='nominal' />
+      <column caption='Month Number' datatype='integer' name='[month_number]' role='dimension' type='quantitative' />
+      <column caption='Naics Code' datatype='integer' name='[naics_code]' role='dimension' type='ordinal' />
+      <column caption='Nonprofit' datatype='boolean' name='[nonprofit]' role='dimension' type='nominal' />
+      <column caption='Originating Lender Id' datatype='integer' name='[originating_lender_id]' role='dimension' type='ordinal' />
+      <column caption='Processing Method Id' datatype='integer' name='[processing_method_id]' role='dimension' type='ordinal' />
+      <column caption='Project County Name' datatype='string' name='[project_county_name]' role='dimension' semantic-role='[County].[Name]' type='nominal' />
+      <column caption='Project State' datatype='string' name='[project_state]' role='dimension' semantic-role='[State].[Name]' type='nominal' />
+      <column caption='Quarter Number' datatype='integer' name='[quarter_number]' role='dimension' type='quantitative' />
+      <column caption='Race' datatype='string' name='[race]' role='dimension' type='nominal' />
+      <column caption='Real Gdp' datatype='real' name='[real_gdp]' role='measure' type='quantitative' />
+      <column caption='Region' datatype='string' name='[region]' role='dimension' type='nominal' />
+      <column caption='Sba Guaranty Percentage' datatype='real' name='[sba_guaranty_percentage]' role='measure' type='quantitative' />
+      <column caption='Sba Office Code' datatype='integer' name='[sba_office_code]' role='dimension' type='ordinal' />
+      <column caption='Servicing Lender Id' datatype='integer' name='[servicing_lender_id]' role='dimension' type='ordinal' />
+      <column caption='Term Id' datatype='integer' name='[term_id]' role='dimension' type='ordinal' />
+      <column caption='Undisbursed Amount' datatype='real' name='[undisbursed_amount]' role='measure' type='quantitative' />
+      <column caption='Veteran' datatype='boolean' name='[veteran]' role='dimension' type='nominal' />
+      <column caption='Week Of Month' datatype='integer' name='[week_of_month]' role='dimension' type='quantitative' />
+      <column caption='Week Of Year' datatype='integer' name='[week_of_year]' role='dimension' type='quantitative' />
+      <column aggregation='Sum' caption='Year Id' datatype='integer' name='[year_id]' role='dimension' type='ordinal' />
+      <column caption='Year Number' datatype='integer' name='[year_number]' role='dimension' type='quantitative' />
+      <drill-paths>
+        <drill-path name='project_state, project_county_name'>
+          <field>[project_state]</field>
+          <field>[project_county_name]</field>
+        </drill-path>
+      </drill-paths>
+      <layout _.fcp.SchemaViewerObjectModel.false...dim-percentage='0.5' _.fcp.SchemaViewerObjectModel.false...measure-percentage='0.4' dim-ordering='alphabetic' measure-ordering='alphabetic' show-structure='true' />
+      <semantic-values>
+        <semantic-value key='[Country].[Name]' value='&quot;United States&quot;' />
+      </semantic-values>
+      <_.fcp.ObjectModelEncapsulateLegacy.true...object-graph>
+        <objects>
+          <object caption='dim_borrower' id='dim_borrower (ppp_loan.dim_borrower)_4DD7C1D577C14C7597EF89A2E7A3294F'>
+            <properties context=''>
+              <relation connection='postgres.1w15c9x0vybbw81242zq11ivm08v' name='dim_borrower' table='[ppp_loan].[dim_borrower]' type='table' />
+            </properties>
+          </object>
+          <object caption='dim_business_type' id='dim_business_type (ppp_loan.dim_business_type)_7097FB3C77BA4D9AA05FA1B415742040'>
+            <properties context=''>
+              <relation connection='postgres.1w15c9x0vybbw81242zq11ivm08v' name='dim_business_type' table='[ppp_loan].[dim_business_type]' type='table' />
+            </properties>
+          </object>
+          <object caption='dim_date' id='dim_date (ppp_loan.dim_date)_844DDEAB9D164B2D8F47BFA57164CAC2'>
+            <properties context=''>
+              <relation connection='postgres.1w15c9x0vybbw81242zq11ivm08v' name='dim_date' table='[ppp_loan].[dim_date]' type='table' />
+            </properties>
+          </object>
+          <object caption='dim_geography' id='dim_geography (ppp_loan.dim_geography)_CFECB2DC6DA04CFB91C26384C5AE1D18'>
+            <properties context=''>
+              <relation connection='postgres.1w15c9x0vybbw81242zq11ivm08v' name='dim_geography' table='[ppp_loan].[dim_geography]' type='table' />
+            </properties>
+          </object>
+          <object caption='facts_gdp' id='facts_gdp (ppp_loan.facts_gdp)_919508810F2643FF839F1FFC30DC4699'>
+            <properties context=''>
+              <relation connection='postgres.1w15c9x0vybbw81242zq11ivm08v' name='facts_gdp' table='[ppp_loan].[facts_gdp]' type='table' />
+            </properties>
+          </object>
+          <object caption='facts_ppp' id='facts_ppp (ppp_loan.facts_ppp)_8228CCE778534F179374E0DEE4C5B2CD'>
+            <properties context=''>
+              <relation connection='postgres.1w15c9x0vybbw81242zq11ivm08v' name='facts_ppp' table='[ppp_loan].[facts_ppp]' type='table' />
+            </properties>
+          </object>
+        </objects>
+        <relationships>
+          <relationship>
+            <expression op='='>
+              <expression op='[borrower_id]' />
+              <expression op='[borrower_id (dim_borrower)]' />
+            </expression>
+            <first-end-point object-id='facts_ppp (ppp_loan.facts_ppp)_8228CCE778534F179374E0DEE4C5B2CD' />
+            <second-end-point _.fcp.ObjectModelRelationshipPerfOptions.true...is-db-set-unique-key='true' object-id='dim_borrower (ppp_loan.dim_borrower)_4DD7C1D577C14C7597EF89A2E7A3294F' unique-key='true' />
+          </relationship>
+          <relationship>
+            <expression op='='>
+              <expression op='[business_type_id]' />
+              <expression op='[business_type_id (dim_business_type)]' />
+            </expression>
+            <first-end-point object-id='facts_ppp (ppp_loan.facts_ppp)_8228CCE778534F179374E0DEE4C5B2CD' />
+            <second-end-point _.fcp.ObjectModelRelationshipPerfOptions.true...is-db-set-unique-key='true' object-id='dim_business_type (ppp_loan.dim_business_type)_7097FB3C77BA4D9AA05FA1B415742040' unique-key='true' />
+          </relationship>
+          <relationship>
+            <expression op='='>
+              <expression op='[date_approved_id]' />
+              <expression op='[date_id]' />
+            </expression>
+            <first-end-point object-id='facts_ppp (ppp_loan.facts_ppp)_8228CCE778534F179374E0DEE4C5B2CD' />
+            <second-end-point _.fcp.ObjectModelRelationshipPerfOptions.true...is-db-set-unique-key='true' object-id='dim_date (ppp_loan.dim_date)_844DDEAB9D164B2D8F47BFA57164CAC2' unique-key='true' />
+          </relationship>
+          <relationship>
+            <expression op='='>
+              <expression op='[geofips]' />
+              <expression op='[geofips (facts_gdp)]' />
+            </expression>
+            <first-end-point _.fcp.ObjectModelRelationshipPerfOptions.true...is-db-set-unique-key='true' object-id='dim_geography (ppp_loan.dim_geography)_CFECB2DC6DA04CFB91C26384C5AE1D18' unique-key='true' />
+            <second-end-point _.fcp.ObjectModelRelationshipPerfOptions.true...is-db-set-guaranteed-value='true' guaranteed-value='true' object-id='facts_gdp (ppp_loan.facts_gdp)_919508810F2643FF839F1FFC30DC4699' />
+          </relationship>
+          <relationship>
+            <expression op='='>
+              <expression op='[geofips]' />
+              <expression op='[geofips (facts_ppp)]' />
+            </expression>
+            <first-end-point _.fcp.ObjectModelRelationshipPerfOptions.true...is-db-set-unique-key='true' object-id='dim_geography (ppp_loan.dim_geography)_CFECB2DC6DA04CFB91C26384C5AE1D18' unique-key='true' />
+            <second-end-point object-id='facts_ppp (ppp_loan.facts_ppp)_8228CCE778534F179374E0DEE4C5B2CD' />
+          </relationship>
+        </relationships>
+      </_.fcp.ObjectModelEncapsulateLegacy.true...object-graph>
+    </datasource>
+  </datasources>
+  <mapsources>
+    <mapsource name='Tableau' />
+  </mapsources>
+  <worksheets>
+    <worksheet name='Sheet 1'>
+      <repository-location id='Sheet1' path='/t/josegarcia3a8338ac3fb/workbooks/gelbert_ppp' revision='' site='josegarcia3a8338ac3fb' />
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run fontcolor='#000000' fontname='Benton Sans Book' fontsize='20'>Distribution of PPP Loans by State </run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='dim_geography (ppp_loan.dim_geography) (postgres)' name='federated.016dzcb005l8au1f5fekv1c7hy0v' />
+          </datasources>
+          <mapsources>
+            <mapsource name='Tableau' />
+          </mapsources>
+          <datasource-dependencies datasource='federated.016dzcb005l8au1f5fekv1c7hy0v'>
+            <column caption='Current Approval Amount' datatype='real' name='[current_approval_amount]' role='measure' type='quantitative' />
+            <column-instance column='[project_state]' derivation='None' name='[none:project_state:nk]' pivot='key' type='nominal' />
+            <column caption='Project State' datatype='string' name='[project_state]' role='dimension' semantic-role='[State].[Name]' type='nominal' />
+            <column-instance column='[current_approval_amount]' derivation='Sum' name='[sum:current_approval_amount:qk]' pivot='key' type='quantitative' />
+          </datasource-dependencies>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='axis'>
+            <encoding attr='space' class='0' field='[federated.016dzcb005l8au1f5fekv1c7hy0v].[Longitude (generated)]' field-type='quantitative' max='40017932.49098298' min='27107298.12009507' projection='EPSG:3857' range-type='fixed' scope='cols' type='space' />
+            <encoding attr='space' class='0' field='[federated.016dzcb005l8au1f5fekv1c7hy0v].[Latitude (generated)]' field-type='quantitative' max='7482842.2945121014' min='408003.47822895856' projection='EPSG:3857' range-type='fixed' scope='rows' type='space' />
+          </style-rule>
+          <style-rule element='map'>
+            <format attr='washout' value='0.0' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+            <encodings>
+              <color column='[federated.016dzcb005l8au1f5fekv1c7hy0v].[sum:current_approval_amount:qk]' />
+              <lod column='[federated.016dzcb005l8au1f5fekv1c7hy0v].[none:project_state:nk]' />
+              <geometry column='[federated.016dzcb005l8au1f5fekv1c7hy0v].[Geometry (generated)]' />
+            </encodings>
+          </pane>
+        </panes>
+        <rows>[federated.016dzcb005l8au1f5fekv1c7hy0v].[Latitude (generated)]</rows>
+        <cols>[federated.016dzcb005l8au1f5fekv1c7hy0v].[Longitude (generated)]</cols>
+      </table>
+      <simple-id uuid='{50C6B19D-DB59-4ABA-BCCE-458386804AEC}' />
+    </worksheet>
+    <worksheet name='Sheet 1 (2)'>
+      <repository-location id='Sheet12' path='/t/josegarcia3a8338ac3fb/workbooks/gelbert_ppp' revision='' site='josegarcia3a8338ac3fb' />
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run fontcolor='#000000' fontname='Benton Sans Book' fontsize='20'>Distribution of PPP Loans by State </run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='dim_geography (ppp_loan.dim_geography) (postgres)' name='federated.016dzcb005l8au1f5fekv1c7hy0v' />
+          </datasources>
+          <mapsources>
+            <mapsource name='Tableau' />
+          </mapsources>
+          <datasource-dependencies datasource='federated.016dzcb005l8au1f5fekv1c7hy0v'>
+            <column caption='Current Approval Amount' datatype='real' name='[current_approval_amount]' role='measure' type='quantitative' />
+            <column-instance column='[current_approval_amount]' derivation='Sum' name='[sum:current_approval_amount:qk]' pivot='key' type='quantitative' />
+          </datasource-dependencies>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='map'>
+            <format attr='washout' value='0.0' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+            <encodings>
+              <lod column='[federated.016dzcb005l8au1f5fekv1c7hy0v].[sum:current_approval_amount:qk]' />
+            </encodings>
+          </pane>
+        </panes>
+        <rows />
+        <cols />
+      </table>
+      <simple-id uuid='{F46DA177-1192-4B33-80EE-4277D8289AFB}' />
+    </worksheet>
+    <worksheet name='Sheet 1 (3)'>
+      <repository-location id='Sheet13' path='/t/josegarcia3a8338ac3fb/workbooks/gelbert_ppp' revision='' site='josegarcia3a8338ac3fb' />
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run fontcolor='#000000' fontname='Benton Sans Book' fontsize='20'>Distribution of PPP Loans by State </run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='dim_geography (ppp_loan.dim_geography) (postgres)' name='federated.016dzcb005l8au1f5fekv1c7hy0v' />
+          </datasources>
+          <mapsources>
+            <mapsource name='Tableau' />
+          </mapsources>
+          <datasource-dependencies datasource='federated.016dzcb005l8au1f5fekv1c7hy0v'>
+            <column caption='Current Approval Amount' datatype='real' name='[current_approval_amount]' role='measure' type='quantitative' />
+            <column-instance column='[project_state]' derivation='None' name='[none:project_state:nk]' pivot='key' type='nominal' />
+            <column caption='Project State' datatype='string' name='[project_state]' role='dimension' semantic-role='[State].[Name]' type='nominal' />
+            <column-instance column='[current_approval_amount]' derivation='Sum' name='[sum:current_approval_amount:qk]' pivot='key' type='quantitative' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.016dzcb005l8au1f5fekv1c7hy0v].[none:project_state:nk]'>
+            <groupfilter count='10' end='top' function='end' units='records' user:ui-marker='end' user:ui-top-by-field='true'>
+              <groupfilter direction='DESC' expression='SUM([current_approval_amount])' function='order' user:ui-marker='order'>
+                <groupfilter function='except' user:ui-domain='cascading' user:ui-enumeration='inclusive' user:ui-marker='enumerate'>
+                  <groupfilter function='level-members' level='[none:project_state:nk]' />
+                  <groupfilter function='member' level='[none:project_state:nk]' member='%null%' />
+                </groupfilter>
+              </groupfilter>
+            </groupfilter>
+          </filter>
+          <shelf-sorts>
+            <shelf-sort-v2 dimension-to-sort='[federated.016dzcb005l8au1f5fekv1c7hy0v].[none:project_state:nk]' direction='DESC' is-on-innermost-dimension='true' measure-to-sort-by='[federated.016dzcb005l8au1f5fekv1c7hy0v].[sum:current_approval_amount:qk]' shelf='rows' />
+          </shelf-sorts>
+          <slices>
+            <column>[federated.016dzcb005l8au1f5fekv1c7hy0v].[none:project_state:nk]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='map'>
+            <format attr='washout' value='0.0' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+          </pane>
+        </panes>
+        <rows>[federated.016dzcb005l8au1f5fekv1c7hy0v].[none:project_state:nk]</rows>
+        <cols>[federated.016dzcb005l8au1f5fekv1c7hy0v].[sum:current_approval_amount:qk]</cols>
+      </table>
+      <simple-id uuid='{3FC304E8-71F2-49AD-AED9-267B188DB990}' />
+    </worksheet>
+  </worksheets>
+  <windows source-height='30'>
+    <window class='worksheet' maximized='true' name='Sheet 1'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card pane-specification-id='0' param='[federated.016dzcb005l8au1f5fekv1c7hy0v].[sum:current_approval_amount:qk]' type='color' />
+          </strip>
+        </edge>
+      </cards>
+      <viewpoint>
+        <highlight>
+          <color-one-way>
+            <field>[federated.016dzcb005l8au1f5fekv1c7hy0v].[none:borrower_city:nk]</field>
+            <field>[federated.016dzcb005l8au1f5fekv1c7hy0v].[none:project_county_name:nk]</field>
+            <field>[federated.016dzcb005l8au1f5fekv1c7hy0v].[none:project_state:nk]</field>
+            <field>[federated.016dzcb005l8au1f5fekv1c7hy0v].[none:region:nk]</field>
+            <field>[federated.016dzcb005l8au1f5fekv1c7hy0v].[sum:initial_approval_amount:qk]</field>
+          </color-one-way>
+        </highlight>
+      </viewpoint>
+      <simple-id uuid='{F1B10C8A-F2CA-4AA7-AD10-C37C8AAE4054}' />
+    </window>
+    <window class='worksheet' name='Sheet 1 (3)'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card param='[federated.016dzcb005l8au1f5fekv1c7hy0v].[none:project_state:nk]' type='filter' values='cascading' />
+          </strip>
+        </edge>
+      </cards>
+      <viewpoint>
+        <highlight>
+          <color-one-way>
+            <field>[federated.016dzcb005l8au1f5fekv1c7hy0v].[none:borrower_city:nk]</field>
+            <field>[federated.016dzcb005l8au1f5fekv1c7hy0v].[none:project_county_name:nk]</field>
+            <field>[federated.016dzcb005l8au1f5fekv1c7hy0v].[none:project_state:nk]</field>
+            <field>[federated.016dzcb005l8au1f5fekv1c7hy0v].[none:region:nk]</field>
+            <field>[federated.016dzcb005l8au1f5fekv1c7hy0v].[sum:initial_approval_amount:qk]</field>
+          </color-one-way>
+        </highlight>
+      </viewpoint>
+      <simple-id uuid='{FCCD547B-4604-4775-A3F2-277D26670F3D}' />
+    </window>
+    <window class='worksheet' name='Sheet 1 (2)'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='title' />
+          </strip>
+        </edge>
+      </cards>
+      <viewpoint>
+        <highlight>
+          <color-one-way>
+            <field>[federated.016dzcb005l8au1f5fekv1c7hy0v].[none:borrower_city:nk]</field>
+            <field>[federated.016dzcb005l8au1f5fekv1c7hy0v].[none:project_county_name:nk]</field>
+            <field>[federated.016dzcb005l8au1f5fekv1c7hy0v].[none:project_state:nk]</field>
+            <field>[federated.016dzcb005l8au1f5fekv1c7hy0v].[none:region:nk]</field>
+            <field>[federated.016dzcb005l8au1f5fekv1c7hy0v].[sum:initial_approval_amount:qk]</field>
+          </color-one-way>
+        </highlight>
+      </viewpoint>
+      <simple-id uuid='{BBE3EDA7-D691-471C-91E1-0CF48EBC41EA}' />
+    </window>
+  </windows>
+</workbook>
