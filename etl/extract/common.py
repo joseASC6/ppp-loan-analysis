@@ -1,14 +1,17 @@
 import requests
 import io
 from azure.storage.blob import BlobServiceClient
-from config import AZURE_CONNECTION_STRING
+from etl.config import AZURE_CONNECTION_STRING
 
 # Download file from web
 def download_file(url: str) -> io.BytesIO:
     """Download a file from the specified URL and return it as a BytesIO object."""
     print(f"Downloading file from {url}...")
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+    }
     try:
-        response = requests.get(url, timeout=30)
+        response = requests.get(url, timeout=120, headers=headers)
         response.raise_for_status()
     except requests.exceptions.RequestException as e:
         print(f"Failed to download file from {url}.")

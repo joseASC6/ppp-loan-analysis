@@ -1,6 +1,6 @@
 import pandas as pd
 import io
-from extract.common import download_file, upload_to_azure
+from .common import download_file, upload_to_azure
 
 def extract_naics_data():
     """

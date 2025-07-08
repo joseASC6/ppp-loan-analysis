@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup, Tag
 import pandas as pd
 import io
 import requests
-from extract.common import download_file, upload_to_azure
+from .common import download_file, upload_to_azure
 
 def extract_ppp_data():
     """
