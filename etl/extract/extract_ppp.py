@@ -8,7 +8,7 @@ def extract_ppp_data():
     """
     Extracts PPP data from the U.S. Small Business Administration (SBA) website, and uploads it to Azure Blob Storage.
     """
-    container_name = "pppdata"
+    container_name = "raw-data"
     ppp_url = "https://data.sba.gov/dataset/ppp-foia"
     response = requests.get(ppp_url)
     soup = BeautifulSoup(response.content, 'html.parser')
@@ -25,12 +25,13 @@ def extract_ppp_data():
                 file_content = download_file(file_url)
 
                 # Read the CSV file into a DataFrame
-                df = pd.read_csv(file_content)
+                df = pd.read_csv(file_content, encoding="latin-1")
                 print(f"CSV file has {len(df)} rows and {len(df.columns)} columns.")
 
                 # Upload to Azure Blob Storage
                 output = io.StringIO()
                 df.to_csv(output, index=False)
                 output.seek(0)
+                file_name = "PPP-data/" + file_name
                 upload_to_azure(output, file_name, container_name)
             

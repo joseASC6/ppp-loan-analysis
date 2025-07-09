@@ -6,7 +6,7 @@ def extract_naics_data():
     """
     Extracts NAICS data from the Census Bureau, and uploads it to Azure Blob Storage.
     """
-    container_name = "raw-naics-data"
+    container_name = "raw-data"
     # NAICS data from the Census Bureau
     naics_url = "https://www.census.gov/naics/2022NAICS/2022_NAICS_Descriptions.xlsx"
     file_name = naics_url.split("/")[-1].replace(".xlsx", ".csv")
@@ -22,4 +22,5 @@ def extract_naics_data():
     output = io.StringIO()
     df.to_csv(output, index=False)
     output.seek(0)
+    file_name = "NAICS-data/" + file_name
     upload_to_azure(output, file_name, container_name)

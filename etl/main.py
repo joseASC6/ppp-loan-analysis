@@ -6,14 +6,14 @@ if __name__ == "__main__":
     print("\nStarting data extraction...")
 
     print("\nExtracting PPP data...")
-    #extract_ppp_data()
+    extract_ppp_data()
     print("\nSuccess: Extracted PPP data.")
 
     print("\nExtracting NAICS data...")
-    extract_naics_data()
+    #extract_naics_data()
     print("\nSuccess: Extracted NAICS data.")
 
-    print("\nExtracting GDP data...")
+    print("\nExtracting GDP data...\n")
     #extract_gdp_data()
     print("\nSuccess: Extracted GDP data.")
 
