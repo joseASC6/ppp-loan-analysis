@@ -1,7 +1,7 @@
 import requests
 import io, socket
 from azure.storage.blob import BlobServiceClient
-from etl.config import AZURE_CONNECTION_STRING
+from config.config import AZURE_CONNECTION_STRING
 
 # Download file from web
 def download_file(url: str) -> io.BytesIO:

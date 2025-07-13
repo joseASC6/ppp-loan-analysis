@@ -14,7 +14,7 @@ if __name__ == "__main__":
     print("\nSuccess: Extracted NAICS data.")
 
     print("\nExtracting GDP data...\n")
-    #extract_gdp_data()
+    extract_gdp_data()
     print("\nSuccess: Extracted GDP data.")
 
     print("\nData extraction completed.")

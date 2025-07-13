@@ -1,3 +1,5 @@
 .env
 /etl/extract/__pycache__
 /etl/__pycache__
+.venv/
+notebooks/.ipynb_checkpoints
