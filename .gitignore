@@ -1,5 +1,5 @@
 .env
+.venv/
 pipeline/extract/__pycache__/
 pipeline/__pycache__/
-.venv/
 notebooks/.ipynb_checkpoints/
