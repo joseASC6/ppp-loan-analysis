@@ -111,3 +111,70 @@ def clean_ppp_data():
         df['forgiveness_date_id'] = pd.to_datetime(df['forgiveness_date_id']).dt.strftime('%Y%m%d%H')
         df['date_approved_id'] = pd.to_datetime(df['date_approved_id']).dt.strftime('%Y%m%d%H')
         df['loan_status_date_id'] = pd.to_datetime(df['loan_status_date_id']).dt.strftime('%Y%m%d%H')
+
+        # Change nonprofit to boolean
+        df['nonprofit'] = df['nonprofit'].map({'Y': True})
+        df['nonprofit'] = df['nonprofit'].fillna(False)
+
+        # Change veteran to boolean
+        df['veteran'] = df['veteran'].map({'veteran': True, 'Non-veteran': False, 'Unanswered':None})
+
+        # Sentence case the string columns
+        df['borrower_address'] = df['borrower_address'].str.title()
+        df['borrower_city'] = df['borrower_city'].str.title()
+        df['originating_lender_city'] = df['originating_lender_city'].str.title()
+        df['servicing_lender_city'] = df['servicing_lender_city'].str.title()
+        df['project_county_name'] = df['project_county_name'].str.title()
+
+        #df['loan_number'] = df['loan_number'].astype(int)
+        df['date_approved_id'] = df['date_approved_id'].astype(int)
+        df['sba_office_code'] = df['sba_office_code'].astype(int)
+        df['processing_method'] = df['processing_method'].astype(pd.StringDtype("pyarrow"))
+        df['borrower_name'] = df['borrower_name'].astype(pd.StringDtype("pyarrow"))
+        df['borrower_address'] = df['borrower_address'].astype(pd.StringDtype("pyarrow"))
+        df['borrower_city'] = df['borrower_city'].astype(pd.StringDtype("pyarrow"))
+        df['borrower_state'] = df['borrower_state'].astype(pd.StringDtype("pyarrow"))
+        df['borrower_zip'] = df['borrower_zip'].astype(pd.StringDtype("pyarrow"))
+        df['loan_status_date_id'] = df['loan_status_date_id'].astype(int)
+        df['loan_status'] = df['loan_status'].astype(pd.StringDtype("pyarrow"))
+        df['term_month'] = df['term_month'].astype(int)
+        df['sba_guaranty_percentage'] = df['sba_guaranty_percentage'].astype(float)
+        df['initial_approval_amount'] = df['initial_approval_amount'].astype(float)
+        df['current_approval_amount'] = df['current_approval_amount'].astype(float)
+        df['undisbursed_amount'] = df['undisbursed_amount'].astype(float)
+        df['franchise_name'] = df['franchise_name'].astype(pd.StringDtype("pyarrow"))
+        df['servicing_lender_location_id'] = df['servicing_lender_location_id'].astype(int)
+        df['servicing_lender_name'] = df['servicing_lender_name'].astype(pd.StringDtype("pyarrow"))
+        df['servicing_lender_address'] = df['servicing_lender_address'].astype(pd.StringDtype("pyarrow"))
+        df['servicing_lender_city'] = df['servicing_lender_city'].astype(pd.StringDtype("pyarrow"))
+        df['servicing_lender_state'] = df['servicing_lender_state'].astype(pd.StringDtype("pyarrow"))
+        df['servicing_lender_zip'] = df['servicing_lender_zip'].astype(pd.StringDtype("pyarrow"))
+        df['business_age_description'] = df['business_age_description'].astype(pd.StringDtype("pyarrow"))
+        df['project_state'] = df['project_state'].astype(pd.StringDtype("pyarrow"))
+        df['project_county_name'] = df['project_county_name'].astype(pd.StringDtype("pyarrow"))
+        df['race'] = df['race'].astype(pd.StringDtype("pyarrow"))
+        df['ethnicity'] = df['ethnicity'].astype(pd.StringDtype("pyarrow"))
+        df['gender'] = df['gender'].astype(pd.StringDtype("pyarrow"))
+        df['business_type'] = df['business_type'].astype(pd.StringDtype("pyarrow"))
+        df['originating_lender_location_id'] = df['originating_lender_location_id'].astype(int)
+        df['originating_lender'] = df['originating_lender'].astype(pd.StringDtype("pyarrow"))
+        df['originating_lender_city'] = df['originating_lender_city'].astype(pd.StringDtype("pyarrow"))
+        df['originating_lender_state'] = df['originating_lender_state'].astype(pd.StringDtype("pyarrow"))
+        df['veteran'] = df['veteran'].astype(bool)
+        df['nonprofit'] = df['nonprofit'].astype(bool)
+        df['forgiveness_amount'] = df['forgiveness_amount'].astype(float)
+        df['forgiveness_date_id'] = df['forgiveness_date_id'].astype(int)
+        df['jobs_reported'] = df['jobs_reported'].astype(int)
+        df['naics_code'] = df['naics_code'].astype(int)
+
+        # Create a FACTS_PPP_ID 
+        df['facts_ppp_id'] = range(1, len(df) + 1)
+
+        # Save the cleaned data to a CSV file
+        output = io.BytesIO()
+        df.to_csv(output, index=False, encoding="utf-8")
+        output.seek(0)
+        clean_container = "clean-data"
+        clean_blob_name = f"PPP-data/cleaned_{blob_name.split('/')[-1]}"
+        # Upload the cleaned data to Azure Blob Storage
+        upload_to_azure(output, clean_blob_name, clean_container)
