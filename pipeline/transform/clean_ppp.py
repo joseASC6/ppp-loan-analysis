@@ -174,7 +174,7 @@ def clean_ppp_data():
         output = io.BytesIO()
         df.to_csv(output, index=False, encoding="utf-8")
         output.seek(0)
-        clean_container = "clean-data"
+        clean_container = "cleaned-data"
         clean_blob_name = f"PPP-data/cleaned_{blob_name.split('/')[-1]}"
         # Upload the cleaned data to Azure Blob Storage
         upload_to_azure(output, clean_blob_name, clean_container)

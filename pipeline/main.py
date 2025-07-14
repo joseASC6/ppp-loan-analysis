@@ -23,9 +23,9 @@ if __name__ == "__main__":
     print("\nData extraction completed.")"""
 
     print("\nStarting data cleaning...")
-    clean_gdp_data()
-    clean_naics_data()
-    #clean_ppp_data()
+    #clean_gdp_data()
+    #clean_naics_data()
+    clean_ppp_data()
     print("\nData cleaning completed.")
 
 
