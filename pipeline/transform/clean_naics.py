@@ -30,8 +30,12 @@ def clean_naics_data():
 
     # Remove rows where 'naics_code' is not a number
     # There are some generic NAICS codes that are not numbers, e.g. '31-33'
-    df = df[df['naics_code'].str.isnumeric()]
+    # Step 1: Remove rows where 'naics_code' is missing or null
+    df = df[df['naics_code'].notnull()]
 
+    # Step 2: Remove rows where 'naics_code' is not a number
+    df = df[df['naics_code'].astype(str).str.isnumeric()]
+    
     # Remove T from the end of 'naics_title'
     # Some naics_titles end with a T, e.g. 'Tile and Terrazzo ContractorsT'
     df['naics_title'] = df['naics_title'].str.rstrip('T')

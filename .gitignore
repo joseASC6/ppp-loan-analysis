@@ -1,5 +1,8 @@
 .env
 .venv/
-pipeline/extract/__pycache__/
-pipeline/__pycache__/
-notebooks/.ipynb_checkpoints/
+/pipeline/extract/__pycache__/
+/pipeline/transform/__pycache__/
+/pipeline/__pycache__/
+/notebooks/.ipynb_checkpoints/
+/config/__pycache__
+*.pyc
