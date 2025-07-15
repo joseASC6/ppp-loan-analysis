@@ -1,6 +1,6 @@
 import pandas as pd
 import io
-from .common import download_from_azure, upload_to_azure, get_blob_list, upload_to_sql
+from utils.common import download_from_azure, upload_to_azure, get_blob_list, upload_to_sql
 
 def load_gdp_data():
     """
