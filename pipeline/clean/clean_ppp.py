@@ -26,7 +26,7 @@ def clean_ppp_data():
 
         # Read the CSV file into a DataFrame
         print(f"Reading PPP data from {blob_name}...")
-        df = pd.read_csv(ppp_data, encoding="latin-1", low_memory=False)
+        df = pd.read_csv(ppp_data, encoding="utf-8", low_memory=False)
         print(f"PPP data has {len(df)} rows and {len(df.columns)} columns.")
 
         # Clean the PPP data

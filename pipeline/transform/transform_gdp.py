@@ -18,7 +18,7 @@ def transform_gdp_data():
 
     # Read the CSV file into a DataFrame
     print(f"Reading cleaned GDP data from {clean_gdp_blob_name}...")
-    df = pd.read_csv(gdp_data, encoding="latin-1")
+    df = pd.read_csv(gdp_data, encoding="utf-8")
     print(f"Cleaned GDP data has {len(df)} rows and {len(df.columns)} columns.")
 
     dim_geography = df[['geofips', 'geo_name', 'region']].drop_duplicates()

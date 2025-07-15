@@ -14,7 +14,7 @@ def clean_gdp_data():
     gdp_data = download_from_azure(gdp_blob_name, raw_container)
     # Read the CSV file into a DataFrame
     print(f"Reading GDP data from {gdp_blob_name}...")
-    df = pd.read_csv(gdp_data, encoding="latin-1")
+    df = pd.read_csv(gdp_data, encoding="utf-8")
     print(f"GDP data has {len(df)} rows and {len(df.columns)} columns.")
     # Clean the GDP data
     print("Cleaning GDP data...")

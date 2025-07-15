@@ -21,12 +21,20 @@ def run_stage(stage: str, dataset: str):
             extract_naics_data()
         elif dataset == "gdp":
             extract_gdp_data()
+        elif dataset == "all":
+            extract_ppp_data()
+            extract_naics_data()
+            extract_gdp_data()
     elif stage == "clean":
         if dataset == "ppp":
             clean_ppp_data()
         elif dataset == "naics":
             clean_naics_data()
         elif dataset == "gdp":
+            clean_gdp_data()
+        elif dataset == "all":
+            clean_ppp_data()
+            clean_naics_data()
             clean_gdp_data()
     elif stage == "transform":
         if dataset == "ppp":
@@ -37,11 +45,16 @@ def run_stage(stage: str, dataset: str):
             transform_gdp_data()
         elif dataset == "dim_date":
             transform_dim_date()
+        elif dataset == "all":
+            transform_ppp_data()
+            transform_naics_data()
+            transform_gdp_data()
+            transform_dim_date()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run ETL pipeline for PPP Loan Project")
     parser.add_argument("--stage", choices=["extract", "clean", "transform"], required=True, help="ETL stage to run")
-    parser.add_argument("--dataset", choices=["ppp", "naics", "gdp", "dim_date"], required=True, help="Dataset to process")
+    parser.add_argument("--dataset", choices=["ppp", "naics", "gdp", "dim_date", "all"], required=True, help="Dataset to process")
 
     args = parser.parse_args()
     print(f"\n[INFO] Running stage: {args.stage} on dataset: {args.dataset}")
