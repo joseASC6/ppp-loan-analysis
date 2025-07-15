@@ -1,5 +1,5 @@
 import requests
-import io, socket
+import io
 from azure.storage.blob import BlobServiceClient
 from config.config import AZURE_CONNECTION_STRING
 
