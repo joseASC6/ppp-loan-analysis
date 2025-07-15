@@ -5,10 +5,10 @@ from utils.common import download_from_azure, upload_to_azure, get_blob_list, up
 def load_gdp_data():
     """
     Loads clean GDP data from Azure Blob Storage
-    Formats the data to fit facts and dimensions schema:
+    Transforms the data to fit facts and dimensions schema:
     - facts_gdp
     - dim_geography
-    Uploads the formatted data to Azure Blob Storage and Azure SQL Database.
+    Uploads the transformed data to Azure Blob Storage and Azure SQL Database.
     """
     cleaned_container = "cleaned-data"
     clean_gdp_blob_name = "GDP-data/cleaned_gdp_data.csv"
@@ -64,11 +64,14 @@ def load_gdp_data():
     # Re order the columns
     facts_gdp = facts_gdp[['facts_gdp_id', 'geofips', 'year_id', 'chain_type_index_gdp', 'current_dollar_gdp', 'real_gdp']]
     
+    print(f"Transformed facts_gdp has {len(facts_gdp)} rows and {len(facts_gdp.columns)} columns.")
+    print(f"Transformed dim_geography has {len(dim_geography)} rows and {len(dim_geography.columns)} columns.")
+
     # Upload dim_geography and facts_gdp to Azure Blob Storage
     final_container = "final-data"
     dim_geography_blob_name = "dim_geography.csv"
     facts_gdp_blob_name = "facts_gdp.csv"
-
+    
     output_geography = io.BytesIO()
     dim_geography.to_csv(output_geography, index=False, encoding='utf-8')
     output_geography.seek(0)
@@ -78,10 +81,6 @@ def load_gdp_data():
     facts_gdp.to_csv(output_gdp, index=False, encoding='utf-8')
     output_gdp.seek(0)
     upload_to_azure(output_gdp, facts_gdp_blob_name, final_container)
-
-    # Upload dim_geography and facts_gdp to Azure SQL Database
-    upload_to_sql(dim_geography, 'dim_geography')
-    upload_to_sql(facts_gdp, 'facts_gdp')
 
 
     

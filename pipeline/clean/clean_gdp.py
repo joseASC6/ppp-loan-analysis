@@ -66,6 +66,8 @@ def clean_gdp_data():
     df['current_dollar_gdp'] = df['current_dollar_gdp'].astype(float)
     df['real_gdp'] = df['real_gdp'].astype(float)
 
+    print(f"Cleaned GDP data has {len(df)} rows and {len(df.columns)} columns after datatype conversion.")
+
     # Upload the cleaned data to Azure Blob Storage
     output = io.BytesIO()
     df.to_csv(output, index=False, encoding='utf-8')

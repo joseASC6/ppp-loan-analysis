@@ -61,15 +61,14 @@ def load_dim_date():
     ]
     dim_date = dim_date[new_order]
 
+    print(f"Transformed dim_date has {len(dim_date)} rows and {len(dim_date.columns)} columns.")
+
     # Upload the dimension date data to Azure Blob Storage
     final_container = "final-data"
-    dim_date_blob_name = "dim-date/dim_date.csv"
+    dim_date_blob_name = "dim_date.csv"
     output = io.BytesIO()
     dim_date.to_csv(output, index=False, encoding='utf-8')
     output.seek(0)
 
     upload_to_azure(output, dim_date_blob_name, final_container)
-
-    # Upload the dimension date data to Azure SQL Database
-    upload_to_sql(dim_date, 'dim_date')
 

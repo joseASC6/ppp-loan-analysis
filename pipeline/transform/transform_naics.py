@@ -5,9 +5,9 @@ import io
 def load_naics_data():
     """
     Loads clean NAICS data from Azure Blob Storage.
-    Formats the data to fit facts and dimensions schema:
+    Transforms the data to fit facts and dimensions schema:
     - dim_naics
-    Uploads the formatted data to Azure Blob Storage and Azure SQL Database.
+    Uploads the transformed data to Azure Blob Storage and Azure SQL Database.
     """
     # Download the cleaned NAICS data from Azure Blob Storage
     cleaned_container = "cleaned-data"
@@ -22,14 +22,13 @@ def load_naics_data():
     # Reset index 
     df.reset_index(drop=True, inplace=True)
 
+    print(f"Transformed dim_naics has {len(df)} rows and {len(df.columns)} columns.")
+
     # Upload the DataFrame to Azure Blob Storage
     final_container = "final-data"
-    final_blob_name = "NAICS-data/final_naics_data.csv"
+    final_blob_name = "dim_naics.csv"
     output = io.BytesIO()
     df.to_csv(output, index=False, encoding='utf-8')
     output.seek(0)
     upload_to_azure(output, final_blob_name, final_container)
-
-    # Upload the DataFrame to Azure SQL Database
-    upload_to_sql(df, "dim_naics")
     
