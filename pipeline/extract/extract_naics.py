@@ -1,6 +1,6 @@
 import pandas as pd
 import io
-from .common import download_file, upload_to_azure
+from utils.common import download_file, upload_to_azure
 
 def extract_naics_data():
     """
@@ -19,7 +19,7 @@ def extract_naics_data():
     print(f"NAICS file has {len(df)} rows and {len(df.columns)} columns.")
 
     # Upload to Azure Blob Storage
-    output = io.StringIO()
+    output = io.BytesIO()
     df.to_csv(output, index=False)
     output.seek(0)
     file_name = "NAICS-data/" + file_name

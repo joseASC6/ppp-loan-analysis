@@ -1,6 +1,6 @@
 import pandas as pd
 import io, zipfile
-from .common import download_file, upload_to_azure
+from utils.common import download_file, upload_to_azure
 
 def extract_gdp_data():
     """
@@ -21,7 +21,7 @@ def extract_gdp_data():
                     print(f"CSV file has {len(df)} rows and {len(df.columns)} columns.")    
 
                     # Upload to Azure Blob Storage
-                    output = io.StringIO()
+                    output = io.BytesIO()
                     df.to_csv(output, index=False)
                     output.seek(0)
                     filename = "GDP-data/" + filename

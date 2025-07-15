@@ -1,9 +1,9 @@
 from .extract.extract_ppp import extract_ppp_data
 from .extract.extract_naics import extract_naics_data
 from .extract.extract_gdp import extract_gdp_data
-from .transform.clean_naics import clean_naics_data
-from .transform.clean_ppp import clean_ppp_data
-from .transform.clean_gdp import clean_gdp_data
+from .clean.clean_naics import clean_naics_data
+from .clean.clean_ppp import clean_ppp_data
+from .clean.clean_gdp import clean_gdp_data
 
 if __name__ == "__main__":
     """    print("\nStarting data extraction...")

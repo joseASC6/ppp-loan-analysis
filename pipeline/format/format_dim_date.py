@@ -1,5 +1,5 @@
 import pandas as pd
-from .common import download_from_azure, upload_to_azure, get_blob_list, upload_to_sql
+from utils.common import download_from_azure, upload_to_azure, get_blob_list, upload_to_sql
 import calendar
 import io
 
