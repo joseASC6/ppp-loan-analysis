@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup, Tag
 import pandas as pd
-import io
 import requests
 from utils.common import download_file, upload_to_azure, df_to_bytesio
 

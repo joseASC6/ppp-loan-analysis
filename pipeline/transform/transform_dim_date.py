@@ -28,7 +28,7 @@ def transform_dim_date():
    
 
     # Create a DataFrame for the date dimension
-    dim_date = pd.DataFrame({'date': pd.date_range(start_date, end_date, freq='H')})
+    dim_date = pd.DataFrame({'date': pd.date_range(start_date, end_date, freq='h')})
 
     # Extract attributes
     dim_date['year_number'] = dim_date['date'].dt.year
