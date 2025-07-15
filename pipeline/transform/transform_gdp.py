@@ -10,6 +10,7 @@ def transform_gdp_data():
     - dim_geography
     Uploads the transformed data to Azure Blob Storage
     """
+    print("Transforming GDP data...\n")
     cleaned_container = "cleaned-data"
     clean_gdp_blob_name = "GDP-data/cleaned_gdp_data.csv"
 
@@ -78,5 +79,4 @@ def transform_gdp_data():
     output_gdp = df_to_bytesio(facts_gdp, index=False, encoding='utf-8')
     upload_to_azure(output_gdp, facts_gdp_blob_name, final_container)
 
-
-    
+    print("GDP data transformation completed.\n")

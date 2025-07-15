@@ -12,6 +12,7 @@ def transform_dim_date():
     End date: 2023-10-1 00:00:00 
     October 2023 is the maximum date in the PPP data
     """
+    print("Transforming dim_date...\n")
     # Function to get the week of the month
     def week_of_month(dt):
         year = dt.year
@@ -68,4 +69,5 @@ def transform_dim_date():
     dim_date_blob_name = "dim_date.csv"
     output = df_to_bytesio(dim_date, index=False, encoding='utf-8')
     upload_to_azure(output, dim_date_blob_name, final_container)
+    print("dim_date transformation completed.\n")
 

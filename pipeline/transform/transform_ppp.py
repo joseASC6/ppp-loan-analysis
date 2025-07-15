@@ -18,6 +18,7 @@ def transform_ppp_data():
     - dim_servicing_lender
     and upload the transformed data to Azure Blob Storage
     """
+    print("Transforming PPP data...\n")
     # Download the PPP data from Azure Blob Storage
     cleaned_container = "cleaned-data"
     clean_ppp_blob_name = "PPP-data/"
@@ -184,5 +185,7 @@ def transform_ppp_data():
     upload_to_azure(df_to_bytesio(dim_borrower), dim_borrower_blob_name, final_container)
     upload_to_azure(df_to_bytesio(dim_servicing_lender), dim_servicing_lender_blob_name, final_container)
     upload_to_azure(df_to_bytesio(facts_ppp), facts_ppp_blob_name, final_container)
-    print("All DataFrames uploaded successfully.")
+    print("Transformation completed.")
+
+
 

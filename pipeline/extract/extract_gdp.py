@@ -6,6 +6,7 @@ def extract_gdp_data():
     """
     Extracts GDP data from the U.S. Bureau of Economic Analysis (BEA), and uploads it to Azure Blob Storage.
     """
+    print("Starting GDP data extraction...\n")
     container_name = "raw-data"
     gdp_url = "https://apps.bea.gov/regional/zip/CAGDP1.zip"
     zip_content = download_file(gdp_url)
@@ -23,5 +24,7 @@ def extract_gdp_data():
                     # Upload to Azure Blob Storage
                     output = df_to_bytesio(df, index=False, encoding='utf-8')
                     upload_to_azure(output, filename, container_name)
+                    
 
+    print(f"\nGDP data extraction completed.\n")
 

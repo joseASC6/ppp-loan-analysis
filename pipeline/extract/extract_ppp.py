@@ -7,6 +7,7 @@ def extract_ppp_data():
     """
     Extracts PPP data from the U.S. Small Business Administration (SBA) website, and uploads it to Azure Blob Storage.
     """
+    print("Starting PPP data extraction...\n")
     container_name = "raw-data"
     ppp_url = "https://data.sba.gov/dataset/ppp-foia"
     response = requests.get(ppp_url)
@@ -31,4 +32,4 @@ def extract_ppp_data():
                 file_name = "PPP-data/" + file_name
                 output = df_to_bytesio(df, index=False, encoding='utf-8')
                 upload_to_azure(output, file_name, container_name)
-            
+    print("PPP data extraction completed.\n")

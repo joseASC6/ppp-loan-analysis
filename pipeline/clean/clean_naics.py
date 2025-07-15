@@ -8,6 +8,7 @@ def clean_naics_data():
     Converts the datatypes.
     Uploads the cleaned data to Azure Blob Storage.
     """
+    print("Starting NAICS data cleaning...\n")
     raw_container = "raw-data"
     naics_blob_name = "NAICS-data/2022_NAICS_Descriptions.xlsx"
 
@@ -52,4 +53,5 @@ def clean_naics_data():
     clean_container = "cleaned-data"
     output = df_to_bytesio(df, index=False, encoding='utf-8')
     upload_to_azure(output, cleaned_blob_name, clean_container)
+    print(f"\nCleaned NAICS data uploaded to {cleaned_blob_name} in {clean_container} container.\n")
     

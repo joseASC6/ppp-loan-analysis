@@ -8,6 +8,7 @@ def clean_ppp_data():
     Converts the datatypes.
     Uploads the cleaned data to Azure Blob Storage.
     """
+    print("Starting PPP data cleaning...\n")
     raw_container = "raw-data"
     ppp_blob_name = "PPP-data/"
     # Find all the files in the PPP-data folder in the raw container
@@ -25,7 +26,7 @@ def clean_ppp_data():
             continue
 
         # Read the CSV file into a DataFrame
-        print(f"Reading PPP data from {blob_name}...")
+        print(f"\nReading PPP data from {blob_name}...")
         df = pd.read_csv(ppp_data, encoding="utf-8", low_memory=False)
         print(f"PPP data has {len(df)} rows and {len(df.columns)} columns.")
 
@@ -172,9 +173,13 @@ def clean_ppp_data():
         # Create a FACTS_PPP_ID 
         df['facts_ppp_id'] = range(1, len(df) + 1)
 
+        print(f"Cleaned PPP data has {len(df)} rows and {len(df.columns)} columns.")
+
         # Save the cleaned data to a CSV file
         clean_container = "cleaned-data"
         clean_blob_name = f"PPP-data/cleaned_{blob_name.split('/')[-1]}"
         output = df_to_bytesio(df, index=False, encoding='utf-8')
         # Upload the cleaned data to Azure Blob Storage
         upload_to_azure(output, clean_blob_name, clean_container)
+    
+    print("\nPPP data cleaning completed.\n")

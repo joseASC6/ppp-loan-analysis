@@ -9,6 +9,7 @@ def transform_naics_data():
     - dim_naics
     Uploads the transformed data to Azure Blob Storage
     """
+    print("Transforming NAICS data...\n")
     # Download the cleaned NAICS data from Azure Blob Storage
     cleaned_container = "cleaned-data"
     clean_naics_blob_name = "NAICS-data/cleaned_naics_data.csv"
@@ -29,4 +30,4 @@ def transform_naics_data():
     final_blob_name = "dim_naics.csv"
     output = df_to_bytesio(df, index=False, encoding='utf-8')
     upload_to_azure(output, final_blob_name, final_container)
-    
+    print("NAICS data transformation completed.\n")

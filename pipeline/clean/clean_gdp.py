@@ -8,12 +8,13 @@ def clean_gdp_data():
     Converts the datatypes.
     Uploads the cleaned data to Azure Blob Storage.
     """
+    print("Starting GDP data cleaning...\n")
     raw_container = "raw-data"
     gdp_blob_name = "GDP-data/CAGDP1__ALL_AREAS_2001_2023.csv"
     # Download the GDP data from Azure Blob Storage
     gdp_data = download_from_azure(gdp_blob_name, raw_container)
     # Read the CSV file into a DataFrame
-    print(f"Reading GDP data from {gdp_blob_name}...")
+    print(f"\nReading GDP data from {gdp_blob_name}...")
     df = pd.read_csv(gdp_data, encoding="utf-8")
     print(f"GDP data has {len(df)} rows and {len(df.columns)} columns.")
     # Clean the GDP data
@@ -49,7 +50,6 @@ def clean_gdp_data():
     df['facts_gdp_id'] = range(1, len(df) + 1)
     df = df.drop(columns='Description', errors='ignore')
     df = df[["facts_gdp_id", "geofips", "geo_name", "region", "year_id", "chain_type_index_gdp", "current_dollar_gdp", "real_gdp"]]
-    print(f"Cleaned GDP data has {len(df)} rows and {len(df.columns)} columns.")
 
     # Change the datatypes
     # Remove quotation marks from the geofips
@@ -66,10 +66,11 @@ def clean_gdp_data():
     df['current_dollar_gdp'] = df['current_dollar_gdp'].astype(float)
     df['real_gdp'] = df['real_gdp'].astype(float)
 
-    print(f"Cleaned GDP data has {len(df)} rows and {len(df.columns)} columns after datatype conversion.")
+    print(f"Cleaned GDP data has {len(df)} rows and {len(df.columns)} columns.")
 
     # Upload the cleaned data to Azure Blob Storage
     cleaned_blob_name = "GDP-data/cleaned_gdp_data.csv"
     clean_container = "cleaned-data"
     output = df_to_bytesio(df, index=False, encoding='utf-8')
     upload_to_azure(output, cleaned_blob_name, clean_container)
+    print(f"\nCleaned GDP data uploaded to {cleaned_blob_name} in {clean_container} container.\n")
