@@ -1,9 +1,9 @@
 import pandas as pd
-from utils.common import download_from_azure, upload_to_azure, get_blob_list, upload_to_sql
+from utils.common import upload_to_azure, df_to_bytesio
 import calendar
 import io
 
-def load_dim_date():
+def transform_dim_date():
     """
     Custom function to load dimension date data.
     Start date: 2017-01-01 00:00:00
@@ -66,9 +66,6 @@ def load_dim_date():
     # Upload the dimension date data to Azure Blob Storage
     final_container = "final-data"
     dim_date_blob_name = "dim_date.csv"
-    output = io.BytesIO()
-    dim_date.to_csv(output, index=False, encoding='utf-8')
-    output.seek(0)
-
+    output = df_to_bytesio(dim_date, index=False, encoding='utf-8')
     upload_to_azure(output, dim_date_blob_name, final_container)
 

@@ -62,3 +62,11 @@ def upload_to_sql(df: pd.DataFrame, table_name: str) -> None:
     print(f"Uploading data to SQL table {table_name}...")
     df.to_sql(table_name, con=engine, schema=DB_SCHEMA, if_exists='replace', index=False)
     print(f"Success: Uploaded data to SQL table {table_name}.")
+
+# Convert a DataFrame to a BytesIO object
+def df_to_bytesio(df: pd.DataFrame, encoding: str = 'utf-8', index: bool = False) -> io.BytesIO:
+    """Convert a DataFrame to a BytesIO object."""
+    output = io.BytesIO()
+    df.to_csv(output, index=index, encoding=encoding)
+    output.seek(0)
+    return output

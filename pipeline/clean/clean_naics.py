@@ -1,6 +1,6 @@
 import pandas as pd
 import io
-from utils.common import download_from_azure, upload_to_azure, get_blob_list
+from utils.common import download_from_azure, upload_to_azure, df_to_bytesio
 
 def clean_naics_data():
     """
@@ -48,10 +48,8 @@ def clean_naics_data():
     print(f"Cleaned NAICS data has {len(df)} rows and {len(df.columns)} columns.")
 
     # Upload the cleaned data to Azure Blob Storage
-    output = io.BytesIO()
-    df.to_csv(output, index=False, encoding='utf-8')
-    output.seek(0)
     cleaned_blob_name = "NAICS-data/cleaned_naics_data.csv"
     clean_container = "cleaned-data"
+    output = df_to_bytesio(df, index=False, encoding='utf-8')
     upload_to_azure(output, cleaned_blob_name, clean_container)
     

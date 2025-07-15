@@ -1,6 +1,6 @@
 import pandas as pd
 import io
-from utils.common import download_file, upload_to_azure
+from utils.common import download_file, upload_to_azure, df_to_bytesio
 
 def extract_naics_data():
     """
@@ -19,8 +19,6 @@ def extract_naics_data():
     print(f"NAICS file has {len(df)} rows and {len(df.columns)} columns.")
 
     # Upload to Azure Blob Storage
-    output = io.BytesIO()
-    df.to_csv(output, index=False)
-    output.seek(0)
+    output = df_to_bytesio(df, index=False, encoding='utf-8')
     file_name = "NAICS-data/" + file_name
     upload_to_azure(output, file_name, container_name)

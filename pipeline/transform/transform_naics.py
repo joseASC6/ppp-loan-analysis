@@ -1,13 +1,13 @@
 import pandas as pd
-from utils.common import download_from_azure, upload_to_azure, get_blob_list, upload_to_sql
+from utils.common import download_from_azure, upload_to_azure, df_to_bytesio
 import io
 
-def load_naics_data():
+def transform_naics_data():
     """
     Loads clean NAICS data from Azure Blob Storage.
     Transforms the data to fit facts and dimensions schema:
     - dim_naics
-    Uploads the transformed data to Azure Blob Storage and Azure SQL Database.
+    Uploads the transformed data to Azure Blob Storage
     """
     # Download the cleaned NAICS data from Azure Blob Storage
     cleaned_container = "cleaned-data"
@@ -27,8 +27,6 @@ def load_naics_data():
     # Upload the DataFrame to Azure Blob Storage
     final_container = "final-data"
     final_blob_name = "dim_naics.csv"
-    output = io.BytesIO()
-    df.to_csv(output, index=False, encoding='utf-8')
-    output.seek(0)
+    output = df_to_bytesio(df, index=False, encoding='utf-8')
     upload_to_azure(output, final_blob_name, final_container)
     

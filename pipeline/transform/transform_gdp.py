@@ -1,14 +1,14 @@
 import pandas as pd
 import io
-from utils.common import download_from_azure, upload_to_azure, get_blob_list, upload_to_sql
+from utils.common import download_from_azure, upload_to_azure, df_to_bytesio
 
-def load_gdp_data():
+def transform_gdp_data():
     """
     Loads clean GDP data from Azure Blob Storage
     Transforms the data to fit facts and dimensions schema:
     - facts_gdp
     - dim_geography
-    Uploads the transformed data to Azure Blob Storage and Azure SQL Database.
+    Uploads the transformed data to Azure Blob Storage
     """
     cleaned_container = "cleaned-data"
     clean_gdp_blob_name = "GDP-data/cleaned_gdp_data.csv"
@@ -72,14 +72,10 @@ def load_gdp_data():
     dim_geography_blob_name = "dim_geography.csv"
     facts_gdp_blob_name = "facts_gdp.csv"
     
-    output_geography = io.BytesIO()
-    dim_geography.to_csv(output_geography, index=False, encoding='utf-8')
-    output_geography.seek(0)
+    output_geography = df_to_bytesio(dim_geography, index=False, encoding='utf-8')
     upload_to_azure(output_geography, dim_geography_blob_name, final_container)
 
-    output_gdp = io.BytesIO()
-    facts_gdp.to_csv(output_gdp, index=False, encoding='utf-8')
-    output_gdp.seek(0)
+    output_gdp = df_to_bytesio(facts_gdp, index=False, encoding='utf-8')
     upload_to_azure(output_gdp, facts_gdp_blob_name, final_container)
 
 
