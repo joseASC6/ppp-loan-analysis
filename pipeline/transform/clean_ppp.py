@@ -26,7 +26,7 @@ def clean_ppp_data():
 
         # Read the CSV file into a DataFrame
         print(f"Reading PPP data from {blob_name}...")
-        df = pd.read_csv(ppp_data, encoding="latin-1")
+        df = pd.read_csv(ppp_data, encoding="latin-1", low_memory=False)
         print(f"PPP data has {len(df)} rows and {len(df.columns)} columns.")
 
         # Clean the PPP data
@@ -106,6 +106,8 @@ def clean_ppp_data():
         ]
         # Drop all rows where any of the required columns are empty
         df.dropna(subset=required_columns, inplace=True)
+        # Drop the rows where business_age_description is 'Unanswered'
+        df = df[df['business_age_description'] != 'Unanswered']
 
         # Change date columns: 'date_approved_id', 'loan_status_date_id', 'forgiveness_date_id' to the date dimension format
         df['forgiveness_date_id'] = pd.to_datetime(df['forgiveness_date_id']).dt.strftime('%Y%m%d%H')
@@ -114,7 +116,7 @@ def clean_ppp_data():
 
         # Change nonprofit to boolean
         df['nonprofit'] = df['nonprofit'].map({'Y': True})
-        df['nonprofit'] = df['nonprofit'].fillna(False)
+        df['nonprofit'] = df['nonprofit'].fillna(False).astype(bool)
 
         # Change veteran to boolean
         df['veteran'] = df['veteran'].map({'veteran': True, 'Non-veteran': False, 'Unanswered':None})
