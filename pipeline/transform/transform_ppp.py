@@ -174,7 +174,7 @@ def transform_ppp_data():
     facts_ppp_blob_name = "facts_ppp.csv"
 
     # Upload each DataFrame to Azure Blob Storage
-    print("Uploading transformed DataFrames to Azure Blob Storage...")
+    print("Uploading transformed DataFrames to Azure Blob Storage...\n")
     upload_to_azure(df_to_bytesio(dim_loan_status), dim_loan_status_blob_name, final_container)
     upload_to_azure(df_to_bytesio(dim_processing_method), dim_processing_method_blob_name, final_container)
     upload_to_azure(df_to_bytesio(dim_business_type), dim_business_type_blob_name, final_container)
@@ -185,7 +185,7 @@ def transform_ppp_data():
     upload_to_azure(df_to_bytesio(dim_borrower), dim_borrower_blob_name, final_container)
     upload_to_azure(df_to_bytesio(dim_servicing_lender), dim_servicing_lender_blob_name, final_container)
     upload_to_azure(df_to_bytesio(facts_ppp), facts_ppp_blob_name, final_container)
-    print("Transformation completed.")
+    print("\nTransformation completed.")
 
 
 
