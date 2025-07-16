@@ -16,7 +16,7 @@ def transform_dim_ppp_data():
         - dim_originating_lender
         - dim_borrower
         - dim_servicing_lender
-    
+    Uploads the transformed data to Azure Blob Storage
     """
     print("Transforming PPP data into dimensions...\n")
     cleaned_container = "cleaned-data"
