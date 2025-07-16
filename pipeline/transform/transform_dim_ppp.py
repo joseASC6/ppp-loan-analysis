@@ -60,17 +60,17 @@ def transform_dim_ppp_data():
         # Special case: dim_originating_lender, dim_borrower, dim_servicing_lender
         dim_originating_lender = pd.concat([
             dim_originating_lender,
-            df[['originating_lender_id', 'originating_lender_location_id', 'originating_lender', 'originating_lender_city', 'originating_lender_state']].drop_duplicates()
+            df[['originating_lender_location_id', 'originating_lender', 'originating_lender_city', 'originating_lender_state']].drop_duplicates()
         ]).drop_duplicates()
 
         dim_borrower = pd.concat([
             dim_borrower,
-            df[['borrower_id', 'borrower_name', 'borrower_address', 'borrower_city', 'borrower_state', 'borrower_zip']].drop_duplicates()
+            df[['borrower_name', 'borrower_address', 'borrower_city', 'borrower_state', 'borrower_zip']].drop_duplicates()
         ]).drop_duplicates()
 
         dim_servicing_lender = pd.concat([
             dim_servicing_lender,
-            df[['servicing_lender_location_id', 'servicing_lender_name', 'servicing_lender_address', 'servicing_lender_city', 'servicing_lender_state', 'servicing_lender_zip']].drop_duplicates()
+            df[['servicing_lender_name', 'servicing_lender_address', 'servicing_lender_city', 'servicing_lender_state', 'servicing_lender_zip']].drop_duplicates()
         ]).drop_duplicates()
     
     # Reset index for all dimensions
