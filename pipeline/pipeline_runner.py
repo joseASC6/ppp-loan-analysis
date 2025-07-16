@@ -11,6 +11,7 @@ from transform.transform_ppp import transform_ppp_data
 from transform.transform_naics import transform_naics_data
 from transform.transform_gdp import transform_gdp_data
 from transform.transform_dim_date import transform_dim_date
+from transform.transform_dim_ppp import transform_dim_ppp_data
 
 
 def run_stage(stage: str, dataset: str):
@@ -38,7 +39,8 @@ def run_stage(stage: str, dataset: str):
             clean_gdp_data()
     elif stage == "transform":
         if dataset == "ppp":
-            transform_ppp_data()
+            #transform_ppp_data()
+            transform_dim_ppp_data()
         elif dataset == "naics":
             transform_naics_data()
         elif dataset == "gdp":
