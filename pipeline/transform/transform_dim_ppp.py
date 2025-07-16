@@ -116,9 +116,9 @@ def transform_dim_ppp_data():
     # dim_term
     dim_term = pd.DataFrame({
         'term_id': range(1, len(unique_term) + 1),
-        'term': sorted(list(unique_term))
+        'term_month': sorted(list(unique_term))
     })
-    dim_term['term'] = dim_term['term'].astype(pd.StringDtype("pyarrow"))
+    dim_term['term_month'] = dim_term['term_month'].astype(pd.StringDtype("pyarrow"))
     dim_term['term_id'] = dim_term['term_id'].astype(int)
 
     # dim_business_age

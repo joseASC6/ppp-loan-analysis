@@ -48,6 +48,11 @@ def transform_facts_ppp_data():
     dim_originating_lender = pd.read_csv(download_from_azure(blob_name='dim_originating_lender.csv', container_name=final_container))
     dim_servicing_lender = pd.read_csv(download_from_azure(blob_name='dim_servicing_lender.csv', container_name=final_container))
 
+    # Rename term to term_month in dim_term
+    dim_term.rename(columns={'term': 'term_month'}, inplace=True)
+    # Upload the updated dim_term back to Azure Blob Storage
+    upload_to_azure(blob_name='dim_term.csv', container_name=final_container, data=df_to_bytesio(dim_term))
+    
     # Download the cleaned PPP data
     # Get the list of cleaned PPP data blobs
     ppp_blobs = get_blob_list(cleaned_container, prefix=clean_ppp_blob_name)
