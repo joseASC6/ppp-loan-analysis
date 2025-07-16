@@ -7,7 +7,6 @@ from extract.extract_gdp import extract_gdp_data
 from clean.clean_naics import clean_naics_data
 from clean.clean_ppp import clean_ppp_data
 from clean.clean_gdp import clean_gdp_data
-from transform.transform_ppp import transform_ppp_data
 from transform.transform_naics import transform_naics_data
 from transform.transform_gdp import transform_gdp_data
 from transform.transform_dim_date import transform_dim_date
@@ -40,8 +39,7 @@ def run_stage(stage: str, dataset: str):
             clean_gdp_data()
     elif stage == "transform":
         if dataset == "ppp":
-            #transform_ppp_data()
-            #transform_dim_ppp_data()
+            transform_dim_ppp_data()
             transform_facts_ppp_data()
         elif dataset == "naics":
             transform_naics_data()
@@ -50,11 +48,11 @@ def run_stage(stage: str, dataset: str):
         elif dataset == "dim_date":
             transform_dim_date()
         elif dataset == "all":
-            transform_ppp_data()
             transform_naics_data()
             transform_gdp_data()
             transform_dim_date()
-
+            transform_facts_ppp_data()
+            transform_dim_ppp_data()
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run ETL pipeline for PPP Loan Project")
     parser.add_argument("--stage", choices=["extract", "clean", "transform"], required=True, help="ETL stage to run")
