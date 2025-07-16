@@ -48,7 +48,7 @@ def transform_dim_ppp_data():
     unique_business_age = set()
 
     for blob_name in ppp_blobs:
-        blob_data = download_from_azure(cleaned_container, blob_name)
+        blob_data = download_from_azure(blob_name=blob_name, container_name=cleaned_container)
         df = pd.read_csv(blob_data, encoding="utf-8", low_memory=False)
 
         # Find unique values for dimensions, add them to respective sets
