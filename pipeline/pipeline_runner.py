@@ -40,7 +40,8 @@ def run_stage(stage: str, dataset: str):
     elif stage == "transform":
         if dataset == "ppp":
             #transform_ppp_data()
-            transform_dim_ppp_data()
+            #transform_dim_ppp_data()
+            transform_ppp_data()
         elif dataset == "naics":
             transform_naics_data()
         elif dataset == "gdp":
