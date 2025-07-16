@@ -24,15 +24,15 @@ def transform_ppp_data():
     clean_ppp_blob_name = "PPP-data/"
 
     # Get the list of cleaned PPP data blobs
-    ppp_blobs = get_blob_list(clean_ppp_blob_name, prefix=clean_ppp_blob_name)
+    ppp_blobs = get_blob_list(cleaned_container, prefix=clean_ppp_blob_name)
     if not ppp_blobs:
         print("No cleaned PPP data blobs found.")
         return
     
     # Get each blob, download in chunks, append and concatenate into a single DataFrame
     ppp_data_frames = []
-    for blob in ppp_blobs:
-        blob_data = download_from_azure(cleaned_container, blob)
+    for blob_name in ppp_blobs:
+        blob_data = download_from_azure(blob_name, cleaned_container)
         if isinstance(blob_data, bytes):
             df_chunks = pd.read_csv(io.BytesIO(blob_data), encoding="utf-8", chunksize=10000)
         else:
@@ -40,7 +40,7 @@ def transform_ppp_data():
 
         for df in df_chunks:
             ppp_data_frames.append(df)
-            print(f"Downloaded and processed {blob.name} with {len(df)} rows.")
+            print(f"Downloaded and processed {blob_name} with {len(df)} rows.")
 
     # Concatenate all DataFrames into a single DataFrame
     if ppp_data_frames:
