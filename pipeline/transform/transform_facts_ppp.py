@@ -13,7 +13,7 @@ def transform_facts_ppp_data():
     cleaned_container = "cleaned-data"
     clean_ppp_blob_name = "PPP-data/"
     final_container = "final-data"
-    final_blob_name = "facts_ppp/fact_ppp"
+    final_blob_name = "facts_ppp/facts_ppp"
 
     """
     Using the clean PPP we should complete something like this:
@@ -47,12 +47,7 @@ def transform_facts_ppp_data():
     dim_business_age = pd.read_csv(download_from_azure(blob_name='dim_business_age.csv', container_name=final_container))
     dim_originating_lender = pd.read_csv(download_from_azure(blob_name='dim_originating_lender.csv', container_name=final_container))
     dim_servicing_lender = pd.read_csv(download_from_azure(blob_name='dim_servicing_lender.csv', container_name=final_container))
-
-    # Rename term to term_month in dim_term
-    dim_term.rename(columns={'term': 'term_month'}, inplace=True)
-    # Upload the updated dim_term back to Azure Blob Storage
-    upload_to_azure(blob_name='dim_term.csv', container_name=final_container, data=df_to_bytesio(dim_term))
-    
+    dim_geography = pd.read_csv(download_from_azure(blob_name='dim_geography.csv', container_name=final_container))
     # Download the cleaned PPP data
     # Get the list of cleaned PPP data blobs
     ppp_blobs = get_blob_list(cleaned_container, prefix=clean_ppp_blob_name)
@@ -64,6 +59,11 @@ def transform_facts_ppp_data():
     for blob_name in ppp_blobs:
         blob_data = download_from_azure(blob_name=blob_name, container_name=cleaned_container)
         ppp_df = pd.read_csv(blob_data, encoding="utf-8", low_memory=False)
+
+        # Make project_state and project_county_name as string
+        ppp_df['project_state'] = ppp_df['project_state'].astype(str)
+        ppp_df['project_county_name'] = ppp_df['project_county_name'].astype(str)
+        ppp_df['geo_name'] = ppp_df['project_county_name'] + ', ' + ppp_df['project_state']
 
         # Merge with dimension tables
         ppp_df = ppp_df.merge(dim_loan_status[['loan_status', 'loan_status_id']], on='loan_status', how='left', suffixes=('', '_dim_loan_status'))
@@ -82,6 +82,8 @@ def transform_facts_ppp_data():
         ppp_df.drop(columns=['borrower_name', 'borrower_address', 'borrower_city', 'borrower_state', 'borrower_zip'], inplace=True)
         ppp_df = ppp_df.merge(dim_servicing_lender[['servicing_lender_location_id', 'servicing_lender_id']], on='servicing_lender_location_id', how='left', suffixes=('', '_dim_servicing_lender'))
         ppp_df.drop(columns=['servicing_lender_location_id', 'servicing_lender_name', 'servicing_lender_address', 'servicing_lender_city', 'servicing_lender_state', 'servicing_lender_zip'], inplace=True)
+        ppp_df = ppp_df.merge(dim_geography[['geo_name', 'geofips']], on='geo_name', how='left', suffixes=('', '_dim_geography'))
+        ppp_df.drop(columns=['geo_name'], inplace=True)
         # Select and reorder the final columns for the fact table
         final_columns = [
             'facts_ppp_id', 'loan_number', 'naics_code', 'geofips', 'date_approved_id', 'loan_status_date_id', 'forgiveness_date_id',
@@ -93,6 +95,7 @@ def transform_facts_ppp_data():
 
         # Upload the fact table to Azure Blob Storage
         final_blob_data = df_to_bytesio(facts_ppp_df)
-        upload_to_azure(final_blob_data, final_container, f"{final_blob_name}_{file_count}.csv")
+        blob_name = f"{final_blob_name}_{file_count + 1}.csv"
+        upload_to_azure(blob_name=blob_name, container_name=final_container, data=final_blob_data)
         file_count += 1
     print(f"Transformed {file_count} files and uploaded to Azure Blob Storage.\n")
