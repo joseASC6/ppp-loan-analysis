@@ -15,29 +15,6 @@ def transform_facts_ppp_data():
     final_container = "final-data"
     final_blob_name = "facts_ppp/facts_ppp"
 
-    """
-    Using the clean PPP we should complete something like this:
-        ppp_df = ppp_df.merge(dim_loan_status[['loan_status', 'loan_status_id']], on='loan_status', how='left', suffixes=('', '_dim_loan_status'))
-        ppp_df.drop(columns=['loan_status'], inplace=True)
-        ppp_df = ppp_df.merge(dim_processing_method[['processing_method', 'processing_method_id']], on='processing_method', how='left', suffixes=('', '_dim_processing_method'))
-        ppp_df.drop(columns=['processing_method'], inplace=True)
-        ppp_df = ppp_df.merge(dim_business_type[['business_type', 'business_type_id']], on='business_type', how='left', suffixes=('', '_dim_business_type'))
-        ppp_df.drop(columns=['business_type'], inplace=True)
-        ppp_df = ppp_df.merge(dim_term[['term_month', 'term_id']], on='term_month', how='left', suffixes=('', '_dim_term'))
-        ppp_df.drop(columns=['term_month'], inplace=True)
-        ppp_df = ppp_df.merge(dim_business_age[['business_age_description', 'business_age_id']], on='business_age_description', how='left', suffixes=('', '_dim_business_age_description'))
-        ppp_df.drop(columns=['business_age_description'], inplace=True)
-        ppp_df = ppp_df.merge(dim_originating_lender[['originating_lender_location_id', 'originating_lender_id']], on='originating_lender_location_id', how='left', suffixes=('', '_dim_originating_lender'))
-        ppp_df.drop(columns=['originating_lender_location_id', 'originating_lender', 'originating_lender_city', 'originating_lender_state'], inplace=True)
-        ppp_df = ppp_df.merge(dim_borrower[['borrower_name', 'borrower_address', 'borrower_city', 'borrower_state', 'borrower_zip', 'borrower_id']], on=['borrower_name', 'borrower_address', 'borrower_city', 'borrower_state', 'borrower_zip'], how='left', suffixes=('', '_dim_borrower'))
-        ppp_df.drop(columns=['borrower_name', 'borrower_address', 'borrower_city', 'borrower_state', 'borrower_zip'], inplace=True)
-        ppp_df = ppp_df.merge(dim_servicing_lender[['servicing_lender_location_id', 'servicing_lender_id']], on='servicing_lender_location_id', how='left', suffixes=('', '_dim_servicing_lender'))
-        ppp_df.drop(columns=['servicing_lender_location_id', 'servicing_lender_name', 'servicing_lender_address', 'servicing_lender_city', 'servicing_lender_state', 'servicing_lender_zip'], inplace=True)
-    
-        So the finals fact_ppp should have the following columns:
-        [['facts_ppp_id', 'loan_number', 'naics_code', 'geofips', 'date_approved_id', 'loan_status_date_id', 'forgiveness_date_id', 'borrower_id', 'originating_lender_id', 'servicing_lender_id', 'term_id', 'loan_status_id', 'processing_method_id', 'sba_office_code', 'business_age_id', 'business_type_id', 'sba_guaranty_percentage', 'initial_approval_amount', 'current_approval_amount', 'undisbursed_amount', 'forgiveness_amount']]
-    """
-
     # Download All Dimension Tables from Azure Blob Storage
     dim_borrower = pd.read_csv(download_from_azure(blob_name='dim_borrower.csv', container_name=final_container))
     dim_loan_status = pd.read_csv(download_from_azure(blob_name='dim_loan_status.csv', container_name=final_container))
