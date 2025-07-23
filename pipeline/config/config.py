@@ -1,9 +1,9 @@
 import os
 from dotenv import load_dotenv
 from typing import Optional
-
+from pathlib import Path
 # Load environment variables from .env file
-load_dotenv()
+load_dotenv(dotenv_path=Path(__file__).parents[2] / ".env")
 
 def get_env_var(key: str, fallback: Optional[str] = None) -> str:
     """Retrieve an environment variable with optional fallback."""
