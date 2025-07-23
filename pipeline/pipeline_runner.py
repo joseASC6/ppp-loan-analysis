@@ -12,7 +12,7 @@ from transform.transform_gdp import transform_gdp_data
 from transform.transform_dim_date import transform_dim_date
 from transform.transform_dim_ppp import transform_dim_ppp_data
 from transform.transform_facts_ppp import transform_facts_ppp_data
-
+from load.load import load_to_PostgreSQL
 
 def run_stage(stage: str, dataset: str):
     if stage == "extract":
@@ -53,9 +53,13 @@ def run_stage(stage: str, dataset: str):
             transform_dim_date()
             transform_facts_ppp_data()
             transform_dim_ppp_data()
+    elif stage == "load":
+        if dataset == "all":
+            load_to_PostgreSQL()
+            
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run ETL pipeline for PPP Loan Project")
-    parser.add_argument("--stage", choices=["extract", "clean", "transform"], required=True, help="ETL stage to run")
+    parser.add_argument("--stage", choices=["extract", "clean", "transform", "load"], required=True, help="ETL stage to run")
     parser.add_argument("--dataset", choices=["ppp", "naics", "gdp", "dim_date", "all"], required=True, help="Dataset to process")
 
     args = parser.parse_args()

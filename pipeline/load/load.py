@@ -44,7 +44,8 @@ def load_to_PostgreSQL():
         "facts_gdp"
     ]
 
-    # Upload dimensions to PostgreSQL
+    print("Starting to load data to PostgreSQL...\n")
+    print("Uploading dimensions to PostgreSQL...")
     for dim in dimensions:
         data = download_from_azure(blob_name=f"{dim}.csv", container_name=final_container)
         df = pd.read_csv(data, encoding="utf-8")
@@ -52,13 +53,14 @@ def load_to_PostgreSQL():
 
     print("All dimensions uploaded to PostgreSQL successfully.\n")
 
-    # Upload facts_gdp to PostgreSQL
+    print("Uploading facts to PostgreSQL...")
     gdp_data = download_from_azure(blob_name="facts_gdp.csv", container_name=final_container)
     df = pd.read_csv(gdp_data, encoding="utf-8")
     upload_to_sql(df=df, table_name="facts_gdp")
 
-    print("All facts_gdp uploaded to PostgreSQL successfully.\n")
+    print("Uploaded facts_gdp to PostgreSQL successfully.\n")
 
+    print("Uploading facts_ppp to PostgreSQL...\n")
     # Get the list of blobs in the final container /facts_ppp
     ppp_blobs = get_blob_list(final_container, prefix="facts_ppp")
     if not ppp_blobs:
@@ -70,7 +72,5 @@ def load_to_PostgreSQL():
         df = pd.read_csv(data, encoding="utf-8")
         upload_to_sql(df=df, table_name="facts_ppp")
     print("All facts_ppp uploaded to PostgreSQL successfully.\n")
-
-
 
     print("All data loaded to PostgreSQL successfully.\n")
