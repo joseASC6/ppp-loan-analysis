@@ -48,12 +48,15 @@ def load_to_PostgreSQL():
 
     print("Starting to load data to PostgreSQL...\n")
     print("Uploading dimensions to PostgreSQL...")
-    for dim in dimensions:
-        data = download_from_azure(blob_name=f"{dim}.csv", container_name=final_container)
-        df = pd.read_csv(data, encoding="utf-8")
-        upload_to_sql(df=df, table_name=f"{dim}")
-
-    print("All dimensions uploaded to PostgreSQL successfully.\n")
+    if not dimensions:
+        print("No dimensions to upload.")
+    else:
+        print(f"Found {len(dimensions)} dimensions to upload.")
+        for dim in dimensions:
+            data = download_from_azure(blob_name=f"{dim}.csv", container_name=final_container)
+            df = pd.read_csv(data, encoding="utf-8")
+            upload_to_sql(df=df, table_name=f"{dim}")
+        print("All dimensions uploaded to PostgreSQL successfully.\n")
 
     print("Uploading facts to PostgreSQL...")
     gdp_data = download_from_azure(blob_name="facts_gdp.csv", container_name=final_container)

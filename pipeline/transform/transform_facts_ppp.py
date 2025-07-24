@@ -25,6 +25,7 @@ def transform_facts_ppp_data():
     dim_originating_lender = pd.read_csv(download_from_azure(blob_name='dim_originating_lender.csv', container_name=final_container))
     dim_servicing_lender = pd.read_csv(download_from_azure(blob_name='dim_servicing_lender.csv', container_name=final_container))
     dim_geography = pd.read_csv(download_from_azure(blob_name='dim_geography.csv', container_name=final_container))
+    dim_naics = pd.read_csv(download_from_azure(blob_name='dim_naics.csv', container_name=final_container))
     # Download the cleaned PPP data
     # Get the list of cleaned PPP data blobs
     ppp_blobs = get_blob_list(cleaned_container, prefix=clean_ppp_blob_name)
@@ -69,6 +70,10 @@ def transform_facts_ppp_data():
         
         ppp_df = ppp_df.merge(dim_geography[['geo_name', 'geofips']], on='geo_name', how='left', suffixes=('', '_dim_geography'))
         ppp_df.drop(columns=['geo_name'], inplace=True)
+
+        ppp_df = ppp_df.merge(dim_naics[['naics_code', 'naics_title']], on='naics_code', how='left', suffixes=('', '_dim_naics'))
+        ppp_df = ppp_df[ppp_df['naics_title'].notnull()]
+        ppp_df.drop(columns=['naics_title'], inplace=True)
 
         # Delete the records that have no geofips in the clean_ppp_data
         ppp_df = ppp_df[ppp_df['geofips'].notnull()]
