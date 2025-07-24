@@ -18,6 +18,8 @@ def clean_ppp_data():
         return
     print(f"Found {len(ppp_blob_list)} PPP data files in the raw container.")
 
+    facts_ppp_id = 1
+
     for blob_name in ppp_blob_list:
         # Download the PPP data from Azure Blob Storage
         ppp_data = download_from_azure(blob_name, raw_container)
@@ -170,8 +172,10 @@ def clean_ppp_data():
         df['jobs_reported'] = df['jobs_reported'].astype(int)
         df['naics_code'] = df['naics_code'].astype(int)
 
-        # Create a FACTS_PPP_ID 
-        df['facts_ppp_id'] = range(1, len(df) + 1)
+        # Assing a facts_ppp_id to each row
+        df['facts_ppp_id'] = [facts_ppp_id + i for i in range(len(df))]
+        facts_ppp_id += len(df)
+        
 
         print(f"Cleaned PPP data has {len(df)} rows and {len(df.columns)} columns.")
 

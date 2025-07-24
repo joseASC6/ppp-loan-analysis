@@ -1,5 +1,5 @@
 import pandas as pd
-from utils.common import upload_to_azure, df_to_bytesio
+from utils.common import upload_to_azure, df_to_bytesio, get_blob_list, download_from_azure
 import calendar
 import io
 
@@ -22,12 +22,32 @@ def transform_dim_date():
         cal = calendar.monthcalendar(year, month)
         week_number = (day - 1) // 7 + 1
         return week_number
+    final_container = "final-data"
 
+    # Use the facts_ppp data to determine the start and end dates
+    print("Determining start and end dates for dim_date...")
+    start_date = pd.Timestamp("2017-01-01 00:00:00") # Minimum date in the GDP data
+    end_date = pd.Timestamp("2024-09-30 00:00:00") # Last date in the PPP data
 
-    start_date = pd.Timestamp("2017-01-01 00:00:00")
-    end_date = pd.Timestamp("2023-10-01 00:00:00")
-   
-
+    ppp_blobs = get_blob_list(final_container, prefix="facts_ppp")
+    if not ppp_blobs:
+        print("No facts_ppp blobs found. Using default start and end dates.")
+    else:
+        date_cols = ['date_approved_id', 'loan_status_date_id', 'forgiveness_date_id']
+        for blob_name in ppp_blobs:
+            data = download_from_azure(blob_name=blob_name, container_name=final_container)
+            df = pd.read_csv(data, encoding="utf-8") 
+            for col in date_cols:
+                if col in df.columns:
+                    # dates are in the following format: 2021072200 '%Y%m%d%H'
+                    dates = pd.to_datetime(df[col], format='%Y%m%d%H', errors='coerce')
+                    col_min_date = dates.min()
+                    col_max_date = dates.max()
+                    print(f"Blob: {blob_name}, {col} - Min: {col_min_date}, Max: {col_max_date}")
+                    start_date = min(start_date, col_min_date)
+                    end_date = max(end_date, col_max_date)
+                    
+    print(f"Start date: {start_date}, End date: {end_date}")
     # Create a DataFrame for the date dimension
     dim_date = pd.DataFrame({'date': pd.date_range(start_date, end_date, freq='h')})
 
@@ -65,7 +85,6 @@ def transform_dim_date():
     print(f"Transformed dim_date has {len(dim_date)} rows and {len(dim_date.columns)} columns.")
 
     # Upload the dimension date data to Azure Blob Storage
-    final_container = "final-data"
     dim_date_blob_name = "dim_date.csv"
     output = df_to_bytesio(dim_date, index=False, encoding='utf-8')
     upload_to_azure(output, dim_date_blob_name, final_container)
