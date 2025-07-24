@@ -25,6 +25,10 @@ def transform_gdp_data():
     dim_geography = df[['geofips', 'geo_name', 'region']].drop_duplicates()
     dim_geography = dim_geography.reset_index(drop=True)
 
+    # Remove the * from the geo_name
+    dim_geography['geo_name'] = dim_geography['geo_name'].str.replace('*', '')
+
+
     #Remove these phrase from the geo_name: City and Borough, Borough, Census Area, Municipality, (Independent City)
     remove_phrases = [
         " City and Borough",
