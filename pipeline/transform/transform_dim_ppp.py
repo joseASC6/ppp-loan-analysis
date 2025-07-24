@@ -70,7 +70,7 @@ def transform_dim_ppp_data():
 
         dim_servicing_lender = pd.concat([
             dim_servicing_lender,
-            df[['servicing_lender_name', 'servicing_lender_address', 'servicing_lender_city', 'servicing_lender_state', 'servicing_lender_zip']].drop_duplicates()
+            df[['servicing_lender_location_id', 'servicing_lender_name', 'servicing_lender_address', 'servicing_lender_city', 'servicing_lender_state', 'servicing_lender_zip']].drop_duplicates()
         ]).drop_duplicates()
     
     # Reset index for all dimensions

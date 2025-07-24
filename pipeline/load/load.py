@@ -18,6 +18,7 @@ def load_to_PostgreSQL():
         - facts_ppp
 
         - dim_date
+        - dim_naics
 
         - facts_gdp
         - dim_geography
@@ -36,7 +37,8 @@ def load_to_PostgreSQL():
         "dim_borrower",
         "dim_servicing_lender",
         "dim_date",
-        "dim_geography"
+        "dim_geography",
+        "dim_naics"
     ]
 
     facts = [

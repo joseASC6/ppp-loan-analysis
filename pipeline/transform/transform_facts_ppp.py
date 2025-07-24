@@ -45,22 +45,31 @@ def transform_facts_ppp_data():
         # Merge with dimension tables
         ppp_df = ppp_df.merge(dim_loan_status[['loan_status', 'loan_status_id']], on='loan_status', how='left', suffixes=('', '_dim_loan_status'))
         ppp_df.drop(columns=['loan_status'], inplace=True)
+
         ppp_df = ppp_df.merge(dim_processing_method[['processing_method', 'processing_method_id']], on='processing_method', how='left', suffixes=('', '_dim_processing_method'))
         ppp_df.drop(columns=['processing_method'], inplace=True)
+        
         ppp_df = ppp_df.merge(dim_business_type[['business_type', 'business_type_id']], on='business_type', how='left', suffixes=('', '_dim_business_type'))
         ppp_df.drop(columns=['business_type'], inplace=True)
+
         ppp_df = ppp_df.merge(dim_term[['term_month', 'term_id']], on='term_month', how='left', suffixes=('', '_dim_term'))
         ppp_df.drop(columns=['term_month'], inplace=True)
+
         ppp_df = ppp_df.merge(dim_business_age[['business_age_description', 'business_age_id']], on='business_age_description', how='left', suffixes=('', '_dim_business_age_description'))
         ppp_df.drop(columns=['business_age_description'], inplace=True)
+
         ppp_df = ppp_df.merge(dim_originating_lender[['originating_lender_location_id', 'originating_lender_id']], on='originating_lender_location_id', how='left', suffixes=('', '_dim_originating_lender'))
         ppp_df.drop(columns=['originating_lender_location_id', 'originating_lender', 'originating_lender_city', 'originating_lender_state'], inplace=True)
+        
         ppp_df = ppp_df.merge(dim_borrower[['borrower_name', 'borrower_address', 'borrower_city', 'borrower_state', 'borrower_zip', 'borrower_id']], on=['borrower_name', 'borrower_address', 'borrower_city', 'borrower_state', 'borrower_zip'], how='left', suffixes=('', '_dim_borrower'))
         ppp_df.drop(columns=['borrower_name', 'borrower_address', 'borrower_city', 'borrower_state', 'borrower_zip'], inplace=True)
+        
         ppp_df = ppp_df.merge(dim_servicing_lender[['servicing_lender_location_id', 'servicing_lender_id']], on='servicing_lender_location_id', how='left', suffixes=('', '_dim_servicing_lender'))
         ppp_df.drop(columns=['servicing_lender_location_id', 'servicing_lender_name', 'servicing_lender_address', 'servicing_lender_city', 'servicing_lender_state', 'servicing_lender_zip'], inplace=True)
+        
         ppp_df = ppp_df.merge(dim_geography[['geo_name', 'geofips']], on='geo_name', how='left', suffixes=('', '_dim_geography'))
         ppp_df.drop(columns=['geo_name'], inplace=True)
+
         # Select and reorder the final columns for the fact table
         final_columns = [
             'facts_ppp_id', 'loan_number', 'naics_code', 'geofips', 'date_approved_id', 'loan_status_date_id', 'forgiveness_date_id',
@@ -69,6 +78,8 @@ def transform_facts_ppp_data():
             'current_approval_amount', 'undisbursed_amount', 'forgiveness_amount'
         ]
         facts_ppp_df = ppp_df[final_columns]
+        # Print the number of rows with a missing value
+        print(f"Number of rows with missing values: {facts_ppp_df.isnull().any(axis=1).sum()}")
 
         # Upload the fact table to Azure Blob Storage
         final_blob_data = df_to_bytesio(facts_ppp_df)

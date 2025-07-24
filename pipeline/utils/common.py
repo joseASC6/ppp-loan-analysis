@@ -60,7 +60,7 @@ def upload_to_sql(df: pd.DataFrame, table_name: str) -> None:
     engine = create_engine(DW_CONNECTION_STRING)
 
     print(f"\nUploading data to SQL table {table_name}...")
-    df.to_sql(table_name, con=engine, schema=DB_SCHEMA, if_exists='replace', index=False)
+    df.to_sql(table_name, con=engine, schema=DB_SCHEMA, if_exists='append', index=False)
     print(f"Success: Uploaded data to SQL table {table_name}.\n")
 
 # Convert a DataFrame to a BytesIO object
