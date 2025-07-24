@@ -85,7 +85,12 @@ def transform_facts_ppp_data():
             'sba_office_code', 'business_age_id', 'business_type_id', 'sba_guaranty_percentage', 'initial_approval_amount',
             'current_approval_amount', 'undisbursed_amount', 'forgiveness_amount'
         ]
+        
+        # Drop all the duplicate rows
+        ppp_df.drop_duplicates(subset=final_columns, inplace=True)
+
         facts_ppp_df = ppp_df[final_columns]
+
         # Print the number of rows with a missing value
         print(f"Number of rows with missing values: {facts_ppp_df.isnull().any(axis=1).sum()}")
 
