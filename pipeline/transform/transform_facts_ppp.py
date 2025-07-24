@@ -70,6 +70,9 @@ def transform_facts_ppp_data():
         ppp_df = ppp_df.merge(dim_geography[['geo_name', 'geofips']], on='geo_name', how='left', suffixes=('', '_dim_geography'))
         ppp_df.drop(columns=['geo_name'], inplace=True)
 
+        # Delete the records that have no geofips in the clean_ppp_data
+        ppp_df = ppp_df[ppp_df['geofips'].notnull()]
+        
         # Select and reorder the final columns for the fact table
         final_columns = [
             'facts_ppp_id', 'loan_number', 'naics_code', 'geofips', 'date_approved_id', 'loan_status_date_id', 'forgiveness_date_id',
