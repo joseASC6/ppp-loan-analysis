@@ -65,8 +65,10 @@ def transform_dim_ppp_data():
 
         dim_borrower = pd.concat([
             dim_borrower,
-            df[['borrower_name', 'borrower_address', 'borrower_city', 'borrower_state', 'borrower_zip']].drop_duplicates()
-        ]).drop_duplicates()
+            df[['borrower_name', 'borrower_address', 'borrower_city', 'borrower_state', 'borrower_zip',
+                'race', 'ethnicity', 'gender', 'veteran', 'nonprofit', 'franchise_name', 'jobs_reported']]
+                .drop_duplicates(subset=['borrower_name', 'borrower_address', 'borrower_city', 'borrower_state', 'borrower_zip'])
+        ]).drop_duplicates(subset=['borrower_name', 'borrower_address', 'borrower_city', 'borrower_state', 'borrower_zip'])
 
         dim_servicing_lender = pd.concat([
             dim_servicing_lender,
