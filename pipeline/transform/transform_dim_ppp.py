@@ -35,7 +35,8 @@ def transform_dim_ppp_data():
         'originating_lender', 'originating_lender_city', 'originating_lender_state'
     ])
     dim_borrower = pd.DataFrame(columns=[
-        'borrower_id', 'borrower_name', 'borrower_address', 'borrower_city', 'borrower_state', 'borrower_zip'
+        'borrower_id', 'borrower_name', 'borrower_address', 'borrower_city', 'borrower_state', 'borrower_zip',
+        'race', 'ethnicity', 'gender', 'veteran', 'nonprofit', 'franchise_name', 'jobs_reported'
     ])
     dim_servicing_lender = pd.DataFrame(columns=[
         'servicing_lender_location_id', 'servicing_lender_name',
