@@ -52,6 +52,10 @@ def transform_dim_ppp_data():
         blob_data = download_from_azure(blob_name=blob_name, container_name=cleaned_container)
         df = pd.read_csv(blob_data, encoding="utf-8", low_memory=False)
 
+        # Set cols veteran and nonprofit as boolean
+        df['veteran'] = df['veteran'].astype(bool)
+        df['nonprofit'] = df['nonprofit'].astype(bool)
+
         # Find unique values for dimensions, add them to respective sets
         unique_business_type.update(df['business_type'].dropna().unique())
         unique_sba_office.update(df['sba_office_code'].dropna().unique())
