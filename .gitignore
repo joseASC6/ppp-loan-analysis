@@ -6,3 +6,4 @@
 /notebooks/.ipynb_checkpoints/
 /config/__pycache__
 *.pyc
+.DS_Store
