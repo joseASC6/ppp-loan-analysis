@@ -1,6 +1,6 @@
 import pandas as pd
 import io, zipfile
-from utils.common import download_file, upload_to_azure, df_to_bytesio
+from utils.common import download_url_to_bytes, upload_to_azure, df_to_bytesio
 
 def extract_gdp_data():
     """
@@ -9,7 +9,7 @@ def extract_gdp_data():
     print("Starting GDP data extraction...\n")
     container_name = "raw-data"
     gdp_url = "https://apps.bea.gov/regional/zip/CAGDP1.zip"
-    zip_content = download_file(gdp_url)
+    zip_content = download_url_to_bytes(gdp_url)
 
     with zipfile.ZipFile(zip_content) as zip_ref:
         for filename in zip_ref.namelist():

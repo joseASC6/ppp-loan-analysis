@@ -7,7 +7,7 @@ from config.config import AZURE_CONNECTION_STRING, DW_CONNECTION_STRING, DB_SCHE
 from utils.azure_utils import download_from_azure, upload_to_azure, get_azure_blob_list, upload_to_sql
 from utils.gcs_utils import download_from_gcs, upload_to_gcs, get_gcs_blob_list, upload_to_bigquery
 
-def download_file(url: str) -> io.BytesIO:
+def download_url_to_bytes(url: str) -> io.BytesIO:
     """Download a file from the specified URL and return it as a BytesIO object."""
     print(f"\nDownloading file from {url}...")
     response = requests.get(url)

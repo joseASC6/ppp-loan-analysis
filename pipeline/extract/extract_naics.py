@@ -1,6 +1,6 @@
 import pandas as pd
 import io
-from utils.common import download_file, upload_to_azure, df_to_bytesio
+from utils.common import download_url_to_bytes, upload_to_azure, df_to_bytesio
 
 def extract_naics_data():
     """
@@ -13,7 +13,7 @@ def extract_naics_data():
     file_name = naics_url.split("/")[-1].replace(".xlsx", ".csv")
 
     # Download the NAICS file
-    file_content = download_file(naics_url)
+    file_content = download_url_to_bytes(naics_url)
 
     # Read the Excel file into a DataFrame
     df = pd.read_excel(file_content)

@@ -1,7 +1,8 @@
 from bs4 import BeautifulSoup, Tag
 import pandas as pd
 import requests
-from utils.common import download_file, upload_to_azure, df_to_bytesio
+from utils.common import download_url_to_bytes, upload_to_azure, df_to_bytesio
+from config.config import RAW_CONTAINER
 
 def extract_ppp_data():
     """
@@ -22,7 +23,7 @@ def extract_ppp_data():
                 file_name = file_url.split('/')[-1]
 
                 # Download the file
-                file_content = download_file(file_url)
+                file_content = download_url_to_bytes(file_url)
 
                 # Read the CSV file into a DataFrame
                 df = pd.read_csv(file_content, encoding="latin-1")
