@@ -63,7 +63,7 @@ def clean_naics_data():
     # If there are any dropped rows, upload them to the dropped container
     if not dropped_df.empty:
         print(f"\nDropped NAICS data has {len(dropped_df)} rows.")
-        dropped_blob_name = f"{naics_folder}/dropped_naics_data.csv"
+        dropped_blob_name = f"{naics_folder}/dropped_raw_naics_data.csv"
         dropped_output = df_to_bytesio(dropped_df, index=False, encoding='utf-8')
         upload_to_cloud(data=dropped_output, blob_name=dropped_blob_name, container_name=DROPPED_CONTAINER)
         print(f"\nDropped NAICS data uploaded to {dropped_blob_name} in {DROPPED_CONTAINER} container.\n")

@@ -1,7 +1,7 @@
 import pandas as pd
 import io
-from utils.common import df_to_bytesio, download_from_cloud, upload_to_cloud, get_blob_list_from_cloud
-from config.config import RAW_CONTAINER, CLEAN_CONTAINER
+from utils.common import df_to_bytesio, download_from_cloud, upload_to_cloud, get_blob_list_from_cloud, drop_and_log
+from config.config import RAW_CONTAINER, CLEAN_CONTAINER, DROPPED_CONTAINER
 
 def clean_ppp_data():
     """
@@ -10,9 +10,9 @@ def clean_ppp_data():
     Uploads the cleaned data to Azure Blob Storage.
     """
     print("Starting PPP data cleaning...\n")
-    ppp_blob_name = "PPP-data/"
+    ppp_folder = "PPP-data/"
     # Find all the files in the PPP-data folder in the raw container
-    ppp_blob_list = get_blob_list_from_cloud(RAW_CONTAINER, prefix=ppp_blob_name)
+    ppp_blob_list = get_blob_list_from_cloud(RAW_CONTAINER, prefix=ppp_folder)
     if not ppp_blob_list:
         print("No PPP data found in the raw container.")
         return
@@ -96,6 +96,8 @@ def clean_ppp_data():
             'NAICSCode': 'naics_code'
         }, inplace=True)
 
+        dropped_df = pd.DataFrame(columns=df.columns.tolist() + ['drop_reason'])
+
         # Columns that can not contain empty values
         required_columns = [
             'borrower_state',
@@ -107,10 +109,15 @@ def clean_ppp_data():
             'business_type',
             'business_age_description'
         ]
+        
         # Drop all rows where any of the required columns are empty
-        df.dropna(subset=required_columns, inplace=True)
+        for col in required_columns:
+            mask = df[col].isnull()
+            df, dropped_df = drop_and_log(df, dropped_df, mask, f"{col}_null_or_empty")
+        
         # Drop the rows where business_age_description is 'Unanswered'
-        df = df[df['business_age_description'] != 'Unanswered']
+        mask_unanswered = df['business_age_description'] == 'Unanswered'
+        df, dropped_df = drop_and_log(df, dropped_df, mask_unanswered, "business_age_description_unanswered")
 
         # Change date columns: 'date_approved_id', 'loan_status_date_id', 'forgiveness_date_id' to the date dimension format
         df['forgiveness_date_id'] = pd.to_datetime(df['forgiveness_date_id']).dt.strftime('%Y%m%d%H')
@@ -180,10 +187,16 @@ def clean_ppp_data():
         print(f"Cleaned PPP data has {len(df)} rows and {len(df.columns)} columns.")
 
         # Save the cleaned data to a CSV file
-        clean_container = "cleaned-data"
-        clean_blob_name = f"PPP-data/cleaned_{blob_name.split('/')[-1]}"
+        cleaned_blob_name = f"{ppp_folder}cleaned_{blob_name.split('/')[-1]}"
         output = df_to_bytesio(df, index=False, encoding='utf-8')
         # Upload the cleaned data to Azure Blob Storage
-        upload_to_cloud(data=output, blob_name=clean_blob_name, container_name=CLEAN_CONTAINER)
-    
+        upload_to_cloud(data=output, blob_name=cleaned_blob_name, container_name=CLEAN_CONTAINER)
+
+        if not dropped_df.empty:
+            print(f"\nDropped PPP data has {len(dropped_df)} rows.")
+            dropped_blob_name = f"{ppp_folder}dropped_raw_{blob_name.split('/')[-1]}"
+            dropped_output = df_to_bytesio(dropped_df, index=False, encoding='utf-8')
+            upload_to_cloud(data=dropped_output, blob_name=dropped_blob_name, container_name=DROPPED_CONTAINER)
+            print(f"\nDropped PPP data uploaded to {dropped_blob_name} in {DROPPED_CONTAINER} container.\n")
+
     print("\nPPP data cleaning completed.\n")

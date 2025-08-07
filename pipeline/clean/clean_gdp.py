@@ -83,7 +83,7 @@ def clean_gdp_data():
     # If there are any dropped rows, upload them to the dropped container
     if not dropped_df.empty:
         print(f"\nDropped GDP data has {len(dropped_df)} rows.")
-        dropped_blob_name = f"{gdp_folder}/dropped_gdp_data.csv"
+        dropped_blob_name = f"{gdp_folder}/dropped_raw_gdp_data.csv"
         dropped_output = df_to_bytesio(dropped_df, index=False, encoding='utf-8')
         upload_to_cloud(data=dropped_output, blob_name=dropped_blob_name, container_name=DROPPED_CONTAINER)
         print(f"\nDropped GDP data uploaded to {dropped_blob_name} in {DROPPED_CONTAINER} container.\n")
