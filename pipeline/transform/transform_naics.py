@@ -1,7 +1,6 @@
 import pandas as pd
-from utils.common import download_from_azure, upload_to_azure, df_to_bytesio
-from config.config import CLEAN_CONTAINER, DROPPED_CONTAINER, FINAL_CONTAINER
-import io
+from utils.common import df_to_bytesio, download_from_cloud, upload_to_cloud
+from config.config import CLEAN_CONTAINER, FINAL_CONTAINER
 
 def transform_naics_data():
     """
@@ -14,7 +13,7 @@ def transform_naics_data():
     # Download the cleaned NAICS data from Azure Blob Storage
     naics_folder = "NAICS-data/"
     clean_naics_blob_name = f"{naics_folder}cleaned_naics_data.csv"
-    naics_data = download_from_azure(clean_naics_blob_name, CLEAN_CONTAINER)
+    naics_data = download_from_cloud(blob_name=clean_naics_blob_name, container_name=CLEAN_CONTAINER)
 
     # Read the CSV file into a DataFrame
     print(f"Reading cleaned NAICS data from {clean_naics_blob_name}...")
@@ -29,5 +28,5 @@ def transform_naics_data():
     # Upload the DataFrame to Azure Blob Storage
     final_blob_name = "dim_naics.csv"
     output = df_to_bytesio(df, index=False, encoding='utf-8')
-    upload_to_azure(output, final_blob_name, FINAL_CONTAINER)
+    upload_to_cloud(data=output, blob_name=final_blob_name, container_name=FINAL_CONTAINER)
     print("NAICS data transformation completed.\n")
