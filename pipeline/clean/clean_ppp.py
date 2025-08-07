@@ -1,6 +1,7 @@
 import pandas as pd
 import io
-from utils.common import download_from_azure, upload_to_azure, get_blob_list, df_to_bytesio
+from utils.common import df_to_bytesio, download_from_cloud, upload_to_cloud, get_blob_list_from_cloud
+from config.config import RAW_CONTAINER, CLEAN_CONTAINER
 
 def clean_ppp_data():
     """
@@ -9,10 +10,9 @@ def clean_ppp_data():
     Uploads the cleaned data to Azure Blob Storage.
     """
     print("Starting PPP data cleaning...\n")
-    raw_container = "raw-data"
     ppp_blob_name = "PPP-data/"
     # Find all the files in the PPP-data folder in the raw container
-    ppp_blob_list = get_blob_list(raw_container, ppp_blob_name)
+    ppp_blob_list = get_blob_list_from_cloud(RAW_CONTAINER, prefix=ppp_blob_name)
     if not ppp_blob_list:
         print("No PPP data found in the raw container.")
         return
@@ -22,7 +22,7 @@ def clean_ppp_data():
 
     for blob_name in ppp_blob_list:
         # Download the PPP data from Azure Blob Storage
-        ppp_data = download_from_azure(blob_name, raw_container)
+        ppp_data = download_from_cloud(blob_name=blob_name, container_name=RAW_CONTAINER)
         if not ppp_data:
             print(f"Failed to download PPP data from {blob_name}.")
             continue
@@ -184,6 +184,6 @@ def clean_ppp_data():
         clean_blob_name = f"PPP-data/cleaned_{blob_name.split('/')[-1]}"
         output = df_to_bytesio(df, index=False, encoding='utf-8')
         # Upload the cleaned data to Azure Blob Storage
-        upload_to_azure(output, clean_blob_name, clean_container)
+        upload_to_cloud(data=output, blob_name=clean_blob_name, container_name=CLEAN_CONTAINER)
     
     print("\nPPP data cleaning completed.\n")

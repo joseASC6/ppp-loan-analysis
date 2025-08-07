@@ -1,6 +1,7 @@
 import pandas as pd
 import io
-from utils.common import download_from_azure, upload_to_azure, df_to_bytesio
+from utils.common import df_to_bytesio, download_from_cloud, upload_to_cloud
+from config.config import RAW_CONTAINER, CLEAN_CONTAINER
 
 def clean_naics_data():
     """
@@ -9,11 +10,10 @@ def clean_naics_data():
     Uploads the cleaned data to Azure Blob Storage.
     """
     print("Starting NAICS data cleaning...\n")
-    raw_container = "raw-data"
     naics_blob_name = "NAICS-data/2022_NAICS_Descriptions.xlsx"
 
     # Download the NAICS data from Azure Blob Storage
-    naics_data = download_from_azure(naics_blob_name, raw_container)
+    naics_data = download_from_cloud(blob_name=naics_blob_name, container_name=RAW_CONTAINER)
 
     # Read the Excel file into a DataFrame
     print(f"Reading NAICS data from {naics_blob_name}...")
@@ -52,6 +52,6 @@ def clean_naics_data():
     cleaned_blob_name = "NAICS-data/cleaned_naics_data.csv"
     clean_container = "cleaned-data"
     output = df_to_bytesio(df, index=False, encoding='utf-8')
-    upload_to_azure(output, cleaned_blob_name, clean_container)
+    upload_to_cloud(data=output, blob_name=cleaned_blob_name, container_name=clean_container)
     print(f"\nCleaned NAICS data uploaded to {cleaned_blob_name} in {clean_container} container.\n")
     

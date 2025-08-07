@@ -42,7 +42,7 @@ def get_blob_list_from_cloud(container_name: str, prefix: str = "") -> list:
     else:
         raise ValueError(f"Unsupported cloud provider: {CLOUD_PROVIDER}")
     
-def upload_to_cloud_dw(df: pd.DataFrame, table_name: str) -> None:
+def upload_to_dw(df: pd.DataFrame, table_name: str) -> None:
     """Upload a DataFrame to cloud data warehouse (Azure SQL or BigQuery)."""
     if CLOUD_PROVIDER == "azure":
         upload_to_sql(df, table_name)

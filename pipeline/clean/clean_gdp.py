@@ -1,6 +1,7 @@
 import pandas as pd
 import io
-from utils.common import download_from_azure, upload_to_azure, df_to_bytesio
+from utils.common import df_to_bytesio, download_from_cloud, upload_to_cloud
+from config.config import RAW_CONTAINER, CLEAN_CONTAINER
 
 def clean_gdp_data():
     """
@@ -9,10 +10,9 @@ def clean_gdp_data():
     Uploads the cleaned data to Azure Blob Storage.
     """
     print("Starting GDP data cleaning...\n")
-    raw_container = "raw-data"
     gdp_blob_name = "GDP-data/CAGDP1__ALL_AREAS_2001_2023.csv"
     # Download the GDP data from Azure Blob Storage
-    gdp_data = download_from_azure(gdp_blob_name, raw_container)
+    gdp_data = download_from_cloud(blob_name=gdp_blob_name, container_name=RAW_CONTAINER)
     # Read the CSV file into a DataFrame
     print(f"\nReading GDP data from {gdp_blob_name}...")
     df = pd.read_csv(gdp_data, encoding="utf-8")
@@ -70,7 +70,6 @@ def clean_gdp_data():
 
     # Upload the cleaned data to Azure Blob Storage
     cleaned_blob_name = "GDP-data/cleaned_gdp_data.csv"
-    clean_container = "cleaned-data"
     output = df_to_bytesio(df, index=False, encoding='utf-8')
-    upload_to_azure(output, cleaned_blob_name, clean_container)
-    print(f"\nCleaned GDP data uploaded to {cleaned_blob_name} in {clean_container} container.\n")
+    upload_to_cloud(data=output, blob_name=cleaned_blob_name, container_name=CLEAN_CONTAINER)
+    print(f"\nCleaned GDP data uploaded to {cleaned_blob_name} in {CLEAN_CONTAINER} container.\n")
