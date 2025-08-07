@@ -4,7 +4,7 @@ from google.cloud import storage
 from google.cloud import bigquery
 from config.config import DB_SCHEMA, GCS_BUCKET_NAME
 
-def upload_to_gcs(data: io.BytesIO, folder: str, blob_name: str) -> None:
+def upload_to_gcs(data: io.BytesIO, blob_name: str, folder: str) -> None:
     """Upload a BytesIO object to Google Cloud Storage."""
     client = storage.Client()
     bucket = client.bucket(GCS_BUCKET_NAME)
@@ -14,7 +14,7 @@ def upload_to_gcs(data: io.BytesIO, folder: str, blob_name: str) -> None:
     blob.upload_from_file(data)
     print(f"Success: Uploaded {blob_name} to GCS bucket {GCS_BUCKET_NAME}.\n")
 
-def download_from_gcs(folder: str, blob_name: str) -> io.BytesIO:
+def download_from_gcs(blob_name: str, folder: str) -> io.BytesIO:
     """Download a file from Google Cloud Storage and return it as a BytesIO object."""
     client = storage.Client()
     bucket = client.bucket(GCS_BUCKET_NAME)
