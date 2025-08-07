@@ -3,7 +3,9 @@ import pandas as pd
 from azure.storage.blob import BlobServiceClient
 import requests
 from sqlalchemy import create_engine
-from config.config import AZURE_CONNECTION_STRING, DW_CONNECTION_STRING, DB_SCHEMA
+from config.config import AZURE_CONNECTION_STRING, DW_CONNECTION_STRING, DB_SCHEMA, CLOUD_PROVIDER
+from utils.azure_utils import download_from_azure, upload_to_azure, get_blob_list, upload_to_sql
+from utils.gcs_utils import download_from_gcs, upload_to_gcs, get_gcs_blob_list, upload_to_bigquery
 
 # Download file from web
 def download_file(url: str) -> io.BytesIO:
@@ -13,6 +15,42 @@ def download_file(url: str) -> io.BytesIO:
     response.raise_for_status()
     print(f"Success: Downloaded file from {url}.\n")
     return io.BytesIO(response.content)
+
+def download_from_cloud(blob_name: str, container_name: str) -> io.BytesIO:
+    """Download a file from cloud storage (Azure or GCS) and return it as a BytesIO object."""
+    if CLOUD_PROVIDER == "azure":
+        return download_from_azure(blob_name, container_name)
+    elif CLOUD_PROVIDER == "gcs":
+        return download_from_gcs(container_name, blob_name)
+    else:
+        raise ValueError(f"Unsupported cloud provider: {CLOUD_PROVIDER}")
+    
+def upload_to_cloud(data: io.BytesIO, blob_name: str, container_name: str) -> None:
+    """Upload a BytesIO object to cloud storage (Azure or GCS)."""
+    if CLOUD_PROVIDER == "azure":
+        upload_to_azure(data, blob_name, container_name)
+    elif CLOUD_PROVIDER == "gcs":
+        upload_to_gcs(data, container_name, blob_name)
+    else:
+        raise ValueError(f"Unsupported cloud provider: {CLOUD_PROVIDER}")
+
+def get_blob_list_from_cloud(container_name: str, prefix: str = "") -> list:
+    """Retrieve a list of blobs in the specified cloud storage container, optionally filtered by prefix."""
+    if CLOUD_PROVIDER == "azure":
+        return get_blob_list(container_name, prefix)
+    elif CLOUD_PROVIDER == "gcs":
+        return get_gcs_blob_list(container_name, prefix)
+    else:
+        raise ValueError(f"Unsupported cloud provider: {CLOUD_PROVIDER}")
+    
+def upload_to_cloud_dw(df: pd.DataFrame, table_name: str) -> None:
+    """Upload a DataFrame to cloud data warehouse (Azure SQL or BigQuery)."""
+    if CLOUD_PROVIDER == "azure":
+        upload_to_sql(df, table_name)
+    elif CLOUD_PROVIDER == "gcs":
+        upload_to_bigquery(df, table_name)
+    else:
+        raise ValueError(f"Unsupported cloud provider: {CLOUD_PROVIDER}")
 
 # Download file from Azure Blob Storage
 def download_from_azure(blob_name: str, container_name: str) -> io.BytesIO:
