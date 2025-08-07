@@ -4,7 +4,7 @@ from azure.storage.blob import BlobServiceClient
 import requests
 from sqlalchemy import create_engine
 from config.config import AZURE_CONNECTION_STRING, DW_CONNECTION_STRING, DB_SCHEMA, CLOUD_PROVIDER
-from utils.azure_utils import download_from_azure, upload_to_azure, get_blob_list, upload_to_sql
+from utils.azure_utils import download_from_azure, upload_to_azure, get_azure_blob_list, upload_to_sql
 from utils.gcs_utils import download_from_gcs, upload_to_gcs, get_gcs_blob_list, upload_to_bigquery
 
 # Download file from web
@@ -37,7 +37,7 @@ def upload_to_cloud(data: io.BytesIO, blob_name: str, container_name: str) -> No
 def get_blob_list_from_cloud(container_name: str, prefix: str = "") -> list:
     """Retrieve a list of blobs in the specified cloud storage container, optionally filtered by prefix."""
     if CLOUD_PROVIDER == "azure":
-        return get_blob_list(container_name, prefix)
+        return get_azure_blob_list(container_name, prefix)
     elif CLOUD_PROVIDER == "gcs":
         return get_gcs_blob_list(container_name, prefix)
     else:
@@ -68,7 +68,7 @@ def download_from_azure(blob_name: str, container_name: str) -> io.BytesIO:
     return io.BytesIO(data)
 
 # Get blob list from Azure Blob Storage
-def get_blob_list(container_name: str, prefix: str = "") -> list:
+def get_azure_blob_list(container_name: str, prefix: str = "") -> list:
     """Retrieve a list of blobs in the specified Azure container, optionally filtered by prefix."""
     blob_service_client = BlobServiceClient.from_connection_string(AZURE_CONNECTION_STRING)
     container_client = blob_service_client.get_container_client(container_name)
