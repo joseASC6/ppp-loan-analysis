@@ -7,7 +7,7 @@ from config.config import AZURE_CONNECTION_STRING, DW_CONNECTION_STRING, DB_SCHE
 from utils.azure_utils import download_from_azure, upload_to_azure, get_azure_blob_list, upload_to_sql
 from utils.gcs_utils import download_from_gcs, upload_to_gcs, get_gcs_blob_list, upload_to_bigquery
 
-def drop_and_log(df, dropped_df, mask, reason):
+def drop_and_log(df: pd.DataFrame, dropped_df: pd.DataFrame, mask: pd.Series, reason: str) -> tuple:
     """Append dropped rows with reason to dropped_df and return filtered df and updated dropped_df."""
     if mask.any():
         dropped_rows = df[mask].copy()

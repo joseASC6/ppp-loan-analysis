@@ -1,7 +1,7 @@
 import pandas as pd
 import io
-from utils.common import df_to_bytesio, download_from_cloud, upload_to_cloud
-from config.config import RAW_CONTAINER, CLEAN_CONTAINER
+from utils.common import df_to_bytesio, download_from_cloud, upload_to_cloud, drop_and_log
+from config.config import RAW_CONTAINER, CLEAN_CONTAINER, DROPPED_CONTAINER
 
 def clean_gdp_data():
     """
@@ -19,14 +19,19 @@ def clean_gdp_data():
     print(f"GDP data has {len(df)} rows and {len(df.columns)} columns.")
     # Clean the GDP data
     print("Cleaning GDP data...")
-    #Drop all the records where 2017, 2018, 2019, 2020, 2021, 2022 = "(NA)" 
-    # Ex: df_gdp = df_gdp[df_gdp['2017'] != "(NA)"]
-    for year in ['2017', '2018', '2019', '2020', '2021', '2022']:
-        df = df[df[year] != "(NA)"]
 
     # Keep only the columns we need
     selected_columns = ['GeoFIPS', 'GeoName', 'Region', 'Description', '2017', '2018', '2019', '2020', '2021', '2022']
     df = df[selected_columns]
+
+    dropped_df = pd.DataFrame(columns=df.columns.tolist() + ['drop_reason'])
+
+    #Drop all the records where 2017, 2018, 2019, 2020, 2021, 2022 = "(NA)" 
+    # Ex: df_gdp = df_gdp[df_gdp['2017'] != "(NA)"]
+    for year in ['2017', '2018', '2019', '2020', '2021', '2022']:
+        mask = df[year] == "(NA)"
+        df, dropped_df = drop_and_log(df, dropped_df, mask, f"{year}_na")
+
 
     # Pivot the dataframe
     df = df.melt(id_vars=["GeoFIPS", "GeoName", "Region", "Description"],
@@ -69,7 +74,16 @@ def clean_gdp_data():
     print(f"Cleaned GDP data has {len(df)} rows and {len(df.columns)} columns.")
 
     # Upload the cleaned data to Azure Blob Storage
-    cleaned_blob_name = "GDP-data/cleaned_gdp_data.csv"
+    gdp_folder = "GDP-data"
+    cleaned_blob_name = f"{gdp_folder}/cleaned_gdp_data.csv"
     output = df_to_bytesio(df, index=False, encoding='utf-8')
     upload_to_cloud(data=output, blob_name=cleaned_blob_name, container_name=CLEAN_CONTAINER)
     print(f"\nCleaned GDP data uploaded to {cleaned_blob_name} in {CLEAN_CONTAINER} container.\n")
+
+    # If there are any dropped rows, upload them to the dropped container
+    if not dropped_df.empty:
+        print(f"\nDropped GDP data has {len(dropped_df)} rows.")
+        dropped_blob_name = f"{gdp_folder}/dropped_gdp_data.csv"
+        dropped_output = df_to_bytesio(dropped_df, index=False, encoding='utf-8')
+        upload_to_cloud(data=dropped_output, blob_name=dropped_blob_name, container_name=DROPPED_CONTAINER)
+        print(f"\nDropped GDP data uploaded to {dropped_blob_name} in {DROPPED_CONTAINER} container.\n")
