@@ -2,7 +2,6 @@
 <project name="ppp_loan_lgl_dw" id="LogicalDesign-2124" database="LogicalDesign" >
 	<comment><![CDATA[Analysis of the PPP Loans that were issued to Small Businesses during COVID-19.]]></comment>
 	<schema name="INSTANCE" catalogname="ppp_loan_lgl_dw" >
-		<table name="Entity" />
 		<table name="dim_borrower" prior="Entity" >
 			<column name="borrower_id" type="BIGINT" jt="-5" mandatory="y" />
 			<column name="borrower_name" type="VARCHAR" length="200" jt="12" />

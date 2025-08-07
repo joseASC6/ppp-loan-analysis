@@ -4,7 +4,7 @@
 	<schema name="INSTANCE" catalogname="ppp_loan_lgl_dw" >
 		<table name="Entity" />
 		<table name="dim_borrower" prior="Entity" >
-			<column name="borrower_id" type="INT" jt="4" mandatory="y" />
+			<column name="borrower_id" type="BIGINT" jt="-5" mandatory="y" />
 			<column name="borrower_name" type="VARCHAR" length="200" jt="12" />
 			<column name="borrower_address" type="VARCHAR" length="200" jt="12" />
 			<column name="borrower_city" type="VARCHAR" length="100" jt="12" />
@@ -77,7 +77,7 @@
 			</index>
 		</table>
 		<table name="dim_originating_lender" prior="Entity" >
-			<column name="originating_lender_id" type="INT" jt="4" mandatory="y" />
+			<column name="originating_lender_id" type="BIGINT" jt="-5" mandatory="y" />
 			<column name="originating_lender_location_id" type="INT" jt="4" />
 			<column name="originating_lender" type="VARCHAR" length="200" jt="12" />
 			<column name="originating_lender_city" type="VARCHAR" length="200" jt="12" />
@@ -100,13 +100,13 @@
 			</index>
 		</table>
 		<table name="dim_servicing_lender" prior="Entity" >
-			<column name="servicing_lender_id" type="INT" jt="4" mandatory="y" />
+			<column name="servicing_lender_id" type="BIGINT" jt="-5" mandatory="y" />
 			<column name="servicing_lender_location_id" type="INT" jt="4" />
 			<column name="servicing_lender_name" type="VARCHAR" length="200" jt="12" />
 			<column name="servicing_lender_address" type="VARCHAR" length="200" jt="12" />
 			<column name="servicing_lender_city" type="VARCHAR" length="100" jt="12" />
 			<column name="servicing_lender_state" type="VARCHAR" length="200" jt="12" />
-			<column name="servicing_lender_zip" type="INT" jt="4" />
+			<column name="servicing_lender_zip" type="VARCHAR" length="200" jt="12" />
 			<index name="pk_dim_servicing_lender" unique="PRIMARY_KEY" >
 				<column name="servicing_lender_id" />
 			</index>
@@ -137,15 +137,15 @@
 		</table>
 		<table name="facts_ppp" prior="Entity" >
 			<column name="facts_ppp_id" prior="facts_id" type="BIGINT" jt="-5" mandatory="y" />
-			<column name="loan_number" type="INT" jt="4" />
+			<column name="loan_number" type="BIGINT" jt="-5" />
 			<column name="naics_code" type="INT" jt="4" mandatory="y" />
 			<column name="geofips" type="INT" jt="4" mandatory="y" />
 			<column name="date_approved_id" type="BIGINT" jt="-5" mandatory="y" />
 			<column name="loan_status_date_id" type="BIGINT" jt="-5" mandatory="y" />
 			<column name="forgiveness_date_id" type="BIGINT" jt="-5" mandatory="y" />
-			<column name="borrower_id" type="INT" jt="4" mandatory="y" />
-			<column name="originating_lender_id" type="INT" jt="4" mandatory="y" />
-			<column name="servicing_lender_id" type="INT" jt="4" mandatory="y" />
+			<column name="borrower_id" type="BIGINT" jt="-5" mandatory="y" />
+			<column name="originating_lender_id" type="BIGINT" jt="-5" mandatory="y" />
+			<column name="servicing_lender_id" type="BIGINT" jt="-5" mandatory="y" />
 			<column name="term_id" type="INT" jt="4" mandatory="y" />
 			<column name="loan_status_id" type="INT" jt="4" mandatory="y" />
 			<column name="processing_method_id" type="INT" jt="4" mandatory="y" />
