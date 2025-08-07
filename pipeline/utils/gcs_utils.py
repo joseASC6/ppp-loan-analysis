@@ -2,46 +2,46 @@ import pandas as pd
 import io
 from google.cloud import storage
 from google.cloud import bigquery
-from config.config import DB_SCHEMA
+from config.config import DB_SCHEMA, GCS_BUCKET_NAME
 
-def upload_to_gcs(data: io.BytesIO, bucket_name: str, blob_name: str) -> None:
+def upload_to_gcs(data: io.BytesIO, folder: str, blob_name: str) -> None:
     """Upload a BytesIO object to Google Cloud Storage."""
     client = storage.Client()
-    bucket = client.bucket(bucket_name)
-    blob = bucket.blob(blob_name)
+    bucket = client.bucket(GCS_BUCKET_NAME)
+    blob = bucket.blob(f"{folder}/{blob_name}")
 
-    print(f"\nUploading {blob_name} to GCS bucket {bucket_name}...")
-    blob.upload_from_file(data, content_type="application/octet-stream")
-    print(f"Success: Uploaded {blob_name} to GCS bucket {bucket_name}.\n")
+    print(f"\nUploading {blob_name} to GCS bucket {GCS_BUCKET_NAME}...")
+    blob.upload_from_file(data)
+    print(f"Success: Uploaded {blob_name} to GCS bucket {GCS_BUCKET_NAME}.\n")
 
-def download_from_gcs(bucket_name: str, blob_name: str) -> io.BytesIO:
+def download_from_gcs(folder: str, blob_name: str) -> io.BytesIO:
     """Download a file from Google Cloud Storage and return it as a BytesIO object."""
     client = storage.Client()
-    bucket = client.bucket(bucket_name)
-    blob = bucket.blob(blob_name)
+    bucket = client.bucket(GCS_BUCKET_NAME)
+    blob = bucket.blob(f"{folder}/{blob_name}")
 
-    print(f"\nDownloading {blob_name} from GCS bucket {bucket_name}...")
+    print(f"\nDownloading {blob_name} from GCS bucket {GCS_BUCKET_NAME}...")
     data = io.BytesIO()
     blob.download_to_file(data)
     data.seek(0)  # Reset the stream position to the beginning
-    print(f"Success: Downloaded {blob_name} from GCS bucket {bucket_name}.\n")
+    print(f"Success: Downloaded {blob_name} from GCS bucket {GCS_BUCKET_NAME}.\n")
 
     return data
 
-def get_gcs_blob_list(bucket_name: str, prefix: str = "") -> list:
+def get_gcs_blob_list(folder: str, prefix: str = "") -> list:
     """Retrieve a list of blobs in the specified GCS bucket, optionally filtered by prefix."""
     client = storage.Client()
-    bucket = client.bucket(bucket_name)
+    bucket = client.bucket(GCS_BUCKET_NAME)
 
-    print(f"\nRetrieving blob list from GCS bucket {bucket_name} with prefix '{prefix}'...")
-    blobs = bucket.list_blobs(prefix=prefix)
+    print(f"\nRetrieving blob list from GCS bucket {GCS_BUCKET_NAME} with prefix '{prefix}'...")
+    blobs = bucket.list_blobs(prefix=f"{folder}/{prefix}")
     blob_list = [blob.name for blob in blobs]
 
     if not blob_list:
-        print(f"No blobs found in GCS bucket {bucket_name} with prefix '{prefix}'.")
+        print(f"No blobs found in GCS bucket {GCS_BUCKET_NAME} with prefix '{prefix}'.")
         return []
     
-    print(f"Success: Retrieved {len(blob_list)} blobs from GCS bucket {bucket_name} with prefix '{prefix}'.\n")
+    print(f"Success: Retrieved {len(blob_list)} blobs from GCS bucket {GCS_BUCKET_NAME} with prefix '{prefix}'.\n")
     return blob_list
 
 def upload_to_bigquery(df: pd.DataFrame, table_name: str) -> None:
