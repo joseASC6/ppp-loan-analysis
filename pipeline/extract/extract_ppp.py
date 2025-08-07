@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup, Tag
 import pandas as pd
 import requests
-from utils.common import download_url_to_bytes, upload_to_azure, df_to_bytesio
+from utils.common import download_url_to_bytes, upload_to_cloud, df_to_bytesio
 from config.config import RAW_CONTAINER
 
 def extract_ppp_data():
@@ -9,7 +9,6 @@ def extract_ppp_data():
     Extracts PPP data from the U.S. Small Business Administration (SBA) website, and uploads it to Azure Blob Storage.
     """
     print("Starting PPP data extraction...\n")
-    container_name = "raw-data"
     ppp_url = "https://data.sba.gov/dataset/ppp-foia"
     response = requests.get(ppp_url)
     soup = BeautifulSoup(response.content, 'html.parser')
@@ -32,5 +31,5 @@ def extract_ppp_data():
                 # Upload to Azure Blob Storage
                 file_name = "PPP-data/" + file_name
                 output = df_to_bytesio(df, index=False, encoding='utf-8')
-                upload_to_azure(output, file_name, container_name)
+                upload_to_cloud(data=output, blob_name=file_name, container_name=RAW_CONTAINER)
     print("PPP data extraction completed.\n")
