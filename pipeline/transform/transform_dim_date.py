@@ -1,7 +1,8 @@
 import pandas as pd
-from utils.common import upload_to_azure, df_to_bytesio, get_blob_list, download_from_azure
-import calendar
+from utils.common import df_to_bytesio, download_from_cloud, upload_to_cloud, get_blob_list_from_cloud
+from config.config import FINAL_CONTAINER
 import io
+import calendar
 
 def transform_dim_date():
     """
@@ -29,13 +30,13 @@ def transform_dim_date():
     start_date = pd.Timestamp("2017-01-01 00:00:00") # Minimum date in the GDP data
     end_date = pd.Timestamp("2024-09-30 00:00:00") # Last date in the PPP data
 
-    ppp_blobs = get_blob_list(final_container, prefix="facts_ppp")
+    ppp_blobs = get_blob_list_from_cloud(final_container, prefix="facts_ppp")
     if not ppp_blobs:
         print("No facts_ppp blobs found. Using default start and end dates.")
     else:
         date_cols = ['date_approved_id', 'loan_status_date_id', 'forgiveness_date_id']
         for blob_name in ppp_blobs:
-            data = download_from_azure(blob_name=blob_name, container_name=final_container)
+            data = download_from_cloud(blob_name=blob_name, container_name=final_container)
             df = pd.read_csv(data, encoding="utf-8") 
             for col in date_cols:
                 if col in df.columns:
@@ -84,9 +85,9 @@ def transform_dim_date():
 
     print(f"Transformed dim_date has {len(dim_date)} rows and {len(dim_date.columns)} columns.")
 
-    # Upload the dimension date data to Azure Blob Storage
+    # Upload the dimension date data to Cloud Storage
     dim_date_blob_name = "dim_date.csv"
     output = df_to_bytesio(dim_date, index=False, encoding='utf-8')
-    upload_to_azure(output, dim_date_blob_name, final_container)
+    upload_to_cloud(data=output, blob_name=dim_date_blob_name, container_name=FINAL_CONTAINER)
     print("dim_date transformation completed.\n")
 
