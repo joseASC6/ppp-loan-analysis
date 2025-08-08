@@ -1,6 +1,27 @@
 import pandas as pd
 import io
-from utils.common import download_from_azure, upload_to_azure, get_blob_list, df_to_bytesio
+from utils.common import df_to_bytesio, download_from_cloud, upload_to_cloud, get_blob_list_from_cloud
+from config.config import FINAL_CONTAINER, CLEAN_CONTAINER
+
+
+def create_dim_loan_status() -> pd.DataFrame:
+    """Create dim_loan_status DataFrame from the provided DataFrame."""
+    dim_loan_status = pd.DataFrame({
+        'loan_status_id': [1, 2],
+        'loan_status': ['Paid in Full', 'Charged Off']
+    })
+    dim_loan_status['loan_status'] = dim_loan_status['loan_status'].astype(pd.StringDtype("pyarrow"))
+    dim_loan_status['loan_status_id'] = dim_loan_status['loan_status_id'].astype(int)
+    return dim_loan_status
+
+def create_dim_processing_method() -> pd.DataFrame:
+    dim_processing_method = pd.DataFrame({
+        'processing_method_id': [1, 2],
+        'processing_method': ['PPP', 'PPS']
+    })
+    dim_processing_method['processing_method'] = dim_processing_method['processing_method'].astype(pd.StringDtype("pyarrow"))
+    dim_processing_method['processing_method_id'] = dim_processing_method['processing_method_id'].astype(int)
+    return dim_processing_method
 
 def transform_dim_ppp_data():
     """
@@ -19,11 +40,10 @@ def transform_dim_ppp_data():
     Uploads the transformed data to Azure Blob Storage
     """
     print("Transforming PPP data into dimensions...\n")
-    cleaned_container = "cleaned-data"
     clean_ppp_blob_name = "PPP-data/"
 
     # Get the list of cleaned PPP data blobs
-    ppp_blobs = get_blob_list(cleaned_container, prefix=clean_ppp_blob_name)
+    ppp_blobs = get_blob_list_from_cloud(CLEAN_CONTAINER, prefix=clean_ppp_blob_name)
     if not ppp_blobs:
         print("No cleaned PPP data blobs found.")
         return
@@ -49,7 +69,7 @@ def transform_dim_ppp_data():
     unique_business_age = set()
 
     for blob_name in ppp_blobs:
-        blob_data = download_from_azure(blob_name=blob_name, container_name=cleaned_container)
+        blob_data = download_from_cloud(blob_name=blob_name, container_name=CLEAN_CONTAINER)
         df = pd.read_csv(blob_data, encoding="utf-8", low_memory=False)
 
         # Set cols veteran and nonprofit as boolean
@@ -91,21 +111,11 @@ def transform_dim_ppp_data():
     dim_servicing_lender['servicing_lender_id'] = dim_servicing_lender.index + 1
 
     # dim_loan_status
-    dim_loan_status = pd.DataFrame({
-        'loan_status_id': [1, 2],
-        'loan_status': ['Paid in Full', 'Charged Off']
-    })
-    dim_loan_status['loan_status'] = dim_loan_status['loan_status'].astype(pd.StringDtype("pyarrow"))
-    dim_loan_status['loan_status_id'] = dim_loan_status['loan_status_id'].astype(int)
+    dim_loan_status = create_dim_loan_status()
 
     # dim_processing_method
-    dim_processing_method = pd.DataFrame({
-        'processing_method_id': [1, 2],
-        'processing_method': ['PPP', 'PPS']
-    })
-    dim_processing_method['processing_method'] = dim_processing_method['processing_method'].astype(pd.StringDtype("pyarrow"))
-    dim_processing_method['processing_method_id'] = dim_processing_method['processing_method_id'].astype(int)
-
+    dim_processing_method = create_dim_processing_method()
+    
     # dim_business_type
     dim_business_type = pd.DataFrame({
         'business_type_id': range(1, len(unique_business_type) + 1),
@@ -138,7 +148,6 @@ def transform_dim_ppp_data():
     dim_business_age['business_age_id'] = dim_business_age['business_age_id'].astype(int)
 
     # Upload the DataFrames to Azure Blob Storage
-    final_container = "final-data"
     dim_loan_status_blob_name = "dim_loan_status.csv"
     dim_processing_method_blob_name = "dim_processing_method.csv"
     dim_business_type_blob_name = "dim_business_type.csv"
@@ -151,13 +160,13 @@ def transform_dim_ppp_data():
 
     # Upload each DataFrame to Azure Blob Storage
     print("Uploading dimension tables to Azure Blob Storage...\n")
-    upload_to_azure(df_to_bytesio(dim_loan_status), dim_loan_status_blob_name, final_container)
-    upload_to_azure(df_to_bytesio(dim_processing_method), dim_processing_method_blob_name, final_container)
-    upload_to_azure(df_to_bytesio(dim_business_type), dim_business_type_blob_name, final_container)
-    upload_to_azure(df_to_bytesio(dim_sba_office), dim_sba_office_blob_name, final_container)
-    upload_to_azure(df_to_bytesio(dim_term), dim_term_blob_name, final_container)
-    upload_to_azure(df_to_bytesio(dim_business_age), dim_business_age_blob_name, final_container)
-    upload_to_azure(df_to_bytesio(dim_originating_lender), dim_originating_lender_blob_name, final_container)
-    upload_to_azure(df_to_bytesio(dim_borrower), dim_borrower_blob_name, final_container)
-    upload_to_azure(df_to_bytesio(dim_servicing_lender), dim_servicing_lender_blob_name, final_container)
+    upload_to_cloud(data=df_to_bytesio(dim_loan_status), blob_name=dim_loan_status_blob_name, container_name=FINAL_CONTAINER)
+    upload_to_cloud(data=df_to_bytesio(dim_processing_method), blob_name=dim_processing_method_blob_name, container_name=FINAL_CONTAINER)
+    upload_to_cloud(data=df_to_bytesio(dim_business_type), blob_name=dim_business_type_blob_name, container_name=FINAL_CONTAINER)
+    upload_to_cloud(data=df_to_bytesio(dim_sba_office), blob_name=dim_sba_office_blob_name, container_name=FINAL_CONTAINER)
+    upload_to_cloud(data=df_to_bytesio(dim_term), blob_name=dim_term_blob_name, container_name=FINAL_CONTAINER)
+    upload_to_cloud(data=df_to_bytesio(dim_business_age), blob_name=dim_business_age_blob_name, container_name=FINAL_CONTAINER)
+    upload_to_cloud(data=df_to_bytesio(dim_originating_lender), blob_name=dim_originating_lender_blob_name, container_name=FINAL_CONTAINER)
+    upload_to_cloud(data=df_to_bytesio(dim_borrower), blob_name=dim_borrower_blob_name, container_name=FINAL_CONTAINER)
+    upload_to_cloud(data=df_to_bytesio(dim_servicing_lender), blob_name=dim_servicing_lender_blob_name, container_name=FINAL_CONTAINER)
     print("\nTransformation completed.")
