@@ -1,7 +1,7 @@
 import pandas as pd
 import io
 from utils.common import df_to_bytesio, download_from_cloud, upload_to_cloud
-from config.config import CLEAN_CONTAINER, FINAL_CONTAINER
+from config.config import CLEAN_CONTAINER, FINAL_CONTAINER, GDP_FOLDER
 
 def create_dim_geography(df):
     dim_geography = df[['geofips', 'geo_name', 'region']].drop_duplicates()
@@ -62,7 +62,7 @@ def transform_gdp_data():
     Uploads the transformed data to cloud storage.
     """
     print("Transforming GDP data...\n")
-    clean_gdp_blob_name = "GDP-data/cleaned_gdp_data.csv"
+    clean_gdp_blob_name = f"{GDP_FOLDER}/cleaned_gdp_data.csv"
 
     # Download the cleaned GDP data from cloud storage
     gdp_data = download_from_cloud(blob_name=clean_gdp_blob_name, container_name=CLEAN_CONTAINER)

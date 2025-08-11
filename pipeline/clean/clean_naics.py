@@ -1,7 +1,7 @@
 import pandas as pd
 import io
 from utils.common import df_to_bytesio, download_from_cloud, upload_to_cloud, drop_and_log
-from config.config import RAW_CONTAINER, CLEAN_CONTAINER, DROPPED_CONTAINER
+from config.config import RAW_CONTAINER, CLEAN_CONTAINER, DROPPED_CONTAINER, NAICS_FOLDER
 
 def clean_naics_data():
     """
@@ -10,7 +10,7 @@ def clean_naics_data():
     Uploads the cleaned data to Azure Blob Storage.
     """
     print("Starting NAICS data cleaning...\n")
-    naics_blob_name = "NAICS-data/2022_NAICS_Descriptions.xlsx"
+    naics_blob_name = f"{NAICS_FOLDER}/2022_NAICS_Descriptions.xlsx"
 
     # Download the NAICS data from Azure Blob Storage
     naics_data = download_from_cloud(blob_name=naics_blob_name, container_name=RAW_CONTAINER)
@@ -54,8 +54,7 @@ def clean_naics_data():
     print(f"Cleaned NAICS data has {len(df)} rows and {len(df.columns)} columns.")
 
     # Upload the cleaned data to Azure Blob Storage
-    naics_folder = "NAICS-data"
-    cleaned_blob_name = f"{naics_folder}/cleaned_naics_data.csv"
+    cleaned_blob_name = f"{NAICS_FOLDER}/cleaned_naics_data.csv"
     output = df_to_bytesio(df, index=False, encoding='utf-8')
     upload_to_cloud(data=output, blob_name=cleaned_blob_name, container_name=CLEAN_CONTAINER)
     print(f"\nCleaned NAICS data uploaded to {cleaned_blob_name} in {CLEAN_CONTAINER} container.\n")
@@ -63,7 +62,7 @@ def clean_naics_data():
     # If there are any dropped rows, upload them to the dropped container
     if not dropped_df.empty:
         print(f"\nDropped NAICS data has {len(dropped_df)} rows.")
-        dropped_blob_name = f"{naics_folder}/dropped_raw_naics_data.csv"
+        dropped_blob_name = f"{NAICS_FOLDER}/dropped_raw_naics_data.csv"
         dropped_output = df_to_bytesio(dropped_df, index=False, encoding='utf-8')
         upload_to_cloud(data=dropped_output, blob_name=dropped_blob_name, container_name=DROPPED_CONTAINER)
         print(f"\nDropped NAICS data uploaded to {dropped_blob_name} in {DROPPED_CONTAINER} container.\n")

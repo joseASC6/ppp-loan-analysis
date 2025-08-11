@@ -1,7 +1,7 @@
 import pandas as pd
 import io, zipfile
 from utils.common import download_url_to_bytes, upload_to_cloud, df_to_bytesio
-from config.config import RAW_CONTAINER
+from config.config import RAW_CONTAINER, GDP_FOLDER
 
 def extract_gdp_data():
     """
@@ -23,6 +23,7 @@ def extract_gdp_data():
 
                     # Upload to Azure Blob Storage
                     output = df_to_bytesio(df, index=False, encoding='utf-8')
+                    filename = f"{GDP_FOLDER}/{filename}"
                     upload_to_cloud(data=output, blob_name=filename, container_name=RAW_CONTAINER)
 
     print(f"\nGDP data extraction completed.\n")

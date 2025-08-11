@@ -1,8 +1,7 @@
 from sqlalchemy import create_engine
 import pandas as pd
-from utils.common import upload_to_sql, df_to_bytesio, download_from_azure, get_blob_list
-import io
-
+from utils.common import upload_to_sql, df_to_bytesio, download_from_azure, get_blob_list_from_cloud
+from config.config import FINAL_CONTAINER
 def load_to_PostgreSQL():
     """
     Upload a dimensions and facts to PostgreSQL database.
@@ -24,7 +23,6 @@ def load_to_PostgreSQL():
         - dim_geography
     """
 
-    final_container = "final-data"
 
     dimensions = [
         "dim_loan_status",
@@ -53,13 +51,13 @@ def load_to_PostgreSQL():
     else:
         print(f"Found {len(dimensions)} dimensions to upload.")
         for dim in dimensions:
-            data = download_from_azure(blob_name=f"{dim}.csv", container_name=final_container)
+            data = download_from_azure(blob_name=f"{dim}.csv", container_name=FINAL_CONTAINER)
             df = pd.read_csv(data, encoding="utf-8")
             upload_to_sql(df=df, table_name=f"{dim}")
         print("All dimensions uploaded to PostgreSQL successfully.\n")
 
     print("Uploading facts to PostgreSQL...")
-    gdp_data = download_from_azure(blob_name="facts_gdp.csv", container_name=final_container)
+    gdp_data = download_from_azure(blob_name="facts_gdp.csv", container_name=FINAL_CONTAINER)
     df = pd.read_csv(gdp_data, encoding="utf-8")
     upload_to_sql(df=df, table_name="facts_gdp")
 
@@ -67,13 +65,13 @@ def load_to_PostgreSQL():
 
     print("Uploading facts_ppp to PostgreSQL...\n")
     # Get the list of blobs in the final container /facts_ppp
-    ppp_blobs = get_blob_list(final_container, prefix="facts_ppp")
+    ppp_blobs = get_blob_list_from_cloud(FINAL_CONTAINER, prefix="facts_ppp")
     if not ppp_blobs:
         print("No facts_ppp blobs found.")
         return
     print(f"Found {len(ppp_blobs)} facts_ppp blobs.")
     for blob_name in ppp_blobs:
-        data = download_from_azure(blob_name=blob_name, container_name=final_container)
+        data = download_from_azure(blob_name=blob_name, container_name=FINAL_CONTAINER)
         df = pd.read_csv(data, encoding="utf-8")
         upload_to_sql(df=df, table_name="facts_ppp")
     print("All facts_ppp uploaded to PostgreSQL successfully.\n")

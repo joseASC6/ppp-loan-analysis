@@ -1,9 +1,7 @@
 import io
 import pandas as pd
-from azure.storage.blob import BlobServiceClient
 import requests
-from sqlalchemy import create_engine
-from config.config import AZURE_CONNECTION_STRING, DW_CONNECTION_STRING, DB_SCHEMA, CLOUD_PROVIDER
+from config.config import CLOUD_PROVIDER
 from utils.azure_utils import download_from_azure, upload_to_azure, get_azure_blob_list, upload_to_sql
 from utils.gcs_utils import download_from_gcs, upload_to_gcs, get_gcs_blob_list, upload_to_bigquery
 

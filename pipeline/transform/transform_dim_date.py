@@ -1,6 +1,6 @@
 import pandas as pd
 from utils.common import df_to_bytesio, download_from_cloud, upload_to_cloud, get_blob_list_from_cloud
-from config.config import FINAL_CONTAINER
+from config.config import FINAL_CONTAINER, PPP_FOLDER
 import io
 import calendar
 
@@ -23,20 +23,19 @@ def transform_dim_date():
         cal = calendar.monthcalendar(year, month)
         week_number = (day - 1) // 7 + 1
         return week_number
-    final_container = "final-data"
 
     # Use the facts_ppp data to determine the start and end dates
     print("Determining start and end dates for dim_date...")
     start_date = pd.Timestamp("2017-01-01 00:00:00") # Minimum date in the GDP data
     end_date = pd.Timestamp("2024-09-30 00:00:00") # Last date in the PPP data
 
-    ppp_blobs = get_blob_list_from_cloud(final_container, prefix="facts_ppp")
+    ppp_blobs = get_blob_list_from_cloud(FINAL_CONTAINER, prefix=PPP_FOLDER)
     if not ppp_blobs:
         print("No facts_ppp blobs found. Using default start and end dates.")
     else:
         date_cols = ['date_approved_id', 'loan_status_date_id', 'forgiveness_date_id']
         for blob_name in ppp_blobs:
-            data = download_from_cloud(blob_name=blob_name, container_name=final_container)
+            data = download_from_cloud(blob_name=blob_name, container_name=FINAL_CONTAINER)
             df = pd.read_csv(data, encoding="utf-8") 
             for col in date_cols:
                 if col in df.columns:

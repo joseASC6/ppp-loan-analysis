@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup, Tag
 import pandas as pd
 import requests
 from utils.common import download_url_to_bytes, upload_to_cloud, df_to_bytesio
-from config.config import RAW_CONTAINER
+from config.config import RAW_CONTAINER, PPP_FOLDER
 
 def extract_ppp_data():
     """
@@ -29,7 +29,7 @@ def extract_ppp_data():
                 print(f"CSV file has {len(df)} rows and {len(df.columns)} columns.")
 
                 # Upload to Azure Blob Storage
-                file_name = "PPP-data/" + file_name
+                file_name = f"{PPP_FOLDER}/{file_name}"
                 output = df_to_bytesio(df, index=False, encoding='utf-8')
                 upload_to_cloud(data=output, blob_name=file_name, container_name=RAW_CONTAINER)
     print("PPP data extraction completed.\n")

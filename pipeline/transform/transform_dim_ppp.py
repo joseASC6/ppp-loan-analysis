@@ -1,7 +1,7 @@
 import pandas as pd
 import io
 from utils.common import df_to_bytesio, download_from_cloud, upload_to_cloud, get_blob_list_from_cloud
-from config.config import FINAL_CONTAINER, CLEAN_CONTAINER
+from config.config import FINAL_CONTAINER, CLEAN_CONTAINER, PPP_FOLDER
 
 
 def create_dim_loan_status() -> pd.DataFrame:
@@ -40,10 +40,9 @@ def transform_dim_ppp_data():
     Uploads the transformed data to Azure Blob Storage
     """
     print("Transforming PPP data into dimensions...\n")
-    clean_ppp_blob_name = "PPP-data/"
 
     # Get the list of cleaned PPP data blobs
-    ppp_blobs = get_blob_list_from_cloud(CLEAN_CONTAINER, prefix=clean_ppp_blob_name)
+    ppp_blobs = get_blob_list_from_cloud(CLEAN_CONTAINER, prefix=PPP_FOLDER)
     if not ppp_blobs:
         print("No cleaned PPP data blobs found.")
         return

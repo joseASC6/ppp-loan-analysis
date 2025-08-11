@@ -1,7 +1,7 @@
 import pandas as pd
 import io
 from utils.common import df_to_bytesio, download_from_cloud, upload_to_cloud, drop_and_log
-from config.config import RAW_CONTAINER, CLEAN_CONTAINER, DROPPED_CONTAINER
+from config.config import RAW_CONTAINER, CLEAN_CONTAINER, DROPPED_CONTAINER, GDP_FOLDER
 
 def clean_gdp_data():
     """
@@ -10,7 +10,7 @@ def clean_gdp_data():
     Uploads the cleaned data to Azure Blob Storage.
     """
     print("Starting GDP data cleaning...\n")
-    gdp_blob_name = "GDP-data/CAGDP1__ALL_AREAS_2001_2023.csv"
+    gdp_blob_name = f"{GDP_FOLDER}/CAGDP1__ALL_AREAS_2001_2023.csv"
     # Download the GDP data from Azure Blob Storage
     gdp_data = download_from_cloud(blob_name=gdp_blob_name, container_name=RAW_CONTAINER)
     # Read the CSV file into a DataFrame
@@ -74,8 +74,7 @@ def clean_gdp_data():
     print(f"Cleaned GDP data has {len(df)} rows and {len(df.columns)} columns.")
 
     # Upload the cleaned data to Azure Blob Storage
-    gdp_folder = "GDP-data"
-    cleaned_blob_name = f"{gdp_folder}/cleaned_gdp_data.csv"
+    cleaned_blob_name = f"{GDP_FOLDER}/cleaned_gdp_data.csv"
     output = df_to_bytesio(df, index=False, encoding='utf-8')
     upload_to_cloud(data=output, blob_name=cleaned_blob_name, container_name=CLEAN_CONTAINER)
     print(f"\nCleaned GDP data uploaded to {cleaned_blob_name} in {CLEAN_CONTAINER} container.\n")
@@ -83,7 +82,7 @@ def clean_gdp_data():
     # If there are any dropped rows, upload them to the dropped container
     if not dropped_df.empty:
         print(f"\nDropped GDP data has {len(dropped_df)} rows.")
-        dropped_blob_name = f"{gdp_folder}/dropped_raw_gdp_data.csv"
+        dropped_blob_name = f"{GDP_FOLDER}/dropped_raw_gdp_data.csv"
         dropped_output = df_to_bytesio(dropped_df, index=False, encoding='utf-8')
         upload_to_cloud(data=dropped_output, blob_name=dropped_blob_name, container_name=DROPPED_CONTAINER)
         print(f"\nDropped GDP data uploaded to {dropped_blob_name} in {DROPPED_CONTAINER} container.\n")

@@ -1,7 +1,7 @@
 import pandas as pd
 import io
 from utils.common import df_to_bytesio, download_from_cloud, upload_to_cloud, get_blob_list_from_cloud, drop_and_log
-from config.config import FINAL_CONTAINER, CLEAN_CONTAINER, DROPPED_CONTAINER
+from config.config import FINAL_CONTAINER, CLEAN_CONTAINER, DROPPED_CONTAINER, PPP_FOLDER
 
 def transform_facts_ppp_data():
     """
@@ -11,7 +11,6 @@ def transform_facts_ppp_data():
     Uploads the transformed data to Azure Blob Storage
     """
     print("Transforming PPP data into facts...\n")
-    clean_ppp_blob_name = "PPP-data/"
     final_blob_name = "facts_ppp/facts_ppp"
 
     # Download All Dimension Tables from Azure Blob Storage
@@ -27,7 +26,7 @@ def transform_facts_ppp_data():
     dim_naics = pd.read_csv(download_from_cloud(blob_name='dim_naics.csv', container_name=FINAL_CONTAINER))
     # Download the cleaned PPP data
     # Get the list of cleaned PPP data blobs
-    ppp_blobs = get_blob_list_from_cloud(CLEAN_CONTAINER, prefix=clean_ppp_blob_name)
+    ppp_blobs = get_blob_list_from_cloud(CLEAN_CONTAINER, prefix=PPP_FOLDER)
     if not ppp_blobs:
         print("No cleaned PPP data blobs found.")
         return
@@ -104,7 +103,7 @@ def transform_facts_ppp_data():
 
         if not dropped_df.empty:
             print(f"\nDropped PPP data has {len(dropped_df)} rows.")
-            dropped_blob_name = f"PPP-data/dropped_clean_ppp_data_{file_count + 1}.csv"
+            dropped_blob_name = f"{PPP_FOLDER}/dropped_clean_ppp_data_{file_count + 1}.csv"
             dropped_output = df_to_bytesio(dropped_df, index=False, encoding='utf-8')
             upload_to_cloud(data=dropped_output, blob_name=dropped_blob_name, container_name=DROPPED_CONTAINER)
 
