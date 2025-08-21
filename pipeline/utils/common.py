@@ -25,7 +25,7 @@ def upload_to_cloud(data: io.BytesIO, blob_name: str, container_name: str) -> No
     """Upload a BytesIO object to cloud storage (Azure or GCS)."""
     if CLOUD_PROVIDER == "azure":
         upload_to_azure(data, blob_name, container_name)
-    elif CLOUD_PROVIDER == "gcs":
+    elif CLOUD_PROVIDER == "GCP":
         upload_to_gcs(data, blob_name, container_name)
     else:
         raise ValueError(f"Unsupported cloud provider: {CLOUD_PROVIDER}")
@@ -34,7 +34,7 @@ def download_from_cloud(blob_name: str, container_name: str) -> io.BytesIO:
     """Download a file from cloud storage (Azure or GCS) and return it as a BytesIO object."""
     if CLOUD_PROVIDER == "azure":
         return download_from_azure(blob_name, container_name)
-    elif CLOUD_PROVIDER == "gcs":
+    elif CLOUD_PROVIDER == "GCP":
         return download_from_gcs(blob_name, container_name)
     else:
         raise ValueError(f"Unsupported cloud provider: {CLOUD_PROVIDER}")
@@ -43,7 +43,7 @@ def get_blob_list_from_cloud(container_name: str, prefix: str = "") -> list:
     """Retrieve a list of blobs in the specified cloud storage container, optionally filtered by prefix."""
     if CLOUD_PROVIDER == "azure":
         return get_azure_blob_list(container_name, prefix)
-    elif CLOUD_PROVIDER == "gcs":
+    elif CLOUD_PROVIDER == "GCP":
         return get_gcs_blob_list(container_name, prefix)
     else:
         raise ValueError(f"Unsupported cloud provider: {CLOUD_PROVIDER}")
@@ -52,7 +52,7 @@ def upload_to_dw(df: pd.DataFrame, table_name: str) -> None:
     """Upload a DataFrame to cloud data warehouse (Azure SQL or BigQuery)."""
     if CLOUD_PROVIDER == "azure":
         upload_to_sql(df, table_name)
-    elif CLOUD_PROVIDER == "gcs":
+    elif CLOUD_PROVIDER == "GCP":
         upload_to_bigquery(df, table_name)
     else:
         raise ValueError(f"Unsupported cloud provider: {CLOUD_PROVIDER}")
