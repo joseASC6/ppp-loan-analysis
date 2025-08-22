@@ -2,8 +2,12 @@ import os
 from dotenv import load_dotenv
 from typing import Optional
 from pathlib import Path
+
 # Load environment variables from .env file
-load_dotenv(dotenv_path=Path(__file__).parents[2] / ".env")
+env_path = Path(__file__).parents[2] / ".env"
+
+if env_path.exists():
+    load_dotenv(dotenv_path=env_path)
 
 def get_env_var(key: str, fallback: Optional[str] = None) -> str:
     """Retrieve an environment variable with optional fallback."""
@@ -13,11 +17,11 @@ def get_env_var(key: str, fallback: Optional[str] = None) -> str:
     return value
 
 # Common environment variables
-AZURE_CONNECTION_STRING = get_env_var("AZURE_CONNECTION_STRING")
-DW_CONNECTION_STRING = get_env_var("DW_CONNECTION_STRING")
+AZURE_CONNECTION_STRING = get_env_var("AZURE_CONNECTION_STRING", "")
+DW_CONNECTION_STRING = get_env_var("DW_CONNECTION_STRING", "")
 DB_SCHEMA = get_env_var("DB_SCHEMA", "ppp-loan")
 
-CLOUD_PROVIDER = get_env_var("CLOUD_PROVIDER", "azure")
+CLOUD_PROVIDER = get_env_var("CLOUD_PROVIDER", "GCP")
 
 GCS_BUCKET_NAME = get_env_var("GCS_BUCKET_NAME", "ppp-loan-analysis")
 

@@ -23,6 +23,7 @@ def download_url_to_bytes(url: str) -> io.BytesIO:
 
 def upload_to_cloud(data: io.BytesIO, blob_name: str, container_name: str) -> None:
     """Upload a BytesIO object to cloud storage (Azure or GCS)."""
+    print(f"CLOUD_PROVIDER: '{CLOUD_PROVIDER}'")
     if CLOUD_PROVIDER == "azure":
         upload_to_azure(data, blob_name, container_name)
     elif CLOUD_PROVIDER == "GCP":
