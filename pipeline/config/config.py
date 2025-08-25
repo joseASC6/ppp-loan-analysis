@@ -21,6 +21,8 @@ CLOUD_PROVIDER = get_env_var("CLOUD_PROVIDER", "GCP")
 
 # GCP configuration
 GCS_BUCKET_NAME = get_env_var("GCS_BUCKET_NAME", "ppp-loan-analysis")
+GC_PROJECT_ID = get_env_var("GCP_PROJECT_ID", "ppp-loan-analysis")
+GC_DATASET_ID = get_env_var("GCP_DATASET_ID", "ppploan")
 
 # Azure configuration
 AZURE_CONNECTION_STRING = get_env_var("AZURE_CONNECTION_STRING", "")

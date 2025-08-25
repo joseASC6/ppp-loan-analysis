@@ -2,7 +2,7 @@ import pandas as pd
 import io
 from google.cloud import storage
 from google.cloud import bigquery
-from config.config import DB_SCHEMA, GCS_BUCKET_NAME
+from config.config import GCS_BUCKET_NAME, GC_DATASET_ID, GC_PROJECT_ID
 
 def upload_to_gcs(data: io.BytesIO, blob_name: str, folder: str) -> None:
     """Upload a BytesIO object to Google Cloud Storage."""
@@ -49,20 +49,17 @@ def get_gcs_blob_list(folder: str, prefix: str = "") -> list:
     print(f"Success: Retrieved {len(blob_list)} blobs from GCS bucket {GCS_BUCKET_NAME} with prefix '{prefix}'.\n")
     return blob_list
 
-def upload_to_bigquery(df: pd.DataFrame, table_name: str) -> None:
-    """Upload a DataFrame to Google BigQuery."""
-    client = bigquery.Client()
-    dataset_ref = client.dataset(DB_SCHEMA)
-    table_ref = dataset_ref.table(table_name)
-
-    print(f"\nUploading data to BigQuery table {table_name}...")
+def upload_to_bigquery(table_name: str, gcs_uri: str) -> None:
+    """Load GCS CSV to Google BigQuery."""
+    client = bigquery.Client(project=GC_PROJECT_ID)
+    table_ref = f"{GC_PROJECT_ID}.{GC_DATASET_ID}.{table_name}"
     job_config = bigquery.LoadJobConfig(
-        write_disposition="WRITE_APPEND",
         source_format=bigquery.SourceFormat.CSV,
+        skip_leading_rows=1,        
         autodetect=True,
+        write_disposition=bigquery.WriteDisposition.WRITE_APPEND
     )
-    
-    job = client.load_table_from_dataframe(df, table_ref, job_config=job_config)
+    job = client.load_table_from_uri(source_uris=gcs_uri, destination=table_ref, job_config=job_config)
+    print(f"Loading data from {gcs_uri} to BigQuery table {table_name}...")
     job.result()  # Wait for the job to complete
-    print(f"Success: Uploaded data to BigQuery table {table_name}.\n")
-    
+    print(f"Success: Loaded data from {gcs_uri} to BigQuery table {table_name}.\n")
