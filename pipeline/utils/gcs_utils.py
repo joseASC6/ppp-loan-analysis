@@ -18,9 +18,14 @@ def download_from_gcs(blob_name: str, folder: str) -> io.BytesIO:
     """Download a file from Google Cloud Storage and return it as a BytesIO object."""
     client = storage.Client()
     bucket = client.bucket(GCS_BUCKET_NAME)
-    blob = bucket.blob(f"{folder}/{blob_name}")
-
+    
     print(f"\nDownloading {blob_name} from GCS bucket {GCS_BUCKET_NAME}...")
+
+    if folder in blob_name:
+        blob = bucket.blob(blob_name)
+    else:
+        blob = bucket.blob(f"{folder}/{blob_name}")
+
     data = io.BytesIO()
     blob.download_to_file(data)
     data.seek(0)  # Reset the stream position to the beginning
