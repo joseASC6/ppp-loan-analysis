@@ -29,7 +29,7 @@ def transform_dim_date():
     start_date = pd.Timestamp("2017-01-01 00:00:00") # Minimum date in the GDP data
     end_date = pd.Timestamp("2024-09-30 00:00:00") # Last date in the PPP data
 
-    ppp_blobs = get_blob_list_from_cloud(FINAL_CONTAINER, prefix=PPP_FOLDER)
+    ppp_blobs = get_blob_list_from_cloud(FINAL_CONTAINER, prefix="facts_ppp")
     if not ppp_blobs:
         print("No facts_ppp blobs found. Using default start and end dates.")
     else:
