@@ -12,7 +12,8 @@ from transform.transform_gdp import transform_gdp_data
 from transform.transform_dim_date import transform_dim_date
 from transform.transform_dim_ppp import transform_dim_ppp_data
 from transform.transform_facts_ppp import transform_facts_ppp_data
-from load.load import load_to_PostgreSQL
+from load.load import load_to_PostgreSQL, load_to_BigQuery
+from config.config import CLOUD_PROVIDER
 
 def run_stage(stage: str, dataset: str):
     if stage == "extract":
@@ -55,8 +56,11 @@ def run_stage(stage: str, dataset: str):
             transform_dim_ppp_data()
     elif stage == "load":
         if dataset == "all":
-            load_to_PostgreSQL()
-            
+            if CLOUD_PROVIDER == "AWS":
+                load_to_PostgreSQL()
+            elif CLOUD_PROVIDER == "GCP":
+                load_to_BigQuery()
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run ETL pipeline for PPP Loan Project")
     parser.add_argument("--stage", choices=["extract", "clean", "transform", "load"], required=True, help="ETL stage to run")
