@@ -130,7 +130,7 @@ def clean_ppp_data():
         # Change veteran to boolean
         df['veteran'] = df['veteran'].map({'veteran': True, 'Non-veteran': False, 'Unanswered':None})
 
-        # Sentence case the string columns
+        # Title case the string columns
         df['borrower_address'] = df['borrower_address'].str.title()
         df['borrower_city'] = df['borrower_city'].str.title()
         df['originating_lender_city'] = df['originating_lender_city'].str.title()
