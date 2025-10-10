@@ -11,6 +11,8 @@ def transform_naics_data():
     """
     print("Transforming NAICS data...\n")
     # Download the cleaned NAICS data from Azure Blob Storage
+    # naics_data files: cleaned_naics_data_2022.csv, cleaned_naics_data_2017.csv
+    
     clean_naics_blob_name = f"{NAICS_FOLDER}/cleaned_naics_data.csv"
     naics_data = download_from_cloud(blob_name=clean_naics_blob_name, container_name=CLEAN_CONTAINER)
 

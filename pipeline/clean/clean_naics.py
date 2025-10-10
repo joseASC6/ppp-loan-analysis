@@ -10,54 +10,65 @@ def clean_naics_data():
     Uploads the cleaned data to Azure Blob Storage.
     """
     print("Starting NAICS data cleaning...\n")
-    naics_blob_name = f"{NAICS_FOLDER}/2022_NAICS_Descriptions.xlsx"
+    # naics_data files: 2022_NAICS_Descriptions.xlsx, 2017_NAICS_Descriptions.xlsx
+    naics_files = ['2022_NAICS_Descriptions.xlsx', '2017_NAICS_Descriptions.xlsx']
+    dropped_df = pd.DataFrame()  # DataFrame to log dropped rows
 
-    # Download the NAICS data from Azure Blob Storage
-    naics_data = download_from_cloud(blob_name=naics_blob_name, container_name=RAW_CONTAINER)
+    for naics_file in naics_files:
+        naics_year = naics_file.split('_')[0]
+        print(f"Processing NAICS data for year: {naics_year}")
+        naics_blob_name = f"{NAICS_FOLDER}/{naics_file}"
 
-    # Read the Excel file into a DataFrame
-    print(f"Reading NAICS data from {naics_blob_name}...")
-    df = pd.read_excel(naics_data, engine='openpyxl')
-    print(f"NAICS data has {len(df)} rows and {len(df.columns)} columns.")
+        # Download the NAICS data from Azure Blob Storage
+        naics_data = download_from_cloud(blob_name=naics_blob_name, container_name=RAW_CONTAINER)
 
-    # Clean the NAICS codes
-    print("Cleaning NAICS codes...")
+        # Read the Excel file into a DataFrame
+        print(f"Reading NAICS data from {naics_blob_name}...")
+        df = pd.read_excel(naics_data, engine='openpyxl')
+        print(f"NAICS data has {len(df)} rows and {len(df.columns)} columns.")
 
-    df.rename(columns={
-        'Code': 'naics_code',
-        'Title': 'naics_title',
-        'Description': 'description'
-    }, inplace=True)
+        # Clean the NAICS codes
+        print("Cleaning NAICS codes...")
 
-    dropped_df = pd.DataFrame(columns=df.columns.tolist() + ['drop_reason'])
+        df.rename(columns={
+            'Code': 'naics_code',
+            'Title': 'naics_title',
+            'Description': 'description'
+        }, inplace=True)
 
-    # Remove rows where 'naics_code' is not a number
-    # There are some generic NAICS codes that are not numbers, e.g. '31-33'
-    # Step 1: Remove rows where 'naics_code' is missing or null
-    mask_null = df['naics_code'].isnull()
-    df, dropped_df = drop_and_log(df, dropped_df, mask_null, 'naics_code_null')
+        # Initialize dropped_df with columns if empty
+        if dropped_df.empty:
+            dropped_df = pd.DataFrame(columns=df.columns.tolist() + ['drop_reason'])
+        else:
+            print(f"Dropped NAICS data has {len(dropped_df)} rows so far.")
 
-    # Step 2: Remove rows where 'naics_code' is not a number
-    
-    mask_not_numeric = ~df['naics_code'].astype(str).str.isnumeric()
-    df, dropped_df = drop_and_log(df, dropped_df, mask_not_numeric, 'naics_code_not_numeric')
-    
-    # Remove T from the end of 'naics_title'
-    # Some naics_titles end with a T, e.g. 'Tile and Terrazzo ContractorsT'
-    df['naics_title'] = df['naics_title'].str.rstrip('T')
+        # Remove rows where 'naics_code' is not a number
+        # There are some generic NAICS codes that are not numbers, e.g. '31-33'
+        # Step 1: Remove rows where 'naics_code' is missing or null
+        mask_null = df['naics_code'].isnull()
+        df, dropped_df = drop_and_log(df, dropped_df, mask_null, 'naics_code_null')
 
-    # Convert datatypes
-    df['naics_code'] = df['naics_code'].astype(int)
-    df['naics_title'] = df['naics_title'].astype(pd.StringDtype('pyarrow'))
-    df['description'] = df['description'].astype(pd.StringDtype('pyarrow'))
-    
-    print(f"Cleaned NAICS data has {len(df)} rows and {len(df.columns)} columns.")
+        # Step 2: Remove rows where 'naics_code' is not a number
+        
+        mask_not_numeric = ~df['naics_code'].astype(str).str.isnumeric()
+        df, dropped_df = drop_and_log(df, dropped_df, mask_not_numeric, 'naics_code_not_numeric')
+        
+        # Remove T from the end of 'naics_title'
+        # Some naics_titles end with a T, e.g. 'Tile and Terrazzo ContractorsT'
+        df['naics_title'] = df['naics_title'].str.rstrip('T')
 
-    # Upload the cleaned data to Azure Blob Storage
-    cleaned_blob_name = f"{NAICS_FOLDER}/cleaned_naics_data.csv"
-    output = df_to_bytesio(df, index=False, encoding='utf-8')
-    upload_to_cloud(data=output, blob_name=cleaned_blob_name, container_name=CLEAN_CONTAINER)
-    print(f"\nCleaned NAICS data uploaded to {cleaned_blob_name} in {CLEAN_CONTAINER} container.\n")
+        # Convert datatypes
+        df['naics_code'] = df['naics_code'].astype(int)
+        df['naics_title'] = df['naics_title'].astype(pd.StringDtype('pyarrow'))
+        df['description'] = df['description'].astype(pd.StringDtype('pyarrow'))
+        
+        print(f"Cleaned NAICS data has {len(df)} rows and {len(df.columns)} columns.")
+
+        # Upload the cleaned data to Azure Blob Storage
+        cleaned_blob_name = f"{NAICS_FOLDER}/cleaned_naics_data_{naics_year}.csv"
+        output = df_to_bytesio(df, index=False, encoding='utf-8')
+        upload_to_cloud(data=output, blob_name=cleaned_blob_name, container_name=CLEAN_CONTAINER)
+        print(f"\nCleaned NAICS data uploaded to {cleaned_blob_name} in {CLEAN_CONTAINER} container.\n")
 
     # If there are any dropped rows, upload them to the dropped container
     if not dropped_df.empty:
