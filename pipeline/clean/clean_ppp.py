@@ -17,7 +17,7 @@ def clean_ppp_data():
         return
     print(f"Found {len(ppp_blob_list)} PPP data files in the raw container.")
 
-    facts_ppp_id = 1
+    facts_ppp_id = int(1)
 
     for blob_name in ppp_blob_list:
         # Download the PPP data from Azure Blob Storage
@@ -234,7 +234,10 @@ def clean_ppp_data():
         df, dropped_df = drop_and_log(df, dropped_df, mask_forgiveness_date_id, "forgiveness_date_id_not_int")
 
         # Assign a facts_ppp_id to each row
-        df['facts_ppp_id'] = [facts_ppp_id + i for i in range(len(df))]
+        df['facts_ppp_id'] = [facts_ppp_id + i for i in range(len(df))].
+        # Set facts_ppp_id to int
+        df['facts_ppp_id'] = df['facts_ppp_id'].astype(int)
+        # Increment facts_ppp_id for the next file
         facts_ppp_id += len(df)
         
 
