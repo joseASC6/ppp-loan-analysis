@@ -151,6 +151,10 @@ def clean_ppp_data():
         df['forgiveness_date_id'] = pd.to_datetime(df['forgiveness_date_id']).dt.strftime('%Y%m%d%H')
         df['date_approved_id'] = pd.to_datetime(df['date_approved_id']).dt.strftime('%Y%m%d%H')
         df['loan_status_date_id'] = pd.to_datetime(df['loan_status_date_id']).dt.strftime('%Y%m%d%H')
+        # Drop the rows where loan_status_date_id is a string
+        mask_loan_status_date = ~df['loan_status_date_id'].str.match(r'^\d{10}$')
+        df, dropped_df = drop_and_log(df, dropped_df, mask_loan_status_date, "loan_status_date_id_not_date_format")
+
 
         # Change nonprofit to boolean
         df['nonprofit'] = df['nonprofit'].map({'Y': True})
