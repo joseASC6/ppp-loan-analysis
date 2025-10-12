@@ -98,6 +98,7 @@ def clean_ppp_data():
         dropped_df = pd.DataFrame(columns=df.columns.tolist() + ['drop_reason'])
 
         # Columns that can not contain empty values
+        """
         required_columns = [
             'borrower_state',
             'naics_code',
@@ -107,6 +108,34 @@ def clean_ppp_data():
             'jobs_reported',
             'business_type',
             'business_age_description'
+        ]"""
+        required_columns = [
+             'date_approved_id',
+             'sba_office_code',
+             'processing_method',
+             'borrower_name',
+             'borrower_address',
+             'borrower_city',
+             'borrower_state',
+             'borrower_zip',
+             'loan_status_date_id',
+             'loan_status',
+             'term_month',
+             'servicing_lender_location_id',
+             'servicing_lender_name',
+             'servicing_lender_address',
+             'servicing_lender_city',
+             'servicing_lender_state',
+             'servicing_lender_zip',
+             'business_age_description',
+             'project_county_name',
+             'project_state',
+             'naics_code',
+             'business_type'
+             'originating_lender_location_id',
+             'originating_lender',
+             'originating_lender_city',
+             'originating_lender_state'
         ]
         
         # Drop all rows where any of the required columns are empty
