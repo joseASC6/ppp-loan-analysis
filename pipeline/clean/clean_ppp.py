@@ -155,9 +155,15 @@ def clean_ppp_data():
         # Change nonprofit to boolean
         df['nonprofit'] = df['nonprofit'].map({'Y': True})
         df['nonprofit'] = df['nonprofit'].fillna(False).astype(bool)
+        # Drop the rows where nonprofit is a string and not a boolean
+        mask_nonprofit = ~df['nonprofit'].isin([True, False])
+        df, dropped_df = drop_and_log(df, dropped_df, mask_nonprofit, "nonprofit_not_boolean")
 
         # Change veteran to boolean
         df['veteran'] = df['veteran'].map({'veteran': True, 'Non-veteran': False, 'Unanswered':None})
+        # Drop the rows where veteran is a string and not a boolean
+        mask_veteran = ~df['veteran'].isin([True, False])
+        df, dropped_df = drop_and_log(df, dropped_df, mask_veteran, "veteran_not_boolean")
 
         # Title case the string columns
         df['borrower_address'] = df['borrower_address'].str.title()
