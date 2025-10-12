@@ -217,7 +217,23 @@ def clean_ppp_data():
         df['jobs_reported'] = df['jobs_reported'].astype(int)
         df['naics_code'] = df['naics_code'].astype(int)
 
-        # Assing a facts_ppp_id to each row
+        # Drop the rows where naics_code is a string and not a int
+        mask_naics_code = ~df['naics_code'].apply(lambda x: isinstance(x, int))
+        df, dropped_df = drop_and_log(df, dropped_df, mask_naics_code, "naics_code_not_int")
+        # Drop the rows where term_month is a string and not an int
+        mask_term_month = ~df['term_month'].apply(lambda x: isinstance(x, int))
+        df, dropped_df = drop_and_log(df, dropped_df, mask_term_month, "term_month_not_int")
+        # Drop the rows where sba_guaranty_percentage is a string and not a float
+        mask_sba_guaranty_percentage = ~df['sba_guaranty_percentage'].apply(lambda x: isinstance(x, float))
+        df, dropped_df = drop_and_log(df, dropped_df, mask_sba_guaranty_percentage, "sba_guaranty_percentage_not_float")
+        # Drop the rows where forgiveness_amount is a string and not a float
+        mask_forgiveness_amount = ~df['forgiveness_amount'].apply(lambda x: isinstance(x, float))
+        df, dropped_df = drop_and_log(df, dropped_df, mask_forgiveness_amount, "forgiveness_amount_not_float")
+        # Drop the rows where forgiveness_date_id is a string and not an int
+        mask_forgiveness_date_id = ~df['forgiveness_date_id'].apply(lambda x: isinstance(x, int))
+        df, dropped_df = drop_and_log(df, dropped_df, mask_forgiveness_date_id, "forgiveness_date_id_not_int")
+
+        # Assign a facts_ppp_id to each row
         df['facts_ppp_id'] = [facts_ppp_id + i for i in range(len(df))]
         facts_ppp_id += len(df)
         
