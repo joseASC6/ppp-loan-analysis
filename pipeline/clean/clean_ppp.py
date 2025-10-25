@@ -234,7 +234,7 @@ def clean_ppp_data():
         df, dropped_df = drop_and_log(df, dropped_df, mask_forgiveness_date_id, "forgiveness_date_id_not_int")
 
         # Assign a facts_ppp_id to each row
-        df['facts_ppp_id'] = [facts_ppp_id + i for i in range(len(df))].
+        df['facts_ppp_id'] = [facts_ppp_id + i for i in range(len(df))]
         # Set facts_ppp_id to int
         df['facts_ppp_id'] = df['facts_ppp_id'].astype(int)
         # Increment facts_ppp_id for the next file
