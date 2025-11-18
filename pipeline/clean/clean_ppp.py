@@ -131,7 +131,7 @@ def clean_ppp_data():
              'project_county_name',
              'project_state',
              'naics_code',
-             'business_type'
+             'business_type',
              'originating_lender_location_id',
              'originating_lender',
              'originating_lender_city',
